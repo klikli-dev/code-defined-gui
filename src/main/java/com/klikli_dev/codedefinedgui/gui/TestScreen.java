@@ -1,19 +1,13 @@
 package com.klikli_dev.codedefinedgui.gui;
 
-import com.klikli_dev.codedefinedgui.CodeDefinedGui;
-import net.minecraft.client.gui.BundleMouseActions;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
-import net.minecraft.util.ARGB;
 
-public class TestScreen extends Screen {
-
-    private static final Identifier GUI_BACKGROUND = Identifier.fromNamespaceAndPath(CodeDefinedGui.MODID, "gui_background");
+public class TestScreen extends Screen implements GuiHost {
     private final int imageWidth;
     private final int imageHeight;
+    private final GuiRootWidget root;
     private int leftPos;
     private int topPos;
 
@@ -22,17 +16,64 @@ public class TestScreen extends Screen {
 
         this.imageWidth = 176;
         this.imageHeight = 166;
-    }
-
-    protected void init() {
-        this.leftPos = (this.width - this.imageWidth) / 2;
-        this.topPos = (this.height - this.imageHeight) / 2;
+        this.root = new GuiRootWidget(this);
     }
 
     @Override
-    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-        super.extractRenderState(graphics, mouseX, mouseY, a);
+    protected void init() {
+        this.leftPos = (this.width - this.imageWidth) / 2;
+        this.topPos = (this.height - this.imageHeight) / 2;
 
-        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, GUI_BACKGROUND, this.leftPos, this.topPos, this.imageWidth, this.imageHeight, ARGB.color(255, 0, 0, 139));
+        this.addRenderableWidget(this.root);
+
+        this.root.clearChildren();
+        this.root.addChild(new GuiBackgroundWidget(this));
+        this.root.addChild(new InventorySlotWidget(this.leftPos + 8, this.topPos + 18));
+        this.root.addChild(new InventorySlotWidget(this.leftPos + 26, this.topPos + 18));
+        this.root.addChild(new InventorySlotWidget(this.leftPos + 44, this.topPos + 18));
+        this.root.addChild(new CraftingArrowWidget(this.leftPos + 68, this.topPos + 20));
+        this.root.addChild(new CraftingResultSlotWidget(this.leftPos + 94, this.topPos + 14));
+
+        this.root.syncWithHost();
+    }
+
+    @Override
+    public int leftPos() {
+        return this.leftPos;
+    }
+
+    @Override
+    public int topPos() {
+        return this.topPos;
+    }
+
+    @Override
+    public int width() {
+        return this.width;
+    }
+
+    @Override
+    public int height() {
+        return this.height;
+    }
+
+    @Override
+    public int imageWidth() {
+        return this.imageWidth;
+    }
+
+    @Override
+    public int imageHeight() {
+        return this.imageHeight;
+    }
+
+    @Override
+    public <T extends AbstractWidget> T addGuiWidget(T widget) {
+        return this.addRenderableWidget(widget);
+    }
+
+    @Override
+    public void removeGuiWidget(AbstractWidget widget) {
+        this.removeWidget(widget);
     }
 }
