@@ -34,22 +34,23 @@ public class GuiRootWidget extends AbstractWidget {
     }
 
     public void removeChild(AbstractWidget child) {
-        if (this.children.remove(child) && this.registeredChildren.remove(child)) {
+        this.children.remove(child);
+        if (this.registeredChildren.remove(child)) {
             this.host.removeGuiWidget(child);
         }
     }
 
     public void clearChildren() {
-        for (AbstractWidget child : Set.copyOf(this.children)) {
-            this.removeChild(child);
+        for (AbstractWidget child : this.registeredChildren) {
+            this.host.removeGuiWidget(child);
         }
+
+        this.children.clear();
+        this.registeredChildren.clear();
     }
 
     public void syncWithHost() {
-        this.setX(0);
-        this.setY(0);
-        this.setWidth(this.host.width());
-        this.setHeight(this.host.height());
+        this.syncBoundsToHost();
 
         for (AbstractWidget child : this.children) {
             this.syncChild(child);
@@ -64,6 +65,13 @@ public class GuiRootWidget extends AbstractWidget {
         for (AbstractWidget child : this.children) {
             this.registerChild(child);
         }
+    }
+
+    public void syncBoundsToHost() {
+        this.setX(0);
+        this.setY(0);
+        this.setWidth(this.host.width());
+        this.setHeight(this.host.height());
     }
 
     public Collection<AbstractWidget> children() {
