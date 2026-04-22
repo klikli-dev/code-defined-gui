@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 klikli-dev
+// SPDX-FileCopyrightText: 2026 klikli-dev
 //
 // SPDX-License-Identifier: MIT
 
