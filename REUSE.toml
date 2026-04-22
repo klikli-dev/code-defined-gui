@@ -14,6 +14,36 @@ SPDX-FileCopyrightText = "2026 klikli-dev"
 SPDX-License-Identifier = "CC0-1.0"
 
 [[annotations]]
+path = "openspec/changes/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 klikli-dev"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "openspec/specs/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 klikli-dev"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "openspec/config.yaml"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 klikli-dev"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ".opencode/commands/opsx-*"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2024 OpenSpec Contributors"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = ".opencode/skills/openspec-*/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2024 OpenSpec Contributors"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
 path = "src/main/resources/**"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 klikli-dev"
