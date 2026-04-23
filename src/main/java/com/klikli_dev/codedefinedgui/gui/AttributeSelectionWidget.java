@@ -50,6 +50,24 @@ public class AttributeSelectionWidget extends AbstractWidget {
     }
 
     @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        List<AttributeCandidate> entries = this.candidates.get();
+        if (entries.isEmpty() || !this.isMouseOver(mouseX, mouseY)) {
+            return false;
+        }
+
+        int currentIndex = Math.max(0, Math.min(this.selectedIndex.getAsInt(), entries.size() - 1));
+        int direction = scrollY > 0 ? -1 : scrollY < 0 ? 1 : 0;
+        if (direction == 0) {
+            return false;
+        }
+
+        int nextIndex = Math.floorMod(currentIndex + direction, entries.size());
+        this.onChange.accept(nextIndex);
+        return true;
+    }
+
+    @Override
     protected void updateWidgetNarration(NarrationElementOutput output) {
         this.defaultButtonNarrationText(output);
     }
