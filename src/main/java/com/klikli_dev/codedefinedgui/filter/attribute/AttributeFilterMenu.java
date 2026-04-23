@@ -5,6 +5,7 @@
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.filter.menu.AbstractFilterMenu;
+import com.klikli_dev.codedefinedgui.registry.CDGDataComponents;
 import com.klikli_dev.codedefinedgui.registry.CDGMenuTypes;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,9 +35,9 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
     }
 
     public AttributeFilterMenu(int containerId, Inventory inventory, InteractionHand hand) {
-        super(CDGMenuTypes.ATTRIBUTE_FILTER.get(), containerId, inventory, hand, 1);
+        super(CDGMenuTypes.ATTRIBUTE_FILTER.get(), containerId, inventory, hand, 1, CDGDataComponents.ATTRIBUTE_FILTER_REFERENCE.get());
 
-        AttributeFilterState state = AttributeFilterStateAccessor.INSTANCE.read(this.filterStack);
+        AttributeFilterState state = AttributeFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());
         this.selectedCandidateIndex.set(0);
         this.addDataSlot(this.mode);
@@ -53,11 +53,11 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
     }
 
     public ItemStack referenceStack() {
-        return this.ghostInventory.getItem(0);
+        return this.ghostStack(0);
     }
 
     public AttributeFilterState state() {
-        return AttributeFilterStateAccessor.INSTANCE.read(this.filterStack);
+        return AttributeFilterStateAccessor.INSTANCE.read(this.filterStack());
     }
 
     public List<AttributeCandidate> candidates() {
@@ -96,17 +96,17 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
             }
             case BUTTON_MATCH_ANY -> {
                 this.mode.set(AttributeFilterMode.MATCH_ANY.ordinal());
-                this.saveToFilterStack();
+                this.saveState();
                 return true;
             }
             case BUTTON_MATCH_ALL -> {
                 this.mode.set(AttributeFilterMode.MATCH_ALL.ordinal());
-                this.saveToFilterStack();
+                this.saveState();
                 return true;
             }
             case BUTTON_DENY -> {
                 this.mode.set(AttributeFilterMode.DENY.ordinal());
-                this.saveToFilterStack();
+                this.saveState();
                 return true;
             }
             case BUTTON_NEXT_CANDIDATE -> {
@@ -133,19 +133,19 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
         if (index < 36) {
             ItemStack stack = this.slots.get(index).getItem();
             if (!stack.isEmpty()) {
-                this.ghostInventory.setItem(0, stack.copyWithCount(1));
+                this.setGhostStack(0, stack);
             }
             return ItemStack.EMPTY;
         }
 
-        this.ghostInventory.setItem(0, ItemStack.EMPTY);
+        this.clearGhostStack(0);
         return ItemStack.EMPTY;
     }
 
     @Override
-    protected void onGhostInventoryChanged() {
+    protected void onGhostContentsChanged() {
         this.selectedCandidateIndex.set(0);
-        super.onGhostInventoryChanged();
+        super.onGhostContentsChanged();
     }
 
     @Override
@@ -160,23 +160,16 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
 
     @Override
     protected void addFilterSlots() {
-        this.addSlot(new Slot(this.ghostInventory, 0, 16, 24) {
-            @Override
-            public boolean mayPickup(Player player) {
-                return false;
-            }
-        });
+        this.addGhostSlot(0, 16, 24);
     }
 
     @Override
-    protected void loadFromFilterStack() {
-        this.ghostInventory.setItem(0, AttributeFilterStateAccessor.INSTANCE.read(this.filterStack).referenceStack());
-    }
+    protected void migrateLegacyStateIfNeeded() {
+        if (this.filterStack().get(CDGDataComponents.ATTRIBUTE_FILTER_REFERENCE.get()) != null || this.filterStack().get(CDGDataComponents.ATTRIBUTE_FILTER_STATE.get()) == null) {
+            return;
+        }
 
-    @Override
-    protected void saveToFilterStack() {
-        AttributeFilterState state = this.state();
-        this.writeState(new AttributeFilterState(this.referenceStack(), this.mode(), state.rules()));
+        this.ghostStorage.setStackInSlot(0, AttributeFilterStateAccessor.INSTANCE.read(this.filterStack()).referenceStack());
     }
 
     private boolean addSelectedRule(boolean inverted) {
@@ -199,6 +192,11 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
     }
 
     private void writeState(AttributeFilterState state) {
-        AttributeFilterStateAccessor.INSTANCE.write(this.filterStack, state);
+        AttributeFilterStateAccessor.INSTANCE.write(this.filterStack(), state);
+    }
+
+    private void saveState() {
+        AttributeFilterState state = this.state();
+        this.writeState(new AttributeFilterState(this.referenceStack(), this.mode(), state.rules()));
     }
 }
