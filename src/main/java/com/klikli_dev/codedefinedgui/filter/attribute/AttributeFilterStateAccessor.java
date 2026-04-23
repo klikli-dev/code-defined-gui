@@ -20,18 +20,14 @@ public final class AttributeFilterStateAccessor implements FilterStateAccessor<A
     public AttributeFilterState read(ItemStack stack) {
         ItemContainerContents reference = stack.get(CDGDataComponents.ATTRIBUTE_FILTER_REFERENCE.get());
         AttributeFilterConfig config = stack.get(CDGDataComponents.ATTRIBUTE_FILTER_CONFIG.get());
-        if (reference != null || config != null) {
-            ItemStack referenceStack = ItemStack.EMPTY;
-            if (reference != null) {
-                NonNullList<ItemStack> items = NonNullList.withSize(1, ItemStack.EMPTY);
-                reference.copyInto(items);
-                referenceStack = items.get(0);
-            }
-
-            return new AttributeFilterState(referenceStack, config != null ? config.mode() : AttributeFilterConfig.EMPTY.mode(), config != null ? config.rules() : AttributeFilterConfig.EMPTY.rules());
+        ItemStack referenceStack = ItemStack.EMPTY;
+        if (reference != null) {
+            NonNullList<ItemStack> items = NonNullList.withSize(1, ItemStack.EMPTY);
+            reference.copyInto(items);
+            referenceStack = items.get(0);
         }
 
-        return stack.getOrDefault(CDGDataComponents.ATTRIBUTE_FILTER_STATE.get(), AttributeFilterState.EMPTY);
+        return new AttributeFilterState(referenceStack, config != null ? config.mode() : AttributeFilterConfig.EMPTY.mode(), config != null ? config.rules() : AttributeFilterConfig.EMPTY.rules());
     }
 
     @Override
@@ -48,7 +44,5 @@ public final class AttributeFilterStateAccessor implements FilterStateAccessor<A
         } else {
             stack.set(CDGDataComponents.ATTRIBUTE_FILTER_CONFIG.get(), config);
         }
-
-        stack.remove(CDGDataComponents.ATTRIBUTE_FILTER_STATE.get());
     }
 }

@@ -40,7 +40,6 @@ public abstract class AbstractFilterMenu extends AbstractContainerMenu {
         this.ghostSlots = ghostSlots;
         this.lockedPlayerSlotId = playerSlotId(this.heldSlot);
         this.ghostStorage = new GhostItemStorage(this.filterAccess, ghostComponent, ghostSlots);
-        this.migrateLegacyStateIfNeeded();
 
         this.addStandardInventorySlots(inventory, this.playerInventoryX(), this.playerInventoryY());
         this.addFilterSlots();
@@ -135,8 +134,6 @@ public abstract class AbstractFilterMenu extends AbstractContainerMenu {
     protected Slot addGhostSlot(int slot, int xPosition, int yPosition) {
         return this.addSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition));
     }
-
-    protected abstract void migrateLegacyStateIfNeeded();
 
     private boolean isGhostSlotId(int slotId) {
         return slotId >= PLAYER_SLOT_COUNT && slotId < PLAYER_SLOT_COUNT + this.ghostSlots;

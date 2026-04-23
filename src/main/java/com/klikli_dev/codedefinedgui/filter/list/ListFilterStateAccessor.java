@@ -20,11 +20,7 @@ public final class ListFilterStateAccessor implements FilterStateAccessor<ListFi
     public ListFilterState read(ItemStack stack) {
         ItemContainerContents contents = stack.get(CDGDataComponents.LIST_FILTER_CONTENTS.get());
         ListFilterConfig config = stack.get(CDGDataComponents.LIST_FILTER_CONFIG.get());
-        if (contents != null || config != null) {
-            return new ListFilterState(contents != null ? contents : ItemContainerContents.EMPTY, config != null ? config.mode() : ListFilterConfig.EMPTY.mode(), config != null && config.respectDataComponents());
-        }
-
-        return stack.getOrDefault(CDGDataComponents.LIST_FILTER_STATE.get(), ListFilterState.EMPTY);
+        return new ListFilterState(contents != null ? contents : ItemContainerContents.EMPTY, config != null ? config.mode() : ListFilterConfig.EMPTY.mode(), config != null && config.respectDataComponents());
     }
 
     @Override
@@ -41,8 +37,6 @@ public final class ListFilterStateAccessor implements FilterStateAccessor<ListFi
         } else {
             stack.set(CDGDataComponents.LIST_FILTER_CONFIG.get(), config);
         }
-
-        stack.remove(CDGDataComponents.LIST_FILTER_STATE.get());
     }
 
     private static boolean isEmptyContents(ItemContainerContents contents) {

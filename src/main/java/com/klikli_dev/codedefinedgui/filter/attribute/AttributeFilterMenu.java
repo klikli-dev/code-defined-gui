@@ -163,15 +163,6 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
         this.addGhostSlot(0, 16, 24);
     }
 
-    @Override
-    protected void migrateLegacyStateIfNeeded() {
-        if (this.filterStack().get(CDGDataComponents.ATTRIBUTE_FILTER_REFERENCE.get()) != null || this.filterStack().get(CDGDataComponents.ATTRIBUTE_FILTER_STATE.get()) == null) {
-            return;
-        }
-
-        this.ghostStorage.setStackInSlot(0, AttributeFilterStateAccessor.INSTANCE.read(this.filterStack()).referenceStack());
-    }
-
     private boolean addSelectedRule(boolean inverted) {
         AttributeFilterState state = this.state();
         Optional<AttributeCandidate> selected = this.selectedCandidate();

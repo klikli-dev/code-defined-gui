@@ -133,18 +133,6 @@ public class ListFilterMenu extends AbstractFilterMenu {
         }
     }
 
-    @Override
-    protected void migrateLegacyStateIfNeeded() {
-        if (this.filterStack().get(CDGDataComponents.LIST_FILTER_CONTENTS.get()) != null || this.filterStack().get(CDGDataComponents.LIST_FILTER_STATE.get()) == null) {
-            return;
-        }
-
-        ListFilterState state = ListFilterStateAccessor.INSTANCE.read(this.filterStack());
-        for (int slot = 0; slot < FILTER_SLOTS; slot++) {
-            this.ghostStorage.setStackInSlot(slot, state.entries().getStackInSlot(slot));
-        }
-    }
-
     private void saveState() {
         ListFilterStateAccessor.INSTANCE.write(this.filterStack(), new ListFilterState(
                 this.ghostStorage.contents(),
