@@ -1,11 +1,21 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {"item": "minecraft:paper"},
-    {"item": "minecraft:iron_ingot"}
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "m": {
+      "item": "minecraft:iron_ingot"
+    },
+    "p": {
+      "item": "minecraft:paper"
+    }
+  },
+  "pattern": [
+    "ppp",
+    "pmp",
+    "ppp"
   ],
   "result": {
-    "id": "codedefinedgui:list_filter",
-    "count": 1
+    "count": 1,
+    "id": "codedefinedgui:list_filter"
   }
 }
