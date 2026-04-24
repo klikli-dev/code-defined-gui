@@ -16,10 +16,12 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 
 public class CDGItemModelProvider implements DataProvider {
-    private final PackOutput.PathProvider pathProvider;
+    private final PackOutput.PathProvider itemInfoPathProvider;
+    private final PackOutput.PathProvider modelPathProvider;
 
     public CDGItemModelProvider(PackOutput output) {
-        this.pathProvider = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "models/item");
+        this.itemInfoPathProvider = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "items");
+        this.modelPathProvider = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "models/item");
     }
 
     @Override
@@ -29,7 +31,10 @@ public class CDGItemModelProvider implements DataProvider {
         textures.put(ItemRegistry.ATTRIBUTE_FILTER.getId(), "codedefinedgui:item/attribute_filter");
 
         CompletableFuture<?>[] futures = textures.entrySet().stream()
-                .map(entry -> DataProvider.saveStable(output, this.model(entry.getValue()), this.pathProvider.json(entry.getKey())))
+                .flatMap(entry -> java.util.stream.Stream.of(
+                        DataProvider.saveStable(output, this.model(entry.getValue()), this.modelPathProvider.json(entry.getKey())),
+                        DataProvider.saveStable(output, this.clientItem(entry.getKey()), this.itemInfoPathProvider.json(entry.getKey()))
+                ))
                 .toArray(CompletableFuture[]::new);
         return CompletableFuture.allOf(futures);
     }
@@ -45,6 +50,15 @@ public class CDGItemModelProvider implements DataProvider {
         JsonObject textures = new JsonObject();
         textures.addProperty("layer0", layer0);
         root.add("textures", textures);
+        return root;
+    }
+
+    private JsonObject clientItem(Identifier modelId) {
+        JsonObject root = new JsonObject();
+        JsonObject model = new JsonObject();
+        model.addProperty("type", "minecraft:model");
+        model.addProperty("model", modelId.withPrefix("item/").toString());
+        root.add("model", model);
         return root;
     }
 }
