@@ -7,23 +7,23 @@ package com.klikli_dev.codedefinedgui.datagen.model;
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
-import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.data.PackOutput;
+import org.jspecify.annotations.NonNull;
 
-public class CDGModelProvider extends ModelProvider {
-    private final CDGItemModelSubProvider itemModels = new CDGItemModelSubProvider();
+public class ModelProvider extends net.minecraft.client.data.models.ModelProvider {
+    private final ItemModelSubProvider itemModels = new ItemModelSubProvider();
 
-    public CDGModelProvider(PackOutput packOutput) {
+    public ModelProvider(PackOutput packOutput) {
         super(packOutput, CodeDefinedGui.MODID);
     }
 
     @Override
-    public String getName() {
+    public @NonNull String getName() {
         return "Model Definitions - " + CodeDefinedGui.MODID;
     }
 
     @Override
-    protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+    protected void registerModels(@NonNull BlockModelGenerators blockModels, @NonNull ItemModelGenerators itemModels) {
         this.itemModels.registerModels(itemModels);
     }
 }
