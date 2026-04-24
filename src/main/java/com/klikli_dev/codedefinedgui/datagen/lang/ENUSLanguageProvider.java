@@ -17,12 +17,17 @@ public class ENUSLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         this.addConfig();
+        this.addCreativeTabs();
         this.addItems();
         this.addFilters();
     }
 
     protected void addConfig() {
         this.add(CodeDefinedGui.MODID + ".configuration.title", "Code Defined Gui Configs");
+    }
+
+    protected void addCreativeTabs() {
+        this.add("itemGroup." + CodeDefinedGui.MODID, "Code Defined GUI");
     }
 
     protected void addItems() {
