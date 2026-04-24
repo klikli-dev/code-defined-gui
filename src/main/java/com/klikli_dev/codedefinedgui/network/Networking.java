@@ -15,10 +15,10 @@ public final class Networking {
 
     public static void register(RegisterPayloadHandlersEvent event) {
         event.registrar(CodeDefinedGui.MODID)
-                .playToClient(OpenTestScreenPayload.TYPE, OpenTestScreenPayload.STREAM_CODEC);
+                .playToClient(OpenTestScreenPayload.TYPE, OpenTestScreenPayload.STREAM_CODEC, MessageHandler::handle);
     }
 
-    public static void sendTo(ServerPlayer player, OpenTestScreenPayload payload) {
-        PacketDistributor.sendToPlayer(player, payload);
+    public static <T extends Message> void sendTo(ServerPlayer player, T message) {
+        PacketDistributor.sendToPlayer(player, message);
     }
 }
