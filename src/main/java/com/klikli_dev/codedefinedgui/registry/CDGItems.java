@@ -8,14 +8,14 @@ import com.klikli_dev.codedefinedgui.CodeDefinedGui;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterItem;
 import com.klikli_dev.codedefinedgui.filter.list.ListFilterItem;
 import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class CDGItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(CodeDefinedGui.MODID);
 
-    public static final DeferredHolder<Item, ListFilterItem> LIST_FILTER = ITEMS.register("list_filter", () -> new ListFilterItem(new Item.Properties().stacksTo(1)));
-    public static final DeferredHolder<Item, AttributeFilterItem> ATTRIBUTE_FILTER = ITEMS.register("attribute_filter", () -> new AttributeFilterItem(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<ListFilterItem> LIST_FILTER = ITEMS.registerItem("list_filter", p -> new ListFilterItem(p.stacksTo(1)));
+    public static final DeferredItem<AttributeFilterItem> ATTRIBUTE_FILTER = ITEMS.registerItem("attribute_filter", p -> new AttributeFilterItem(p.stacksTo(1)));
 
     private CDGItems() {
     }
