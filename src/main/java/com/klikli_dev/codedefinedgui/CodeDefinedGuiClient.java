@@ -8,7 +8,7 @@ import com.klikli_dev.codedefinedgui.client.ClientPayloadHandlers;
 import com.klikli_dev.codedefinedgui.gui.filter.AttributeFilterScreen;
 import com.klikli_dev.codedefinedgui.gui.filter.ListFilterScreen;
 import com.klikli_dev.codedefinedgui.network.OpenTestScreenPayload;
-import com.klikli_dev.codedefinedgui.registry.CDGMenuTypes;
+import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -33,8 +33,8 @@ public class CodeDefinedGuiClient {
     }
 
     private void onRegisterMenuScreensEvent(RegisterMenuScreensEvent event) {
-        event.register(CDGMenuTypes.LIST_FILTER.get(), ListFilterScreen::new);
-        event.register(CDGMenuTypes.ATTRIBUTE_FILTER.get(), AttributeFilterScreen::new);
+        event.register(MenuTypeRegistry.LIST_FILTER.get(), ListFilterScreen::new);
+        event.register(MenuTypeRegistry.ATTRIBUTE_FILTER.get(), AttributeFilterScreen::new);
     }
 
     private void onRegisterClientPayloadHandlersEvent(RegisterClientPayloadHandlersEvent event) {

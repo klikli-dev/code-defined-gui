@@ -8,10 +8,9 @@ import com.klikli_dev.codedefinedgui.command.CdgCommand;
 import com.klikli_dev.codedefinedgui.datagen.DataGenerators;
 import com.klikli_dev.codedefinedgui.filter.attribute.CdgItemAttributes;
 import com.klikli_dev.codedefinedgui.network.Networking;
-import com.klikli_dev.codedefinedgui.registry.CDGDataComponents;
-import com.klikli_dev.codedefinedgui.registry.CDGItems;
-import com.klikli_dev.codedefinedgui.registry.CDGMenuTypes;
-import com.klikli_dev.codedefinedgui.registry.CreativeModeTabRegistry;
+import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
+import com.klikli_dev.codedefinedgui.registry.ItemRegistry;
+import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -30,10 +29,9 @@ public class CodeDefinedGui {
     public CodeDefinedGui(IEventBus modEventBus, ModContainer modContainer) {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
-        CDGItems.ITEMS.register(modEventBus);
-        CreativeModeTabRegistry.CREATIVE_MODE_TABS.register(modEventBus);
-        CDGMenuTypes.MENU_TYPES.register(modEventBus);
-        CDGDataComponents.DATA_COMPONENTS.register(modEventBus);
+        ItemRegistry.ITEMS.register(modEventBus);
+        MenuTypeRegistry.MENU_TYPES.register(modEventBus);
+        DataComponentRegistry.DATA_COMPONENTS.register(modEventBus);
         CdgItemAttributes.bootstrap();
 
         modEventBus.addListener(this::onCommonSetupEvent);

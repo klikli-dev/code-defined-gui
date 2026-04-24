@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.datagen.lang;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
-import com.klikli_dev.codedefinedgui.registry.CDGItems;
+import com.klikli_dev.codedefinedgui.registry.ItemRegistry;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
@@ -31,8 +31,8 @@ public class ENUSLanguageProvider extends LanguageProvider {
     }
 
     protected void addItems() {
-        this.addItem(CDGItems.LIST_FILTER, "List Filter");
-        this.addItem(CDGItems.ATTRIBUTE_FILTER, "Attribute Filter");
+        this.addItem(ItemRegistry.LIST_FILTER, "List Filter");
+        this.addItem(ItemRegistry.ATTRIBUTE_FILTER, "Attribute Filter");
     }
 
     protected void addFilters() {

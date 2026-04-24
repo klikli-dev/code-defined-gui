@@ -5,8 +5,8 @@
 package com.klikli_dev.codedefinedgui.filter.list;
 
 import com.klikli_dev.codedefinedgui.filter.menu.AbstractFilterMenu;
-import com.klikli_dev.codedefinedgui.registry.CDGDataComponents;
-import com.klikli_dev.codedefinedgui.registry.CDGMenuTypes;
+import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
+import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
@@ -31,7 +31,7 @@ public class ListFilterMenu extends AbstractFilterMenu {
     }
 
     public ListFilterMenu(int containerId, Inventory inventory, InteractionHand hand) {
-        super(CDGMenuTypes.LIST_FILTER.get(), containerId, inventory, hand, FILTER_SLOTS, CDGDataComponents.LIST_FILTER_CONTENTS.get());
+        super(MenuTypeRegistry.LIST_FILTER.get(), containerId, inventory, hand, FILTER_SLOTS, DataComponentRegistry.LIST_FILTER_CONTENTS.get());
 
         ListFilterState state = ListFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());

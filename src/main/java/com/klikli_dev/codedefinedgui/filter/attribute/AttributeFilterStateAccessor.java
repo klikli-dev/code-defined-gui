@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.filter.FilterStateAccessor;
-import com.klikli_dev.codedefinedgui.registry.CDGDataComponents;
+import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
@@ -18,8 +18,8 @@ public final class AttributeFilterStateAccessor implements FilterStateAccessor<A
 
     @Override
     public AttributeFilterState read(ItemStack stack) {
-        ItemContainerContents reference = stack.get(CDGDataComponents.ATTRIBUTE_FILTER_REFERENCE.get());
-        AttributeFilterConfig config = stack.get(CDGDataComponents.ATTRIBUTE_FILTER_CONFIG.get());
+        ItemContainerContents reference = stack.get(DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
+        AttributeFilterConfig config = stack.get(DataComponentRegistry.ATTRIBUTE_FILTER_CONFIG.get());
         ItemStack referenceStack = ItemStack.EMPTY;
         if (reference != null) {
             NonNullList<ItemStack> items = NonNullList.withSize(1, ItemStack.EMPTY);
@@ -33,16 +33,16 @@ public final class AttributeFilterStateAccessor implements FilterStateAccessor<A
     @Override
     public void write(ItemStack stack, AttributeFilterState state) {
         if (state.referenceStack().isEmpty()) {
-            stack.remove(CDGDataComponents.ATTRIBUTE_FILTER_REFERENCE.get());
+            stack.remove(DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
         } else {
-            stack.set(CDGDataComponents.ATTRIBUTE_FILTER_REFERENCE.get(), ItemContainerContents.fromItems(NonNullList.of(ItemStack.EMPTY, state.referenceStack().copyWithCount(1))));
+            stack.set(DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get(), ItemContainerContents.fromItems(NonNullList.of(ItemStack.EMPTY, state.referenceStack().copyWithCount(1))));
         }
 
         AttributeFilterConfig config = new AttributeFilterConfig(state.mode(), state.rules());
         if (AttributeFilterConfig.EMPTY.equals(config)) {
-            stack.remove(CDGDataComponents.ATTRIBUTE_FILTER_CONFIG.get());
+            stack.remove(DataComponentRegistry.ATTRIBUTE_FILTER_CONFIG.get());
         } else {
-            stack.set(CDGDataComponents.ATTRIBUTE_FILTER_CONFIG.get(), config);
+            stack.set(DataComponentRegistry.ATTRIBUTE_FILTER_CONFIG.get(), config);
         }
     }
 }

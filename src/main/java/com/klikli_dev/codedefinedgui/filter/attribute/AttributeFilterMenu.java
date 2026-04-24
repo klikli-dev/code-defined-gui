@@ -5,8 +5,8 @@
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.filter.menu.AbstractFilterMenu;
-import com.klikli_dev.codedefinedgui.registry.CDGDataComponents;
-import com.klikli_dev.codedefinedgui.registry.CDGMenuTypes;
+import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
+import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +35,7 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
     }
 
     public AttributeFilterMenu(int containerId, Inventory inventory, InteractionHand hand) {
-        super(CDGMenuTypes.ATTRIBUTE_FILTER.get(), containerId, inventory, hand, 1, CDGDataComponents.ATTRIBUTE_FILTER_REFERENCE.get());
+        super(MenuTypeRegistry.ATTRIBUTE_FILTER.get(), containerId, inventory, hand, 1, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
 
         AttributeFilterState state = AttributeFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());

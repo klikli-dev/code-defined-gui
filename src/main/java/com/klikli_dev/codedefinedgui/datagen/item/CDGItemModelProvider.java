@@ -5,11 +5,11 @@
 package com.klikli_dev.codedefinedgui.datagen.item;
 
 import com.google.gson.JsonObject;
-import com.klikli_dev.codedefinedgui.registry.CDGItems;
+import com.klikli_dev.codedefinedgui.registry.ItemRegistry;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import net.minecraft.core.HolderLookup;
+
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -25,8 +25,8 @@ public class CDGItemModelProvider implements DataProvider {
     @Override
     public CompletableFuture<?> run(CachedOutput output) {
         Map<Identifier, String> textures = new LinkedHashMap<>();
-        textures.put(CDGItems.LIST_FILTER.getId(), "codedefinedgui:item/list_filter");
-        textures.put(CDGItems.ATTRIBUTE_FILTER.getId(), "codedefinedgui:item/attribute_filter");
+        textures.put(ItemRegistry.LIST_FILTER.getId(), "codedefinedgui:item/list_filter");
+        textures.put(ItemRegistry.ATTRIBUTE_FILTER.getId(), "codedefinedgui:item/attribute_filter");
 
         CompletableFuture<?>[] futures = textures.entrySet().stream()
                 .map(entry -> DataProvider.saveStable(output, this.model(entry.getValue()), this.pathProvider.json(entry.getKey())))
