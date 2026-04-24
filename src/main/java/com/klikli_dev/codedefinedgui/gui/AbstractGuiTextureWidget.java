@@ -7,8 +7,8 @@ package com.klikli_dev.codedefinedgui.gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+import org.jspecify.annotations.NonNull;
 
 public abstract class AbstractGuiTextureWidget extends AbstractWidget implements GuiSyncable {
     private final GuiTexture texture;
@@ -24,12 +24,8 @@ public abstract class AbstractGuiTextureWidget extends AbstractWidget implements
     }
 
     @Override
-    protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-        if (this.texture.tint() == -1) {
-            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.texture.sprite(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
-        } else {
-            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.texture.sprite(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.texture.tint());
-        }
+    protected void extractWidgetRenderState(@NonNull GuiGraphicsExtractor guiGraphicsExtractor, int mouseX, int mouseY, float a) {
+        this.texture.extractRenderState(guiGraphicsExtractor, this.getX(), this.getY());
     }
 
     @Override
