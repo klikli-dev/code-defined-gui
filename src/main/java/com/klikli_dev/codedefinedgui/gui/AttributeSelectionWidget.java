@@ -31,7 +31,7 @@ public class AttributeSelectionWidget extends AbstractWidget {
 
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, GuiTextures.GUI_BACKGROUND.sprite(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, GuiTextures.ATTRIBUTE_FILTER_SELECTION.sprite(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
         List<AttributeCandidate> entries = this.candidates.get();
         Component text = entries.isEmpty()
                 ? Component.translatable("codedefinedgui.filter.attribute.no_reference")

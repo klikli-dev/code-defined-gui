@@ -6,10 +6,10 @@ package com.klikli_dev.codedefinedgui.gui.filter;
 
 import com.klikli_dev.codedefinedgui.filter.list.ListFilterMenu;
 import com.klikli_dev.codedefinedgui.gui.FilterIndicatorWidget;
+import com.klikli_dev.codedefinedgui.gui.GuiBackgroundWidget;
 import com.klikli_dev.codedefinedgui.gui.GuiTextures;
 import com.klikli_dev.codedefinedgui.gui.IconButtonWidget;
 import com.klikli_dev.codedefinedgui.gui.InventorySlotWidget;
-import com.klikli_dev.codedefinedgui.gui.ListFilterBackgroundWidget;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -31,7 +31,7 @@ public class ListFilterScreen extends AbstractFilterScreen<ListFilterMenu> {
 
     @Override
     protected void addBackgroundWidgets() {
-        this.root.addChild(new ListFilterBackgroundWidget(this.leftPos, this.topPos));
+        this.root.addChild(new GuiBackgroundWidget(this, this.leftPos, this.topPos, 214, 99));
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 9; col++) {
                 this.root.addChild(new InventorySlotWidget(this.leftPos + 23 + col * 18, this.topPos + 22 + row * 18));

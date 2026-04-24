@@ -12,8 +12,8 @@ public final class GuiTextures {
     public static final GuiTexture INVENTORY_SLOT = new GuiTexture(sprite("inventory_slot"), 18, 18);
     public static final GuiTexture CRAFTING_RESULT_SLOT = new GuiTexture(sprite("crafting_result_slot"), 26, 26);
     public static final GuiTexture CRAFTING_ARROW = new GuiTexture(sprite("crafting_arrow"), 22, 15);
-    public static final GuiTexture LIST_FILTER_BACKGROUND = new GuiTexture(sprite("list_filter_background"), 214, 99);
-    public static final GuiTexture ATTRIBUTE_FILTER_BACKGROUND = new GuiTexture(sprite("attribute_filter_background"), 241, 85);
+    public static final GuiTexture ATTRIBUTE_FILTER_SELECTION = new GuiTexture(sprite("attribute_filter_selection"), 137, 18);
+    public static final GuiTexture ATTRIBUTE_FILTER_SUMMARY = new GuiTexture(sprite("attribute_filter_summary"), 24, 24);
     public static final GuiTexture FILTER_BUTTON = new GuiTexture(sprite("button"), 18, 18);
     public static final GuiTexture FILTER_BUTTON_HOVER = new GuiTexture(sprite("button_hover"), 18, 18);
     public static final GuiTexture FILTER_BUTTON_DOWN = new GuiTexture(sprite("button_down"), 18, 18);

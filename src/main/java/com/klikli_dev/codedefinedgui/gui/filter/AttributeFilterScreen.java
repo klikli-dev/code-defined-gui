@@ -8,10 +8,10 @@ import com.klikli_dev.codedefinedgui.filter.attribute.AttributeCandidate;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterDefinition;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMenu;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMode;
-import com.klikli_dev.codedefinedgui.gui.AttributeFilterBackgroundWidget;
 import com.klikli_dev.codedefinedgui.gui.AttributeRuleSummaryWidget;
 import com.klikli_dev.codedefinedgui.gui.AttributeSelectionWidget;
 import com.klikli_dev.codedefinedgui.gui.FilterIndicatorWidget;
+import com.klikli_dev.codedefinedgui.gui.GuiBackgroundWidget;
 import com.klikli_dev.codedefinedgui.gui.GuiTextures;
 import com.klikli_dev.codedefinedgui.gui.IconButtonWidget;
 import com.klikli_dev.codedefinedgui.gui.InventorySlotWidget;
@@ -41,9 +41,8 @@ public class AttributeFilterScreen extends AbstractFilterScreen<AttributeFilterM
 
     @Override
     protected void addBackgroundWidgets() {
-        this.root.addChild(new AttributeFilterBackgroundWidget(this.leftPos, this.topPos));
+        this.root.addChild(new GuiBackgroundWidget(this, this.leftPos, this.topPos, 241, 85));
         this.root.addChild(new InventorySlotWidget(this.leftPos + 16, this.topPos + 24));
-        this.root.addChild(new InventorySlotWidget(this.leftPos + 22, this.topPos + 59));
     }
 
     @Override
@@ -81,7 +80,7 @@ public class AttributeFilterScreen extends AbstractFilterScreen<AttributeFilterM
         ));
         this.addButton = this.root.addChild(new IconButtonWidget(this.leftPos + 182, this.topPos + 23, GuiTextures.FILTER_ICON_ADD, Component.translatable("codedefinedgui.filter.attribute.add"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED)));
         this.addInvertedButton = this.root.addChild(new IconButtonWidget(this.leftPos + 200, this.topPos + 23, GuiTextures.FILTER_ICON_ADD_INVERTED, Component.translatable("codedefinedgui.filter.attribute.add_inverted"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED)));
-        this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.leftPos + 22, this.topPos + 59, () -> this.menu.state().rules().size()));
+        this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.leftPos + 18, this.topPos + 55, () -> this.menu.state().rules().size()));
     }
 
     @Override

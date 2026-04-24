@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 from pathlib import Path
+import shutil
 from PIL import Image
 
 
@@ -19,7 +20,7 @@ def crop(src: Path, dst: Path, box: tuple[int, int, int, int]) -> None:
 
 def copy(src: Path, dst: Path) -> None:
     dst.parent.mkdir(parents=True, exist_ok=True)
-    Image.open(src).save(dst)
+    shutil.copyfile(src, dst)
 
 
 def main() -> None:
@@ -33,7 +34,7 @@ def main() -> None:
     icons = THEURGY / "gui/icons.png"
 
     for name, x, y, w, h in [
-        ("button", 18, 18, 18, 18),
+        ("button", 0, 0, 18, 18),
         ("button_hover", 18, 0, 18, 18),
         ("button_down", 36, 0, 18, 18),
         ("indicator", 0, 18, 18, 6),
@@ -58,6 +59,9 @@ def main() -> None:
         ("add_inverted", 4, 7),
     ]:
         crop(icons, OUT / f"gui/sprites/{name}.png", (x * 16, y * 16, x * 16 + 16, y * 16 + 16))
+
+    crop(THEURGY / "gui/filters.png", OUT / "gui/sprites/attribute_filter_selection.png", (39, 122, 176, 140))
+    crop(THEURGY / "gui/filters.png", OUT / "gui/sprites/attribute_filter_summary.png", (18, 154, 42, 178))
 
 
 if __name__ == "__main__":

@@ -16,17 +16,17 @@ public class AttributeRuleSummaryWidget extends AbstractWidget {
     private final IntSupplier ruleCount;
 
     public AttributeRuleSummaryWidget(int x, int y, IntSupplier ruleCount) {
-        super(x, y, GuiTextures.INVENTORY_SLOT.width(), GuiTextures.INVENTORY_SLOT.height(), Component.empty());
+        super(x, y, GuiTextures.ATTRIBUTE_FILTER_SUMMARY.width(), GuiTextures.ATTRIBUTE_FILTER_SUMMARY.height(), Component.empty());
         this.ruleCount = ruleCount;
         this.active = false;
     }
 
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, GuiTextures.INVENTORY_SLOT.sprite(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, GuiTextures.ATTRIBUTE_FILTER_SUMMARY.sprite(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
         int count = this.ruleCount.getAsInt();
         if (count > 0) {
-            graphics.text(Minecraft.getInstance().font, Component.literal(Integer.toString(count)), this.getX() + 5, this.getY() + 5, 0xFFFFFF, false);
+            graphics.text(Minecraft.getInstance().font, Component.literal(Integer.toString(count)), this.getX() + 9, this.getY() + 9, 0xFFFFFF, false);
         }
     }
 
