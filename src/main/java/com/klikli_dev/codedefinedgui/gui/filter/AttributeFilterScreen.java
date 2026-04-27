@@ -78,7 +78,7 @@ public class AttributeFilterScreen extends AbstractFilterScreen<AttributeFilterM
                 this::candidates,
                 this.menu::selectedCandidateIndex,
                 this::changeSelection
-        ));
+        ).withTitle(Component.translatable("codedefinedgui.filter.attribute.available")));
         this.addButton = this.root.addChild(new IconButtonWidget(this.leftPos + 182, this.topPos + 23, GuiTextures.FILTER_ICON_ADD, Component.translatable("codedefinedgui.filter.attribute.add"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED)));
         this.addInvertedButton = this.root.addChild(new IconButtonWidget(this.leftPos + 200, this.topPos + 23, GuiTextures.FILTER_ICON_ADD_INVERTED, Component.translatable("codedefinedgui.filter.attribute.add_inverted"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED)));
         this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.leftPos + 18, this.topPos + 55, () -> this.menu.state().rules().size(), this.menu::summaryStack));
@@ -96,6 +96,7 @@ public class AttributeFilterScreen extends AbstractFilterScreen<AttributeFilterM
         boolean hasCandidate = this.menu.selectedCandidate().isPresent();
         this.addButton.active = hasCandidate;
         this.addInvertedButton.active = hasCandidate;
+        this.selectionWidget.updateTooltip();
     }
 
     @Override
@@ -142,5 +143,7 @@ public class AttributeFilterScreen extends AbstractFilterScreen<AttributeFilterM
         if (nextIndex != currentIndex) {
             this.pressButton(AttributeFilterMenu.BUTTON_NEXT_CANDIDATE);
         }
+
+        this.selectionWidget.updateTooltip();
     }
 }
