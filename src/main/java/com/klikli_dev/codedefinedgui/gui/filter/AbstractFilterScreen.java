@@ -6,8 +6,10 @@ package com.klikli_dev.codedefinedgui.gui.filter;
 
 import com.klikli_dev.codedefinedgui.filter.menu.AbstractFilterMenu;
 import com.klikli_dev.codedefinedgui.gui.GuiHost;
+import com.klikli_dev.codedefinedgui.gui.GuiBackgroundWidget;
 import com.klikli_dev.codedefinedgui.gui.GuiRootWidget;
 import com.klikli_dev.codedefinedgui.gui.IconButtonWidget;
+import com.klikli_dev.codedefinedgui.gui.InventorySlotWidget;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -32,6 +34,7 @@ public abstract class AbstractFilterScreen<M extends AbstractFilterMenu> extends
         this.addRenderableWidget(this.root);
         this.root.clearChildren();
         this.addBackgroundWidgets();
+        this.addPlayerInventoryWidgets();
         this.addScreenWidgets();
         this.root.syncWithHost();
         this.refreshWidgetState();
@@ -103,6 +106,26 @@ public abstract class AbstractFilterScreen<M extends AbstractFilterMenu> extends
 
     protected int centeredPlayerInventoryLeft() {
         return this.leftPos + (this.imageWidth - 176) / 2;
+    }
+
+    protected int playerInventoryTop() {
+        return this.topPos + this.imageHeight - 107;
+    }
+
+    protected void addPlayerInventoryWidgets() {
+        int inventoryLeft = this.centeredPlayerInventoryLeft();
+        int inventoryTop = this.playerInventoryTop();
+        this.root.addChild(new GuiBackgroundWidget(this, inventoryLeft, inventoryTop, 176, 108));
+
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 9; col++) {
+                this.root.addChild(new InventorySlotWidget(inventoryLeft + 7 + col * 18, inventoryTop + 17 + row * 18));
+            }
+        }
+
+        for (int col = 0; col < 9; col++) {
+            this.root.addChild(new InventorySlotWidget(inventoryLeft + 7 + col * 18, inventoryTop + 75));
+        }
     }
 
     protected abstract void addBackgroundWidgets();
