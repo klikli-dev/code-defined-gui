@@ -36,7 +36,7 @@ public class AttributeSelectionWidget extends AbstractWidget {
         Component text = entries.isEmpty()
                 ? Component.translatable("codedefinedgui.filter.attribute.no_reference")
                 : entries.get(Math.max(0, Math.min(this.selectedIndex.getAsInt(), entries.size() - 1))).label();
-        graphics.text(Minecraft.getInstance().font, text, this.getX() + 6, this.getY() + (this.getHeight() - 8) / 2, 0xF3EBDE, false);
+        graphics.text(Minecraft.getInstance().font, text, this.getX() + 6, this.getY() + (this.getHeight() - 8) / 2, 0xFFF3EBDE, false);
     }
 
     @Override
