@@ -42,7 +42,8 @@ public class AttributeFilterScreen extends AbstractFilterScreen<AttributeFilterM
     @Override
     protected void addBackgroundWidgets() {
         this.root.addChild(new GuiBackgroundWidget(this, this.leftPos, this.topPos, this.imageWidth, 85));
-        this.root.addChild(new InventorySlotWidget(this.leftPos + 16, this.topPos + 24));
+        this.root.addChild(new InventorySlotWidget(this.leftPos + 15, this.topPos + 23));
+        this.root.addChild(new InventorySlotWidget(this.leftPos + 21, this.topPos + 58));
     }
 
     @Override
@@ -76,11 +77,11 @@ public class AttributeFilterScreen extends AbstractFilterScreen<AttributeFilterM
                 18,
                 this::candidates,
                 this.menu::selectedCandidateIndex,
-                ignored -> this.pressButton(AttributeFilterMenu.BUTTON_NEXT_CANDIDATE)
+                this::changeSelection
         ));
         this.addButton = this.root.addChild(new IconButtonWidget(this.leftPos + 182, this.topPos + 23, GuiTextures.FILTER_ICON_ADD, Component.translatable("codedefinedgui.filter.attribute.add"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED)));
         this.addInvertedButton = this.root.addChild(new IconButtonWidget(this.leftPos + 200, this.topPos + 23, GuiTextures.FILTER_ICON_ADD_INVERTED, Component.translatable("codedefinedgui.filter.attribute.add_inverted"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED)));
-        this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.leftPos + 18, this.topPos + 55, () -> this.menu.state().rules().size()));
+        this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.leftPos + 18, this.topPos + 55, () -> this.menu.state().rules().size(), this.menu::summaryStack));
     }
 
     @Override
@@ -123,6 +124,23 @@ public class AttributeFilterScreen extends AbstractFilterScreen<AttributeFilterM
     private void pressButton(int buttonId) {
         if (this.menu.clickMenuButton(this.minecraft.player, buttonId)) {
             this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, buttonId);
+        }
+    }
+
+    private void changeSelection(int nextIndex) {
+        List<AttributeCandidate> candidates = this.candidates();
+        if (candidates.isEmpty()) {
+            return;
+        }
+
+        int currentIndex = Math.max(0, Math.min(this.menu.selectedCandidateIndex(), candidates.size() - 1));
+        if (nextIndex == Math.floorMod(currentIndex - 1, candidates.size())) {
+            this.pressButton(AttributeFilterMenu.BUTTON_PREVIOUS_CANDIDATE);
+            return;
+        }
+
+        if (nextIndex != currentIndex) {
+            this.pressButton(AttributeFilterMenu.BUTTON_NEXT_CANDIDATE);
         }
     }
 }

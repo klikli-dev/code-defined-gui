@@ -10,12 +10,18 @@ import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
 public class AttributeFilterMenu extends AbstractFilterMenu {
@@ -24,8 +30,9 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
     public static final int BUTTON_MATCH_ALL = 2;
     public static final int BUTTON_DENY = 3;
     public static final int BUTTON_NEXT_CANDIDATE = 4;
-    public static final int BUTTON_ADD_SELECTED = 5;
-    public static final int BUTTON_ADD_SELECTED_INVERTED = 6;
+    public static final int BUTTON_PREVIOUS_CANDIDATE = 5;
+    public static final int BUTTON_ADD_SELECTED = 6;
+    public static final int BUTTON_ADD_SELECTED_INVERTED = 7;
 
     private final DataSlot mode = DataSlot.standalone();
     private final DataSlot selectedCandidateIndex = DataSlot.standalone();
@@ -35,13 +42,15 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
     }
 
     public AttributeFilterMenu(int containerId, Inventory inventory, InteractionHand hand) {
-        super(MenuTypeRegistry.ATTRIBUTE_FILTER.get(), containerId, inventory, hand, 1, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
+        super(MenuTypeRegistry.ATTRIBUTE_FILTER.get(), containerId, inventory, hand, 2, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
 
         AttributeFilterState state = AttributeFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());
         this.selectedCandidateIndex.set(0);
         this.addDataSlot(this.mode);
         this.addDataSlot(this.selectedCandidateIndex);
+
+        this.syncSummarySlot();
     }
 
     public AttributeFilterMode mode() {
@@ -54,6 +63,12 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
 
     public ItemStack referenceStack() {
         return this.ghostStack(0);
+    }
+
+    public ItemStack summaryStack() {
+        ItemStack stack = new ItemStack(Items.NAME_TAG);
+        stack.set(DataComponents.ITEM_NAME, Component.literal("Selected Tags").withStyle(ChatFormatting.RESET, ChatFormatting.BLUE));
+        return stack;
     }
 
     public AttributeFilterState state() {
@@ -116,6 +131,13 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
                 }
                 return true;
             }
+            case BUTTON_PREVIOUS_CANDIDATE -> {
+                List<AttributeCandidate> candidates = this.candidates();
+                if (!candidates.isEmpty()) {
+                    this.selectedCandidateIndex.set(Math.floorMod(this.selectedCandidateIndex() - 1, candidates.size()));
+                }
+                return true;
+            }
             case BUTTON_ADD_SELECTED -> {
                 return this.addSelectedRule(false);
             }
@@ -130,6 +152,10 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
 
     @Override
     public @NotNull ItemStack quickMoveStack(@NotNull Player player, int index) {
+        if (index == 37) {
+            return ItemStack.EMPTY;
+        }
+
         if (index < 36) {
             ItemStack stack = this.slots.get(index).getItem();
             if (!stack.isEmpty()) {
@@ -143,8 +169,36 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
     }
 
     @Override
+    public void clicked(int slotId, int dragType, @NotNull ContainerInput clickTypeIn, @NotNull Player player) {
+        if (slotId == 37) {
+            return;
+        }
+
+        super.clicked(slotId, dragType, clickTypeIn, player);
+    }
+
+    @Override
+    public boolean canDragTo(Slot slotIn) {
+        if (slotIn.index == 37) {
+            return false;
+        }
+
+        return super.canDragTo(slotIn);
+    }
+
+    @Override
+    public boolean canTakeItemForPickAll(@NotNull ItemStack stack, Slot slotIn) {
+        if (slotIn.index == 37) {
+            return false;
+        }
+
+        return super.canTakeItemForPickAll(stack, slotIn);
+    }
+
+    @Override
     protected void onGhostContentsChanged() {
         this.selectedCandidateIndex.set(0);
+        this.syncSummarySlot();
         super.onGhostContentsChanged();
     }
 
@@ -161,6 +215,7 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
     @Override
     protected void addFilterSlots() {
         this.addGhostSlot(0, 16, 24);
+        this.addGhostSlot(1, 22, 59);
     }
 
     private boolean addSelectedRule(boolean inverted) {
@@ -184,10 +239,15 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
 
     private void writeState(AttributeFilterState state) {
         AttributeFilterStateAccessor.INSTANCE.write(this.filterStack(), state);
+        this.syncSummarySlot();
     }
 
     private void saveState() {
         AttributeFilterState state = this.state();
         this.writeState(new AttributeFilterState(this.referenceStack(), this.mode(), state.rules()));
+    }
+
+    private void syncSummarySlot() {
+        this.ghostStorage.setStackInSlot(1, this.summaryStack());
     }
 }

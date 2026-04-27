@@ -11,19 +11,28 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.function.Supplier;
 
 public class AttributeRuleSummaryWidget extends AbstractWidget {
     private final IntSupplier ruleCount;
+    private final Supplier<ItemStack> stack;
 
-    public AttributeRuleSummaryWidget(int x, int y, IntSupplier ruleCount) {
+    public AttributeRuleSummaryWidget(int x, int y, IntSupplier ruleCount, Supplier<ItemStack> stack) {
         super(x, y, GuiTextures.ATTRIBUTE_FILTER_SUMMARY.width(), GuiTextures.ATTRIBUTE_FILTER_SUMMARY.height(), Component.empty());
         this.ruleCount = ruleCount;
+        this.stack = stack;
         this.active = false;
     }
 
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, GuiTextures.ATTRIBUTE_FILTER_SUMMARY.sprite(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        ItemStack itemStack = this.stack.get();
+        if (!itemStack.isEmpty()) {
+            graphics.item(itemStack, this.getX() + 4, this.getY() + 4);
+        }
         int count = this.ruleCount.getAsInt();
         if (count > 0) {
             graphics.text(Minecraft.getInstance().font, Component.literal(Integer.toString(count)), this.getX() + 9, this.getY() + 9, 0xFFFFFF, false);
