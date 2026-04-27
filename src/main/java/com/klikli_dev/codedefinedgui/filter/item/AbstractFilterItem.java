@@ -7,6 +7,7 @@ package com.klikli_dev.codedefinedgui.filter.item;
 import com.klikli_dev.codedefinedgui.filter.FilterDefinition;
 import com.klikli_dev.codedefinedgui.filter.FilterState;
 import java.util.List;
+import java.util.function.Consumer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -17,6 +18,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 
 public abstract class AbstractFilterItem<S extends FilterState> extends Item {
@@ -44,11 +46,12 @@ public abstract class AbstractFilterItem<S extends FilterState> extends Item {
         return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.CONSUME;
     }
 
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag tooltipFlag) {
         List<Component> summary = this.definition.summary(stack, context.registries());
         if (!summary.isEmpty()) {
-            tooltipComponents.add(Component.empty());
-            tooltipComponents.addAll(summary);
+            tooltipAdder.accept(Component.empty());
+            summary.forEach(tooltipAdder);
         }
     }
 
