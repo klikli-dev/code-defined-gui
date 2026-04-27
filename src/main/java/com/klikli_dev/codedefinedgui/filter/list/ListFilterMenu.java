@@ -119,13 +119,13 @@ public class ListFilterMenu extends AbstractFilterMenu {
 
     @Override
     protected int playerInventoryY() {
-        return 122;
+        return 123;
     }
 
     @Override
     protected void addFilterSlots() {
-        int x = 24;
-        int y = 23;
+        int x = 25;
+        int y = 24;
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 9; col++) {
                 this.addGhostSlot(col + row * 9, x + col * 18, y + row * 18);
