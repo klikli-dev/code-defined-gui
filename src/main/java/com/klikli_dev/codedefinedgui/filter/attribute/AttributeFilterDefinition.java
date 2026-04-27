@@ -10,6 +10,7 @@ import com.klikli_dev.codedefinedgui.filter.FilterMatchContext;
 import com.klikli_dev.codedefinedgui.filter.FilterStateAccessor;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -57,7 +58,8 @@ public final class AttributeFilterDefinition implements FilterDefinition<Attribu
             return lines;
         }
 
-        lines.add(Component.translatable("codedefinedgui.filter.attribute.summary.mode", Component.translatable("codedefinedgui.filter.attribute.mode." + state.mode().getSerializedName())));
+        lines.add(Component.translatable("codedefinedgui.filter.attribute.summary.mode", Component.translatable("codedefinedgui.filter.attribute.mode." + state.mode().getSerializedName()))
+                .withStyle(ChatFormatting.GOLD));
         int previewCount = Math.min(state.rules().size(), 4);
         for (int i = 0; i < previewCount; i++) {
             AttributeRule rule = state.rules().get(i);
@@ -68,7 +70,8 @@ public final class AttributeFilterDefinition implements FilterDefinition<Attribu
         }
 
         if (state.rules().size() > previewCount) {
-            lines.add(Component.translatable("codedefinedgui.filter.summary.more", state.rules().size() - previewCount));
+            lines.add(Component.translatable("codedefinedgui.filter.summary.more", state.rules().size() - previewCount)
+                    .withStyle(ChatFormatting.DARK_GRAY));
         }
 
         return lines;

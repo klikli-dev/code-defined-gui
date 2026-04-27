@@ -10,6 +10,7 @@ import com.klikli_dev.codedefinedgui.filter.FilterMatchContext;
 import com.klikli_dev.codedefinedgui.filter.FilterStateAccessor;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
@@ -69,18 +70,20 @@ public final class ListFilterDefinition implements FilterDefinition<ListFilterSt
             return lines;
         }
 
-        lines.add(Component.translatable("codedefinedgui.filter.list.summary.mode", Component.translatable("codedefinedgui.filter.list.mode." + state.mode().getSerializedName())));
+        lines.add(Component.translatable("codedefinedgui.filter.list.summary.mode", Component.translatable("codedefinedgui.filter.list.mode." + state.mode().getSerializedName()))
+                .withStyle(ChatFormatting.GOLD));
         lines.add(Component.translatable(
                 state.respectDataComponents() ? "codedefinedgui.filter.list.summary.respect_data" : "codedefinedgui.filter.list.summary.ignore_data"
-        ));
+        ).withStyle(ChatFormatting.GRAY));
 
         int previewCount = Math.min(entries.size(), 4);
         for (int i = 0; i < previewCount; i++) {
-            lines.add(Component.literal("- ").append(entries.get(i).getHoverName()));
+            lines.add(Component.literal("- ").append(entries.get(i).getHoverName()).withStyle(ChatFormatting.GRAY));
         }
 
         if (entries.size() > previewCount) {
-            lines.add(Component.translatable("codedefinedgui.filter.summary.more", entries.size() - previewCount));
+            lines.add(Component.translatable("codedefinedgui.filter.summary.more", entries.size() - previewCount)
+                    .withStyle(ChatFormatting.DARK_GRAY));
         }
 
         return lines;
