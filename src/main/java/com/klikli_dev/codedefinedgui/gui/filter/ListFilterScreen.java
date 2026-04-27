@@ -34,7 +34,7 @@ public class ListFilterScreen extends AbstractFilterScreen<ListFilterMenu> {
         this.root.addChild(new GuiBackgroundWidget(this, this.leftPos, this.topPos, this.imageWidth, 99));
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 9; col++) {
-                this.root.addChild(new InventorySlotWidget(this.leftPos + 25 + col * 18, this.topPos + 24 + row * 18));
+                this.root.addChild(new InventorySlotWidget(this.leftPos + 24 + col * 18, this.topPos + 23 + row * 18));
             }
         }
     }

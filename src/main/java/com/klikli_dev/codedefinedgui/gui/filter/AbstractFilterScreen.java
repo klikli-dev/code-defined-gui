@@ -119,12 +119,12 @@ public abstract class AbstractFilterScreen<M extends AbstractFilterMenu> extends
 
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
-                this.root.addChild(new InventorySlotWidget(inventoryLeft + 7 + col * 18, inventoryTop + 19 + row * 18));
+                this.root.addChild(new InventorySlotWidget(inventoryLeft + 7 + col * 18, inventoryTop + 18 + row * 18));
             }
         }
 
         for (int col = 0; col < 9; col++) {
-            this.root.addChild(new InventorySlotWidget(inventoryLeft + 7 + col * 18, inventoryTop + 77));
+            this.root.addChild(new InventorySlotWidget(inventoryLeft + 7 + col * 18, inventoryTop + 76));
         }
     }
 
