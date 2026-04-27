@@ -155,7 +155,7 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
 
     @Override
     protected int playerInventoryY() {
-        return 107;
+        return 108;
     }
 
     @Override
