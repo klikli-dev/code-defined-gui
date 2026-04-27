@@ -25,7 +25,7 @@ public abstract class AbstractGuiTextureWidget extends AbstractWidget implements
 
     @Override
     protected void extractWidgetRenderState(@NonNull GuiGraphicsExtractor guiGraphicsExtractor, int mouseX, int mouseY, float a) {
-        this.texture.extractRenderState(guiGraphicsExtractor, this.getX(), this.getY());
+        this.texture.extractRenderState(guiGraphicsExtractor, this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 
     @Override

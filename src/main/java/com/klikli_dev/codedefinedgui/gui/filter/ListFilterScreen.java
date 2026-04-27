@@ -31,7 +31,7 @@ public class ListFilterScreen extends AbstractFilterScreen<ListFilterMenu> {
 
     @Override
     protected void addBackgroundWidgets() {
-        this.root.addChild(new GuiBackgroundWidget(this, this.leftPos, this.topPos, 214, 99));
+        this.root.addChild(new GuiBackgroundWidget(this, this.leftPos, this.topPos, this.imageWidth, 99));
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 9; col++) {
                 this.root.addChild(new InventorySlotWidget(this.leftPos + 23 + col * 18, this.topPos + 22 + row * 18));

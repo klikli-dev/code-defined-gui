@@ -41,7 +41,7 @@ public class AttributeFilterScreen extends AbstractFilterScreen<AttributeFilterM
 
     @Override
     protected void addBackgroundWidgets() {
-        this.root.addChild(new GuiBackgroundWidget(this, this.leftPos, this.topPos, 241, 85));
+        this.root.addChild(new GuiBackgroundWidget(this, this.leftPos, this.topPos, this.imageWidth, 85));
         this.root.addChild(new InventorySlotWidget(this.leftPos + 16, this.topPos + 24));
     }
 
