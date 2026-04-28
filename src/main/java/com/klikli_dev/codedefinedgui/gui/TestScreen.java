@@ -37,6 +37,7 @@ public class TestScreen extends Screen implements GuiHost {
         this.root.addChild(new InventorySlotWidget(this.leftPos + 44, this.topPos + 18));
         this.root.addChild(new CraftingArrowWidget(this.leftPos + 68, this.topPos + 20));
         this.root.addChild(new CraftingResultSlotWidget(this.leftPos + 94, this.topPos + 14));
+        this.root.addChild(new FrameWidget(this.leftPos + 120, this.topPos + 18, 40, 24));
 
         this.root.syncBoundsToHost();
     }
