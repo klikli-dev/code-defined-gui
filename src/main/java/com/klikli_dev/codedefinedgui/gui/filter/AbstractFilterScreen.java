@@ -4,19 +4,20 @@
 
 package com.klikli_dev.codedefinedgui.gui.filter;
 
-import com.klikli_dev.codedefinedgui.filter.menu.AbstractFilterMenu;
-import com.klikli_dev.codedefinedgui.gui.GuiHost;
-import com.klikli_dev.codedefinedgui.gui.GuiBackgroundWidget;
-import com.klikli_dev.codedefinedgui.gui.GuiRootWidget;
-import com.klikli_dev.codedefinedgui.gui.IconButtonWidget;
-import com.klikli_dev.codedefinedgui.gui.InventorySlotWidget;
+import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
+import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
+import com.klikli_dev.codedefinedgui.gui.core.GuiRootWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.TextureWidget;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiTextures;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
-public abstract class AbstractFilterScreen<M extends AbstractFilterMenu> extends AbstractContainerScreen<M> implements GuiHost {
+public abstract class AbstractFilterScreen<M extends FilterMenu> extends AbstractContainerScreen<M> implements GuiHost {
     protected final GuiRootWidget root;
     protected IconButtonWidget resetButton;
     protected IconButtonWidget confirmButton;
@@ -134,12 +135,12 @@ public abstract class AbstractFilterScreen<M extends AbstractFilterMenu> extends
         int inventoryTop = this.playerInventoryTop();
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
-                this.root.addChild(new InventorySlotWidget(inventoryLeft + 7 + col * 18, inventoryTop + 18 + row * 18));
+                this.root.addChild(new TextureWidget(inventoryLeft + 7 + col * 18, inventoryTop + 18 + row * 18, GuiTextures.INVENTORY_SLOT));
             }
         }
 
         for (int col = 0; col < 9; col++) {
-            this.root.addChild(new InventorySlotWidget(inventoryLeft + 7 + col * 18, inventoryTop + 76));
+            this.root.addChild(new TextureWidget(inventoryLeft + 7 + col * 18, inventoryTop + 76, GuiTextures.INVENTORY_SLOT));
         }
     }
 

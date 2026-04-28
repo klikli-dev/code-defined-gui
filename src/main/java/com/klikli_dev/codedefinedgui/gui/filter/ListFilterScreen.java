@@ -5,11 +5,11 @@
 package com.klikli_dev.codedefinedgui.gui.filter;
 
 import com.klikli_dev.codedefinedgui.filter.list.ListFilterMenu;
-import com.klikli_dev.codedefinedgui.gui.FilterIndicatorWidget;
-import com.klikli_dev.codedefinedgui.gui.GuiBackgroundWidget;
-import com.klikli_dev.codedefinedgui.gui.GuiTextures;
-import com.klikli_dev.codedefinedgui.gui.IconButtonWidget;
-import com.klikli_dev.codedefinedgui.gui.InventorySlotWidget;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiTextures;
+import com.klikli_dev.codedefinedgui.gui.widget.FilterIndicatorWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.TextureWidget;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -38,7 +38,7 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
     protected void addFilterSlotWidgets() {
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 9; col++) {
-                this.root.addChild(new InventorySlotWidget(this.leftPos + 24 + col * 18, this.topPos + 23 + row * 18));
+                this.root.addChild(new TextureWidget(this.leftPos + 24 + col * 18, this.topPos + 23 + row * 18, GuiTextures.INVENTORY_SLOT));
             }
         }
     }

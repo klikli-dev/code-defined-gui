@@ -4,7 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
-import com.klikli_dev.codedefinedgui.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.infrastructure.CodeDefinedGui;
 import java.util.List;
 import java.util.stream.Collectors;
 import net.minecraft.core.HolderLookup;

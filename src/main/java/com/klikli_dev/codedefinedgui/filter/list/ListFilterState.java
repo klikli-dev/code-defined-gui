@@ -4,7 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.filter.list;
 
-import com.klikli_dev.codedefinedgui.filter.FilterState;
+import com.klikli_dev.codedefinedgui.filter.core.FilterState;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
