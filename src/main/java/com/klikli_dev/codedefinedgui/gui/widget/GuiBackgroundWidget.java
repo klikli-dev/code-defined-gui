@@ -2,11 +2,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui;
+package com.klikli_dev.codedefinedgui.gui.widget;
 
+import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiTextures;
 import org.jspecify.annotations.Nullable;
 
-public class GuiBackgroundWidget extends AbstractGuiTextureWidget {
+public class GuiBackgroundWidget extends TextureWidget {
     private final GuiHost host;
     private final @Nullable Integer xOverride;
     private final @Nullable Integer yOverride;

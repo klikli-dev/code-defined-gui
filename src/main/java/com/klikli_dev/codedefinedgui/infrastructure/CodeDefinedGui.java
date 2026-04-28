@@ -6,6 +6,7 @@ package com.klikli_dev.codedefinedgui.infrastructure;
 
 import com.klikli_dev.codedefinedgui.command.CdgCommand;
 import com.klikli_dev.codedefinedgui.infrastructure.datagen.DataGenerators;
+import com.klikli_dev.codedefinedgui.infrastructure.Config;
 import com.klikli_dev.codedefinedgui.filter.attribute.ItemAttributes;
 import com.klikli_dev.codedefinedgui.infrastructure.network.Networking;
 import com.klikli_dev.codedefinedgui.infrastructure.registry.DataComponentRegistry;

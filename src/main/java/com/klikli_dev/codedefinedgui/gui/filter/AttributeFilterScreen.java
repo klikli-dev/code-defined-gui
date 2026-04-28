@@ -8,13 +8,13 @@ import com.klikli_dev.codedefinedgui.filter.attribute.AttributeCandidate;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterDefinition;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMenu;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMode;
-import com.klikli_dev.codedefinedgui.gui.AttributeRuleSummaryWidget;
-import com.klikli_dev.codedefinedgui.gui.AttributeSelectionWidget;
-import com.klikli_dev.codedefinedgui.gui.FilterIndicatorWidget;
-import com.klikli_dev.codedefinedgui.gui.GuiBackgroundWidget;
-import com.klikli_dev.codedefinedgui.gui.GuiTextures;
-import com.klikli_dev.codedefinedgui.gui.IconButtonWidget;
-import com.klikli_dev.codedefinedgui.gui.InventorySlotWidget;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiTextures;
+import com.klikli_dev.codedefinedgui.gui.widget.AttributeRuleSummaryWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.AttributeSelectionWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.FilterIndicatorWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.TextureWidget;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -46,8 +46,8 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
 
     @Override
     protected void addFilterSlotWidgets() {
-        this.root.addChild(new InventorySlotWidget(this.leftPos + 15, this.topPos + 23));
-        this.root.addChild(new InventorySlotWidget(this.leftPos + 21, this.topPos + 58));
+        this.root.addChild(new TextureWidget(this.leftPos + 15, this.topPos + 23, GuiTextures.INVENTORY_SLOT));
+        this.root.addChild(new TextureWidget(this.leftPos + 21, this.topPos + 58, GuiTextures.INVENTORY_SLOT));
     }
 
     @Override

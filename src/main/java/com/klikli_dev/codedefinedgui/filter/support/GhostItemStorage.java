@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.filter.menu;
+package com.klikli_dev.codedefinedgui.filter.support;
 
 import java.util.Objects;
 import net.minecraft.core.NonNullList;

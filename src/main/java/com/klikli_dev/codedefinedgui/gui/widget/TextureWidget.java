@@ -2,25 +2,23 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui;
+package com.klikli_dev.codedefinedgui.gui.widget;
 
+import com.klikli_dev.codedefinedgui.gui.core.GuiSyncable;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiTexture;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import org.jspecify.annotations.NonNull;
 
-public abstract class AbstractGuiTextureWidget extends AbstractWidget implements GuiSyncable {
+public class TextureWidget extends AbstractWidget implements GuiSyncable {
     private final GuiTexture texture;
 
-    protected AbstractGuiTextureWidget(int x, int y, GuiTexture texture) {
+    public TextureWidget(int x, int y, GuiTexture texture) {
         super(x, y, texture.width(), texture.height(), Component.empty());
         this.texture = texture;
         this.active = false;
-    }
-
-    protected GuiTexture texture() {
-        return this.texture;
     }
 
     @Override

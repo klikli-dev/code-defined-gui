@@ -2,8 +2,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui;
+package com.klikli_dev.codedefinedgui.gui.widget;
 
+import com.klikli_dev.codedefinedgui.gui.texture.GuiTextures;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeCandidate;
 import java.util.List;
 import java.util.function.IntConsumer;

@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.filter.menu;
+package com.klikli_dev.codedefinedgui.filter.core;
 
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.world.Container;
@@ -19,7 +19,10 @@ import net.minecraft.world.item.component.ItemContainerContents;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class AbstractFilterMenu extends AbstractContainerMenu {
+import com.klikli_dev.codedefinedgui.filter.support.GhostItemStorage;
+import com.klikli_dev.codedefinedgui.filter.support.GhostResourceHandlerSlot;
+
+public abstract class FilterMenu extends AbstractContainerMenu {
     private static final int PLAYER_SLOT_COUNT = 36;
     private static final int OFFHAND_SLOT = 40;
 
@@ -31,7 +34,7 @@ public abstract class AbstractFilterMenu extends AbstractContainerMenu {
     private final int ghostSlots;
     private final int lockedPlayerSlotId;
 
-    protected AbstractFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, int ghostSlots, DataComponentType<ItemContainerContents> ghostComponent) {
+    protected FilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, int ghostSlots, DataComponentType<ItemContainerContents> ghostComponent) {
         super(menuType, containerId);
         this.player = inventory.player;
         this.heldSlot = heldSlot(inventory.player, hand);

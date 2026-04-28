@@ -4,12 +4,12 @@
 
 package com.klikli_dev.codedefinedgui.filter.list;
 
-import com.klikli_dev.codedefinedgui.filter.item.AbstractFilterItem;
+import com.klikli_dev.codedefinedgui.filter.core.FilterItem;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 
-public class ListFilterItem extends AbstractFilterItem<ListFilterState> {
+public class ListFilterItem extends FilterItem<ListFilterState> {
     public ListFilterItem(Properties properties) {
         super(properties, ListFilterDefinition.INSTANCE);
     }

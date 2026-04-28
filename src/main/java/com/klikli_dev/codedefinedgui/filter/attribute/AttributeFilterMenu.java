@@ -4,7 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
-import com.klikli_dev.codedefinedgui.filter.menu.AbstractFilterMenu;
+import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
 import com.klikli_dev.codedefinedgui.infrastructure.registry.DataComponentRegistry;
 import com.klikli_dev.codedefinedgui.infrastructure.registry.MenuTypeRegistry;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
-public class AttributeFilterMenu extends AbstractFilterMenu {
+public class AttributeFilterMenu extends FilterMenu {
     public static final int BUTTON_RESET = 0;
     public static final int BUTTON_MATCH_ANY = 1;
     public static final int BUTTON_MATCH_ALL = 2;

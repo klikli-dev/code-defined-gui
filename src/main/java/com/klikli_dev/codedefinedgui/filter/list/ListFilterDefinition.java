@@ -4,10 +4,10 @@
 
 package com.klikli_dev.codedefinedgui.filter.list;
 
-import com.klikli_dev.codedefinedgui.CodeDefinedGui;
-import com.klikli_dev.codedefinedgui.filter.FilterDefinition;
-import com.klikli_dev.codedefinedgui.filter.FilterMatchContext;
-import com.klikli_dev.codedefinedgui.filter.FilterStateAccessor;
+import com.klikli_dev.codedefinedgui.infrastructure.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.filter.core.FilterDefinition;
+import com.klikli_dev.codedefinedgui.filter.core.FilterMatchContext;
+import com.klikli_dev.codedefinedgui.filter.core.FilterStateAccessor;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.ChatFormatting;

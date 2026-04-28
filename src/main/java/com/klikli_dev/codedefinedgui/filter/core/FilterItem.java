@@ -2,10 +2,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.filter.item;
+package com.klikli_dev.codedefinedgui.filter.core;
 
-import com.klikli_dev.codedefinedgui.filter.FilterDefinition;
-import com.klikli_dev.codedefinedgui.filter.FilterState;
 import java.util.List;
 import java.util.function.Consumer;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -22,10 +20,10 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 
-public abstract class AbstractFilterItem<S extends FilterState> extends Item {
+public abstract class FilterItem<S extends FilterState> extends Item {
     private final FilterDefinition<S> definition;
 
-    protected AbstractFilterItem(Properties properties, FilterDefinition<S> definition) {
+    protected FilterItem(Properties properties, FilterDefinition<S> definition) {
         super(properties);
         this.definition = definition;
     }
