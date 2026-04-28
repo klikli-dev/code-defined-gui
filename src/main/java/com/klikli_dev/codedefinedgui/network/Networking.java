@@ -5,6 +5,7 @@
 package com.klikli_dev.codedefinedgui.network;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.network.message.OpenTestScreenMessage;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -15,10 +16,10 @@ public final class Networking {
 
     public static void register(RegisterPayloadHandlersEvent event) {
         event.registrar(CodeDefinedGui.MODID)
-                .playToClient(OpenTestScreenPayload.TYPE, OpenTestScreenPayload.STREAM_CODEC);
+                .playToClient(OpenTestScreenMessage.TYPE, OpenTestScreenMessage.STREAM_CODEC, MessageHandler::handle);
     }
 
-    public static void sendTo(ServerPlayer player, OpenTestScreenPayload payload) {
-        PacketDistributor.sendToPlayer(player, payload);
+    public static <T extends Message> void sendTo(ServerPlayer player, T message) {
+        PacketDistributor.sendToPlayer(player, message);
     }
 }

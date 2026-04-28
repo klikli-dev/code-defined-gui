@@ -6,7 +6,11 @@ package com.klikli_dev.codedefinedgui;
 
 import com.klikli_dev.codedefinedgui.command.CdgCommand;
 import com.klikli_dev.codedefinedgui.datagen.DataGenerators;
+import com.klikli_dev.codedefinedgui.filter.attribute.ItemAttributes;
 import com.klikli_dev.codedefinedgui.network.Networking;
+import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
+import com.klikli_dev.codedefinedgui.registry.ItemRegistry;
+import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -24,6 +28,11 @@ public class CodeDefinedGui {
 
     public CodeDefinedGui(IEventBus modEventBus, ModContainer modContainer) {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+        ItemRegistry.ITEMS.register(modEventBus);
+        MenuTypeRegistry.MENU_TYPES.register(modEventBus);
+        DataComponentRegistry.DATA_COMPONENTS.register(modEventBus);
+        ItemAttributes.bootstrap();
 
         modEventBus.addListener(this::onCommonSetupEvent);
         modEventBus.addListener(DataGenerators::onGatherData);

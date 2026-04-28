@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.command;
 
 import com.klikli_dev.codedefinedgui.network.Networking;
-import com.klikli_dev.codedefinedgui.network.OpenTestScreenPayload;
+import com.klikli_dev.codedefinedgui.network.message.OpenTestScreenMessage;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
@@ -38,7 +38,7 @@ public final class CdgCommand {
             return 0;
         }
 
-        Networking.sendTo(player, new OpenTestScreenPayload());
+        Networking.sendTo(player, new OpenTestScreenMessage());
         source.sendSuccess(() -> Component.literal("Opening test screen."), false);
         return 1;
     }
