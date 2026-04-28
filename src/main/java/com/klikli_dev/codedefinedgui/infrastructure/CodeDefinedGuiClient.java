@@ -2,13 +2,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui;
+package com.klikli_dev.codedefinedgui.infrastructure;
 
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMenu;
 import com.klikli_dev.codedefinedgui.filter.list.ListFilterMenu;
 import com.klikli_dev.codedefinedgui.gui.filter.AttributeFilterScreen;
 import com.klikli_dev.codedefinedgui.gui.filter.ListFilterScreen;
-import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
+import com.klikli_dev.codedefinedgui.infrastructure.registry.MenuTypeRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.api.distmarker.Dist;

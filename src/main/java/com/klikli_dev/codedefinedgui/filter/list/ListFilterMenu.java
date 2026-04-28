@@ -5,8 +5,8 @@
 package com.klikli_dev.codedefinedgui.filter.list;
 
 import com.klikli_dev.codedefinedgui.filter.menu.AbstractFilterMenu;
-import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
-import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
+import com.klikli_dev.codedefinedgui.infrastructure.registry.DataComponentRegistry;
+import com.klikli_dev.codedefinedgui.infrastructure.registry.MenuTypeRegistry;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;

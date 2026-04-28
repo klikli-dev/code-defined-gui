@@ -2,9 +2,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.registry;
+package com.klikli_dev.codedefinedgui.infrastructure.registry;
 
-import com.klikli_dev.codedefinedgui.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.infrastructure.CodeDefinedGui;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMenu;
 import com.klikli_dev.codedefinedgui.filter.list.ListFilterMenu;
 import net.minecraft.core.registries.Registries;

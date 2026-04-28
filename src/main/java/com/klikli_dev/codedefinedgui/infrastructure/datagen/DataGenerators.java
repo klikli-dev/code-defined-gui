@@ -2,10 +2,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.datagen;
+package com.klikli_dev.codedefinedgui.infrastructure.datagen;
 
-import com.klikli_dev.codedefinedgui.datagen.lang.ENUSLanguageProvider;
-import com.klikli_dev.codedefinedgui.datagen.model.ModelProvider;
+import com.klikli_dev.codedefinedgui.infrastructure.datagen.lang.ENUSLanguageProvider;
+import com.klikli_dev.codedefinedgui.infrastructure.datagen.model.ModelProvider;
 import net.minecraft.data.DataGenerator;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 

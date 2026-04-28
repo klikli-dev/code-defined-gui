@@ -5,8 +5,8 @@
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.filter.menu.AbstractFilterMenu;
-import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
-import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
+import com.klikli_dev.codedefinedgui.infrastructure.registry.DataComponentRegistry;
+import com.klikli_dev.codedefinedgui.infrastructure.registry.MenuTypeRegistry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

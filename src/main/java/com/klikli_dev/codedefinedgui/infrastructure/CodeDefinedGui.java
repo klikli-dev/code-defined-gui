@@ -2,15 +2,15 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui;
+package com.klikli_dev.codedefinedgui.infrastructure;
 
 import com.klikli_dev.codedefinedgui.command.CdgCommand;
-import com.klikli_dev.codedefinedgui.datagen.DataGenerators;
+import com.klikli_dev.codedefinedgui.infrastructure.datagen.DataGenerators;
 import com.klikli_dev.codedefinedgui.filter.attribute.ItemAttributes;
-import com.klikli_dev.codedefinedgui.network.Networking;
-import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
-import com.klikli_dev.codedefinedgui.registry.ItemRegistry;
-import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
+import com.klikli_dev.codedefinedgui.infrastructure.network.Networking;
+import com.klikli_dev.codedefinedgui.infrastructure.registry.DataComponentRegistry;
+import com.klikli_dev.codedefinedgui.infrastructure.registry.ItemRegistry;
+import com.klikli_dev.codedefinedgui.infrastructure.registry.MenuTypeRegistry;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;

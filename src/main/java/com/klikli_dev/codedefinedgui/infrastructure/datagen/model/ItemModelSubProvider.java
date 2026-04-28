@@ -2,9 +2,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.datagen.model;
+package com.klikli_dev.codedefinedgui.infrastructure.datagen.model;
 
-import com.klikli_dev.codedefinedgui.registry.ItemRegistry;
+import com.klikli_dev.codedefinedgui.infrastructure.registry.ItemRegistry;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplates;
 

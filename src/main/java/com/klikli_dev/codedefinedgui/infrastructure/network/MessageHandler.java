@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.network;
+package com.klikli_dev.codedefinedgui.infrastructure.network;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
