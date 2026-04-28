@@ -12,6 +12,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,11 +28,15 @@ public class ListFilterMenu extends AbstractFilterMenu {
     private final DataSlot respectDataComponents = DataSlot.standalone();
 
     public ListFilterMenu(int containerId, Inventory inventory, RegistryFriendlyByteBuf buffer) {
-        this(containerId, inventory, buffer.readEnum(InteractionHand.class));
+        this(MenuTypeRegistry.LIST_FILTER.get(), containerId, inventory, buffer.readEnum(InteractionHand.class));
     }
 
     public ListFilterMenu(int containerId, Inventory inventory, InteractionHand hand) {
-        super(MenuTypeRegistry.LIST_FILTER.get(), containerId, inventory, hand, FILTER_SLOTS, DataComponentRegistry.LIST_FILTER_CONTENTS.get());
+        this(MenuTypeRegistry.LIST_FILTER.get(), containerId, inventory, hand);
+    }
+
+    protected ListFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand) {
+        super(menuType, containerId, inventory, hand, FILTER_SLOTS, DataComponentRegistry.LIST_FILTER_CONTENTS.get());
 
         ListFilterState state = ListFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());

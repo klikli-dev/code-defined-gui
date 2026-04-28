@@ -19,6 +19,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -38,11 +39,15 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
     private final DataSlot selectedCandidateIndex = DataSlot.standalone();
 
     public AttributeFilterMenu(int containerId, Inventory inventory, RegistryFriendlyByteBuf buffer) {
-        this(containerId, inventory, buffer.readEnum(InteractionHand.class));
+        this(MenuTypeRegistry.ATTRIBUTE_FILTER.get(), containerId, inventory, buffer.readEnum(InteractionHand.class));
     }
 
     public AttributeFilterMenu(int containerId, Inventory inventory, InteractionHand hand) {
-        super(MenuTypeRegistry.ATTRIBUTE_FILTER.get(), containerId, inventory, hand, 2, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
+        this(MenuTypeRegistry.ATTRIBUTE_FILTER.get(), containerId, inventory, hand);
+    }
+
+    protected AttributeFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand) {
+        super(menuType, containerId, inventory, hand, 2, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
 
         AttributeFilterState state = AttributeFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());
@@ -81,7 +86,7 @@ public class AttributeFilterMenu extends AbstractFilterMenu {
         }
 
         List<AttributeCandidate> candidates = new ArrayList<>();
-        for (ItemAttributeType type : CdgItemAttributes.all()) {
+        for (ItemAttributeType type : ItemAttributes.all()) {
             candidates.addAll(type.collectCandidates(this.referenceStack(), this.player.level()));
         }
 

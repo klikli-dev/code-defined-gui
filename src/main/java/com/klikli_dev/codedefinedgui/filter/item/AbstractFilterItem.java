@@ -8,6 +8,7 @@ import com.klikli_dev.codedefinedgui.filter.FilterDefinition;
 import com.klikli_dev.codedefinedgui.filter.FilterState;
 import java.util.List;
 import java.util.function.Consumer;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -40,7 +41,7 @@ public abstract class AbstractFilterItem<S extends FilterState> extends Item {
             serverPlayer.openMenu(new SimpleMenuProvider(
                     (containerId, inventory, menuPlayer) -> this.createMenu(containerId, inventory, hand),
                     stack.getHoverName()
-            ), buffer -> buffer.writeEnum(hand));
+            ), buffer -> this.writeMenuData(buffer, player, hand, stack));
         }
 
         return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.CONSUME;
@@ -55,5 +56,19 @@ public abstract class AbstractFilterItem<S extends FilterState> extends Item {
         }
     }
 
+    /**
+     * Writes client menu initialization data.
+     * <p>
+     * Subclasses can override this to send additional data for custom menu and screen implementations.
+     */
+    protected void writeMenuData(RegistryFriendlyByteBuf buffer, Player player, InteractionHand hand, ItemStack stack) {
+        buffer.writeEnum(hand);
+    }
+
+    /**
+     * Creates the server-side menu for this filter item.
+     * <p>
+     * Subclasses may return custom menu subclasses and pair them with their own menu type and client screen registration.
+     */
     protected abstract AbstractContainerMenu createMenu(int containerId, net.minecraft.world.entity.player.Inventory inventory, InteractionHand hand);
 }

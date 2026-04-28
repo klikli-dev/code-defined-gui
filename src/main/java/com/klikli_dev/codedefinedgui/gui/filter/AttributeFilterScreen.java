@@ -21,7 +21,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
-public class AttributeFilterScreen extends AbstractFilterScreen<AttributeFilterMenu> {
+public class AttributeFilterScreen<M extends AttributeFilterMenu> extends AbstractFilterScreen<M> {
     private IconButtonWidget matchAnyButton;
     private IconButtonWidget matchAllButton;
     private IconButtonWidget denyButton;
@@ -33,7 +33,7 @@ public class AttributeFilterScreen extends AbstractFilterScreen<AttributeFilterM
     private AttributeSelectionWidget selectionWidget;
     private AttributeRuleSummaryWidget summaryWidget;
 
-    public AttributeFilterScreen(AttributeFilterMenu menu, Inventory playerInventory, Component title) {
+    public AttributeFilterScreen(M menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title, 241, 197);
         this.titleLabelX = 116 - this.font.width(title) / 2;
         this.titleLabelY = 6;
@@ -42,6 +42,10 @@ public class AttributeFilterScreen extends AbstractFilterScreen<AttributeFilterM
     @Override
     protected void addBackgroundWidgets() {
         this.root.addChild(new GuiBackgroundWidget(this, this.leftPos, this.topPos, this.imageWidth, 85));
+    }
+
+    @Override
+    protected void addFilterSlotWidgets() {
         this.root.addChild(new InventorySlotWidget(this.leftPos + 15, this.topPos + 23));
         this.root.addChild(new InventorySlotWidget(this.leftPos + 21, this.topPos + 58));
     }

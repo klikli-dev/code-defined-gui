@@ -13,7 +13,7 @@ import com.klikli_dev.codedefinedgui.gui.InventorySlotWidget;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
-public class ListFilterScreen extends AbstractFilterScreen<ListFilterMenu> {
+public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterScreen<M> {
     private IconButtonWidget allowButton;
     private IconButtonWidget denyButton;
     private IconButtonWidget respectDataButton;
@@ -23,7 +23,7 @@ public class ListFilterScreen extends AbstractFilterScreen<ListFilterMenu> {
     private FilterIndicatorWidget respectDataIndicator;
     private FilterIndicatorWidget ignoreDataIndicator;
 
-    public ListFilterScreen(ListFilterMenu menu, Inventory playerInventory, Component title) {
+    public ListFilterScreen(M menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title, 214, 211);
         this.titleLabelX = 103 - this.font.width(title) / 2;
         this.titleLabelY = 6;
@@ -32,6 +32,10 @@ public class ListFilterScreen extends AbstractFilterScreen<ListFilterMenu> {
     @Override
     protected void addBackgroundWidgets() {
         this.root.addChild(new GuiBackgroundWidget(this, this.leftPos, this.topPos, this.imageWidth, 99));
+    }
+
+    @Override
+    protected void addFilterSlotWidgets() {
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 9; col++) {
                 this.root.addChild(new InventorySlotWidget(this.leftPos + 24 + col * 18, this.topPos + 23 + row * 18));

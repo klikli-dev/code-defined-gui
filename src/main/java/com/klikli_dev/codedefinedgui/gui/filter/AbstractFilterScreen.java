@@ -34,7 +34,8 @@ public abstract class AbstractFilterScreen<M extends AbstractFilterMenu> extends
         this.addRenderableWidget(this.root);
         this.root.clearChildren();
         this.addBackgroundWidgets();
-        this.addPlayerInventoryWidgets();
+        this.addPlayerInventoryBackgroundWidgets();
+        this.addStaticWidgets();
         this.addScreenWidgets();
         this.root.syncWithHost();
         this.refreshWidgetState();
@@ -112,11 +113,25 @@ public abstract class AbstractFilterScreen<M extends AbstractFilterMenu> extends
         return this.topPos + this.imageHeight - 107;
     }
 
-    protected void addPlayerInventoryWidgets() {
+    /**
+     * Adds the player inventory background widgets.
+     * <p>
+     * Override to replace or suppress the default background while keeping the inventory slot widgets.
+     */
+    protected void addPlayerInventoryBackgroundWidgets() {
         int inventoryLeft = this.centeredPlayerInventoryLeft();
         int inventoryTop = this.playerInventoryTop();
         this.root.addChild(new GuiBackgroundWidget(this, inventoryLeft, inventoryTop, 176, 108));
+    }
 
+    protected final void addStaticWidgets() {
+        this.addPlayerInventorySlotWidgets();
+        this.addFilterSlotWidgets();
+    }
+
+    private void addPlayerInventorySlotWidgets() {
+        int inventoryLeft = this.centeredPlayerInventoryLeft();
+        int inventoryTop = this.playerInventoryTop();
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
                 this.root.addChild(new InventorySlotWidget(inventoryLeft + 7 + col * 18, inventoryTop + 18 + row * 18));
@@ -128,8 +143,22 @@ public abstract class AbstractFilterScreen<M extends AbstractFilterMenu> extends
         }
     }
 
-    protected abstract void addBackgroundWidgets();
+    /**
+     * Adds optional screen background widgets before inventory and filter slot widgets are added.
+     */
+    protected void addBackgroundWidgets() {
+    }
 
+    /**
+     * Adds the visual widgets for the filter's own slots.
+     * <p>
+     * Player inventory slot widgets are always added by the base screen.
+     */
+    protected abstract void addFilterSlotWidgets();
+
+    /**
+     * Adds interactive screen widgets such as buttons, indicators and custom controls.
+     */
     protected abstract void addScreenWidgets();
 
     protected abstract void refreshWidgetState();
