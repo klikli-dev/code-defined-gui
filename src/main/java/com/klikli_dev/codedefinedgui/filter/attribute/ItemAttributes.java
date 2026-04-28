@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 import net.minecraft.resources.Identifier;
 
-public final class CdgItemAttributes {
+public final class ItemAttributes {
     private static final Map<Identifier, ItemAttributeType> TYPES = new LinkedHashMap<>();
 
     static {
@@ -22,7 +22,7 @@ public final class CdgItemAttributes {
         register(new ItemNameAttributeType());
     }
 
-    private CdgItemAttributes() {
+    private ItemAttributes() {
     }
 
     public static void bootstrap() {

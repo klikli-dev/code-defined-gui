@@ -6,7 +6,7 @@ package com.klikli_dev.codedefinedgui;
 
 import com.klikli_dev.codedefinedgui.command.CdgCommand;
 import com.klikli_dev.codedefinedgui.datagen.DataGenerators;
-import com.klikli_dev.codedefinedgui.filter.attribute.CdgItemAttributes;
+import com.klikli_dev.codedefinedgui.filter.attribute.ItemAttributes;
 import com.klikli_dev.codedefinedgui.network.Networking;
 import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
 import com.klikli_dev.codedefinedgui.registry.ItemRegistry;
@@ -32,7 +32,7 @@ public class CodeDefinedGui {
         ItemRegistry.ITEMS.register(modEventBus);
         MenuTypeRegistry.MENU_TYPES.register(modEventBus);
         DataComponentRegistry.DATA_COMPONENTS.register(modEventBus);
-        CdgItemAttributes.bootstrap();
+        ItemAttributes.bootstrap();
 
         modEventBus.addListener(this::onCommonSetupEvent);
         modEventBus.addListener(DataGenerators::onGatherData);

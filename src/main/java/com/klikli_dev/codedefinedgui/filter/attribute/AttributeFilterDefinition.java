@@ -63,7 +63,7 @@ public final class AttributeFilterDefinition implements FilterDefinition<Attribu
         int previewCount = Math.min(state.rules().size(), 4);
         for (int i = 0; i < previewCount; i++) {
             AttributeRule rule = state.rules().get(i);
-            Component description = CdgItemAttributes.get(rule.typeId())
+            Component description = ItemAttributes.get(rule.typeId())
                     .map(type -> type.describe(rule.payload(), registries, rule.inverted()))
                     .orElse(Component.literal(rule.typeId().toString()));
             lines.add(Component.literal("- ").append(description));
@@ -78,7 +78,7 @@ public final class AttributeFilterDefinition implements FilterDefinition<Attribu
     }
 
     private boolean ruleMatches(AttributeRule rule, ItemStack candidate, FilterMatchContext context) {
-        boolean matches = CdgItemAttributes.get(rule.typeId())
+        boolean matches = ItemAttributes.get(rule.typeId())
                 .map(type -> type.matches(candidate, context.level(), rule.payload()))
                 .orElse(false);
         return rule.inverted() ? !matches : matches;
