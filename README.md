@@ -39,7 +39,7 @@ dependencies {
  
     ...
     
-    implementation "com.klikli_dev:code-defined-gui-${minecraft_version}-neoforge:${code_defined_gui_version}"
+    implementation "com.klikli_dev:codedefinedgui-${minecraft_version}-neoforge:${code_defined_gui_version}"
     
     ...
     
