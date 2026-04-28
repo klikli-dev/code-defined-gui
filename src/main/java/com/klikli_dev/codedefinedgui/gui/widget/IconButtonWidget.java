@@ -11,7 +11,6 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.input.MouseButtonEvent;
 
@@ -33,8 +32,8 @@ public class IconButtonWidget extends AbstractWidget {
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         GuiTexture background = !this.active ? GuiTextures.FILTER_BUTTON_DOWN : this.isHoveredOrFocused() ? GuiTextures.FILTER_BUTTON_HOVER : GuiTextures.FILTER_BUTTON;
-        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, background.sprite(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
-        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.icon.sprite(), this.getX() + 1, this.getY() + 1, this.icon.width(), this.icon.height());
+        background.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        this.icon.extractRenderState(graphics, this.getX() + 1, this.getY() + 1, this.icon.width(), this.icon.height());
     }
 
     @Override

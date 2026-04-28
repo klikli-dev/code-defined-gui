@@ -9,7 +9,6 @@ import com.klikli_dev.codedefinedgui.gui.texture.GuiTextures;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 
 public class FilterIndicatorWidget extends AbstractWidget {
@@ -27,7 +26,7 @@ public class FilterIndicatorWidget extends AbstractWidget {
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         GuiTexture texture = this.on ? GuiTextures.FILTER_INDICATOR_ON : GuiTextures.FILTER_INDICATOR_OFF;
-        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, texture.sprite(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        texture.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 
     @Override

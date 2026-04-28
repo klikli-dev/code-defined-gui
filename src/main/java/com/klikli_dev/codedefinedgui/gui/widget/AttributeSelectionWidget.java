@@ -16,7 +16,6 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.client.input.MouseButtonEvent;
@@ -44,7 +43,7 @@ public class AttributeSelectionWidget extends AbstractWidget {
 
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, GuiTextures.ATTRIBUTE_FILTER_SELECTION.sprite(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        GuiTextures.ATTRIBUTE_FILTER_SELECTION.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
         List<AttributeCandidate> entries = this.candidates.get();
         Component text = entries.isEmpty()
                 ? Component.translatable("codedefinedgui.filter.attribute.no_reference")

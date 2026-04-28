@@ -10,7 +10,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
@@ -29,7 +28,7 @@ public class AttributeRuleSummaryWidget extends AbstractWidget {
 
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, GuiTextures.ATTRIBUTE_FILTER_SUMMARY.sprite(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        GuiTextures.ATTRIBUTE_FILTER_SUMMARY.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
         ItemStack itemStack = this.stack.get();
         if (!itemStack.isEmpty()) {
             graphics.item(itemStack, this.getX() + 4, this.getY() + 4);
