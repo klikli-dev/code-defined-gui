@@ -20,6 +20,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
 public abstract class AbstractFilterScreen<M extends FilterMenu> extends AbstractContainerScreen<M> implements GuiHost {
+    private static final int PLAYER_INVENTORY_BACKGROUND_WIDTH = 176;
+    private static final int PLAYER_INVENTORY_BACKGROUND_HEIGHT = 90;
+    private static final int PLAYER_INVENTORY_BACKGROUND_Y_OFFSET = 11;
+    private static final int PLAYER_INVENTORY_SLOT_X_OFFSET = 7;
+    private static final int PLAYER_INVENTORY_MAIN_SLOT_Y_OFFSET = 18;
+    private static final int PLAYER_INVENTORY_HOTBAR_SLOT_Y_OFFSET = 76;
+
     protected final GuiRootWidget root;
     protected IconButtonWidget resetButton;
     protected IconButtonWidget confirmButton;
@@ -32,8 +39,8 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     @Override
     protected void init() {
         super.init();
-        this.inventoryLabelX = this.playerInventoryLabelX();
-        this.inventoryLabelY = this.playerInventoryLabelY();
+        this.inventoryLabelX = (this.imageWidth - PLAYER_INVENTORY_BACKGROUND_WIDTH) / 2 + 8;
+        this.inventoryLabelY = this.imageHeight - 94 + PLAYER_INVENTORY_BACKGROUND_Y_OFFSET;
         this.addRenderableWidget(this.root);
         this.root.clearChildren();
         this.addBackgroundWidgets();
@@ -109,7 +116,7 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     }
 
     protected int centeredPlayerInventoryLeft() {
-        return this.leftPos + (this.imageWidth - 176) / 2;
+        return this.leftPos + (this.imageWidth - PLAYER_INVENTORY_BACKGROUND_WIDTH) / 2;
     }
 
     protected int playerInventoryTop() {
@@ -125,9 +132,9 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         this.root.addChild(new GuiBackgroundWidget(
                 this,
                 this.centeredPlayerInventoryLeft(),
-                this.playerInventoryBackgroundTop(),
-                this.playerInventoryBackgroundWidth(),
-                this.playerInventoryBackgroundHeight(),
+                this.playerInventoryTop() + PLAYER_INVENTORY_BACKGROUND_Y_OFFSET,
+                PLAYER_INVENTORY_BACKGROUND_WIDTH,
+                PLAYER_INVENTORY_BACKGROUND_HEIGHT,
                 this.playerInventoryBackgroundSprite()
         ));
     }
@@ -143,12 +150,12 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         GuiSprite inventorySlotSprite = this.playerInventorySlotSprite();
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
-                this.root.addChild(new GuiSpriteWidget(inventoryLeft + this.playerInventorySlotXOffset() + col * 18, inventoryTop + this.playerInventoryMainSlotYOffset() + row * 18, inventorySlotSprite));
+                this.root.addChild(new GuiSpriteWidget(inventoryLeft + PLAYER_INVENTORY_SLOT_X_OFFSET + col * 18, inventoryTop + PLAYER_INVENTORY_MAIN_SLOT_Y_OFFSET + row * 18, inventorySlotSprite));
             }
         }
 
         for (int col = 0; col < 9; col++) {
-            this.root.addChild(new GuiSpriteWidget(inventoryLeft + this.playerInventorySlotXOffset() + col * 18, inventoryTop + this.playerInventoryHotbarSlotYOffset(), inventorySlotSprite));
+            this.root.addChild(new GuiSpriteWidget(inventoryLeft + PLAYER_INVENTORY_SLOT_X_OFFSET + col * 18, inventoryTop + PLAYER_INVENTORY_HOTBAR_SLOT_Y_OFFSET, inventorySlotSprite));
         }
     }
 
@@ -186,38 +193,6 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
 
     protected GuiSprite playerInventorySlotSprite() {
         return GuiSprites.INVENTORY_SLOT;
-    }
-
-    protected int playerInventoryBackgroundWidth() {
-        return 176;
-    }
-
-    protected int playerInventoryBackgroundTop() {
-        return this.playerInventoryTop();
-    }
-
-    protected int playerInventoryBackgroundHeight() {
-        return 108;
-    }
-
-    protected int playerInventorySlotXOffset() {
-        return 7;
-    }
-
-    protected int playerInventoryMainSlotYOffset() {
-        return 18;
-    }
-
-    protected int playerInventoryHotbarSlotYOffset() {
-        return 76;
-    }
-
-    protected int playerInventoryLabelX() {
-        return (this.imageWidth - 176) / 2 + 8;
-    }
-
-    protected int playerInventoryLabelY() {
-        return this.imageHeight - 94;
     }
 
     protected abstract int titleColor();
