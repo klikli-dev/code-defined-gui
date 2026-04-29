@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [release/v26.1.2-1.1.1] - 2026-04-29
+### :bug: Bug Fixes
+- [`962a3cf`](https://github.com/klikli-dev/code-defined-gui/commit/962a3cf6b0d619bf830c8273301ab4128a4e5531) - attribute selection border *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+
+### :wrench: Chores
+- [`a6c4ca1`](https://github.com/klikli-dev/code-defined-gui/commit/a6c4ca13a3a8764827e45d05aa1af926cceb7602) - cleanup *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+
+
 ## [release/v26.1.2-1.1.0] - 2026-04-29
 ### :recycle: Refactors
 - [`08beea6`](https://github.com/klikli-dev/code-defined-gui/commit/08beea6ad29246341cd268d0c6686d2b4e95031d) - rename gui textures to sprites *(commit by [@klikli-dev](https://github.com/klikli-dev))*
@@ -34,3 +42,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [release/v26.1.2-1.0.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-0.0.0...release/v26.1.2-1.0.0
 [release/v26.1.2-1.1.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.0.0...release/v26.1.2-1.1.0
+[release/v26.1.2-1.1.1]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.1.0...release/v26.1.2-1.1.1
