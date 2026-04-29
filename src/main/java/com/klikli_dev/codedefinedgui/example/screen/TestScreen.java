@@ -9,7 +9,7 @@ import com.klikli_dev.codedefinedgui.gui.core.GuiRootWidget;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.FrameWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.TextureWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -41,17 +41,17 @@ public class TestScreen extends Screen implements GuiHost {
         this.addRenderableWidget(this.root);
 
         this.root.clearChildren();
-        TextureWidget craftingArrow = new TextureWidget(this.leftPos + 68, this.topPos + 20, GuiSprites.CRAFTING_ARROW);
+        GuiSpriteWidget craftingArrow = new GuiSpriteWidget(this.leftPos + 68, this.topPos + 20, GuiSprites.CRAFTING_ARROW);
         FrameWidget beveledArrowFrame = new FrameWidget(craftingArrow).bevel(bevelPrimaryColor, bevelSecondaryColor, bevelCornerColor);
 
         this.root.addChild(new GuiBackgroundWidget(this));
-        this.root.addChild(new TextureWidget(this.leftPos + 8, this.topPos + 18, GuiSprites.INVENTORY_SLOT));
-        this.root.addChild(new TextureWidget(this.leftPos + 26, this.topPos + 18, GuiSprites.INVENTORY_SLOT));
-        this.root.addChild(new TextureWidget(this.leftPos + 44, this.topPos + 18, GuiSprites.INVENTORY_SLOT));
+        this.root.addChild(new GuiSpriteWidget(this.leftPos + 8, this.topPos + 18, GuiSprites.INVENTORY_SLOT));
+        this.root.addChild(new GuiSpriteWidget(this.leftPos + 26, this.topPos + 18, GuiSprites.INVENTORY_SLOT));
+        this.root.addChild(new GuiSpriteWidget(this.leftPos + 44, this.topPos + 18, GuiSprites.INVENTORY_SLOT));
         this.root.addChild(craftingArrow);
         this.root.addChild(beveledArrowFrame);
         this.root.addChild(new FrameWidget(beveledArrowFrame.getX() - 1, beveledArrowFrame.getY() - 1, beveledArrowFrame.getWidth() + 2, beveledArrowFrame.getHeight() + 2));
-        this.root.addChild(new TextureWidget(this.leftPos + 94, this.topPos + 14, GuiSprites.CRAFTING_RESULT_SLOT));
+        this.root.addChild(new GuiSpriteWidget(this.leftPos + 94, this.topPos + 14, GuiSprites.CRAFTING_RESULT_SLOT));
         this.root.addChild(new FrameWidget(this.leftPos + 120, this.topPos + 18, 40, 24));
 
         this.root.syncBoundsToHost();

@@ -5,7 +5,6 @@
 package com.klikli_dev.codedefinedgui.gui.widget;
 
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import java.util.Objects;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -17,10 +16,16 @@ import net.minecraft.client.input.MouseButtonEvent;
 public class IconButtonWidget extends AbstractWidget {
     private final GuiSprite icon;
     private final Runnable onPress;
+    private final IconButtonBackgroundSprites backgroundSprites;
 
     public IconButtonWidget(int x, int y, GuiSprite icon, Component message, Runnable onPress) {
-        super(x, y, GuiSprites.FILTER_BUTTON.width(), GuiSprites.FILTER_BUTTON.height(), message);
+        this(x, y, icon, IconButtonBackgroundSprites.DEFAULT, message, onPress);
+    }
+
+    public IconButtonWidget(int x, int y, GuiSprite icon, IconButtonBackgroundSprites backgroundSprites, Component message, Runnable onPress) {
+        super(x, y, backgroundSprites.normal().width(), backgroundSprites.normal().height(), message);
         this.icon = icon;
+        this.backgroundSprites = backgroundSprites;
         this.onPress = Objects.requireNonNull(onPress);
     }
 
@@ -31,9 +36,11 @@ public class IconButtonWidget extends AbstractWidget {
 
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        GuiSprite background = !this.active ? GuiSprites.FILTER_BUTTON_DOWN : this.isHoveredOrFocused() ? GuiSprites.FILTER_BUTTON_HOVER : GuiSprites.FILTER_BUTTON;
+        GuiSprite background = !this.active ? this.backgroundSprites.pressed() : this.isHoveredOrFocused() ? this.backgroundSprites.hovered() : this.backgroundSprites.normal();
         background.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
-        this.icon.extractRenderState(graphics, this.getX() + 1, this.getY() + 1, this.icon.width(), this.icon.height());
+        int iconX = this.getX() + (this.getWidth() - this.icon.width()) / 2;
+        int iconY = this.getY() + (this.getHeight() - this.icon.height()) / 2;
+        this.icon.extractRenderState(graphics, iconX, iconY, this.icon.width(), this.icon.height());
     }
 
     @Override
