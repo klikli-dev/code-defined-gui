@@ -125,7 +125,7 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         this.root.addChild(new GuiBackgroundWidget(
                 this,
                 this.centeredPlayerInventoryLeft(),
-                this.playerInventoryTop(),
+                this.playerInventoryBackgroundTop(),
                 this.playerInventoryBackgroundWidth(),
                 this.playerInventoryBackgroundHeight(),
                 this.playerInventoryBackgroundSprite()
@@ -190,6 +190,10 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
 
     protected int playerInventoryBackgroundWidth() {
         return 176;
+    }
+
+    protected int playerInventoryBackgroundTop() {
+        return this.playerInventoryTop();
     }
 
     protected int playerInventoryBackgroundHeight() {
