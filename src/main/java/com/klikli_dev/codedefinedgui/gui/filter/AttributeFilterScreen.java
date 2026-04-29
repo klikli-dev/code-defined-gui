@@ -8,6 +8,7 @@ import com.klikli_dev.codedefinedgui.filter.attribute.AttributeCandidate;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterDefinition;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMenu;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMode;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.AttributeRuleSummaryWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.AttributeSelectionWidget;
@@ -46,8 +47,9 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
 
     @Override
     protected void addFilterSlotWidgets() {
-        this.root.addChild(new GuiSpriteWidget(this.leftPos + 15, this.topPos + 23, GuiSprites.INVENTORY_SLOT));
-        this.root.addChild(new GuiSpriteWidget(this.leftPos + 21, this.topPos + 58, GuiSprites.INVENTORY_SLOT));
+        GuiSprite filterSlotSprite = this.filterSlotSprite();
+        this.root.addChild(new GuiSpriteWidget(this.leftPos + 15, this.topPos + 23, filterSlotSprite));
+        this.root.addChild(new GuiSpriteWidget(this.leftPos + 21, this.topPos + 58, filterSlotSprite));
     }
 
     @Override
@@ -82,13 +84,14 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
                 this.topPos + 23,
                 137,
                 18,
+                this.attributeSelectionSprite(),
                 this::candidates,
                 this.menu::selectedCandidateIndex,
                 this::changeSelection
         ).withTitle(Component.translatable("codedefinedgui.filter.attribute.available")));
         this.addButton = this.root.addChild(new IconButtonWidget(this.leftPos + 182, this.topPos + 23, GuiSprites.FILTER_ICON_ADD, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.attribute.add"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED)));
         this.addInvertedButton = this.root.addChild(new IconButtonWidget(this.leftPos + 200, this.topPos + 23, GuiSprites.FILTER_ICON_ADD_INVERTED, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.attribute.add_inverted"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED)));
-        this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.leftPos + 18, this.topPos + 55, () -> this.menu.state().rules().size(), this.menu::summaryStack));
+        this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.leftPos + 18, this.topPos + 55, this.attributeSummarySprite(), () -> this.menu.state().rules().size(), this.menu::summaryStack));
     }
 
     @Override
@@ -109,6 +112,18 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
     @Override
     protected int titleColor() {
         return 0x592424;
+    }
+
+    protected GuiSprite filterSlotSprite() {
+        return this.inventorySlotSprite();
+    }
+
+    protected GuiSprite attributeSelectionSprite() {
+        return GuiSprites.ATTRIBUTE_FILTER_SELECTION;
+    }
+
+    protected GuiSprite attributeSummarySprite() {
+        return GuiSprites.ATTRIBUTE_FILTER_SUMMARY;
     }
 
     @Override

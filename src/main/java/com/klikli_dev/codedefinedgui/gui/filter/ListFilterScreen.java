@@ -5,6 +5,7 @@
 package com.klikli_dev.codedefinedgui.gui.filter;
 
 import com.klikli_dev.codedefinedgui.filter.list.ListFilterMenu;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.FilterIndicatorWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
@@ -36,9 +37,10 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
 
     @Override
     protected void addFilterSlotWidgets() {
+        GuiSprite filterSlotSprite = this.filterSlotSprite();
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 9; col++) {
-                this.root.addChild(new GuiSpriteWidget(this.leftPos + 24 + col * 18, this.topPos + 23 + row * 18, GuiSprites.INVENTORY_SLOT));
+                this.root.addChild(new GuiSpriteWidget(this.leftPos + 24 + col * 18, this.topPos + 23 + row * 18, filterSlotSprite));
             }
         }
     }
@@ -91,6 +93,10 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
     @Override
     protected int titleColor() {
         return 0x303030;
+    }
+
+    protected GuiSprite filterSlotSprite() {
+        return this.inventorySlotSprite();
     }
 
     private void pressButton(int buttonId) {

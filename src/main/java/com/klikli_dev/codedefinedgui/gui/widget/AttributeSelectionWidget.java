@@ -4,9 +4,11 @@
 
 package com.klikli_dev.codedefinedgui.gui.widget;
 
+import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeCandidate;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
@@ -22,13 +24,19 @@ import net.minecraft.client.input.MouseButtonEvent;
 
 public class AttributeSelectionWidget extends AbstractWidget {
     private static final int VISIBLE_TOOLTIP_ENTRIES = 8;
+    private final GuiSprite sprite;
     private final Supplier<List<AttributeCandidate>> candidates;
     private final IntSupplier selectedIndex;
     private final IntConsumer onChange;
     private Component title = Component.empty();
 
     public AttributeSelectionWidget(int x, int y, int width, int height, Supplier<List<AttributeCandidate>> candidates, IntSupplier selectedIndex, IntConsumer onChange) {
+        this(x, y, width, height, GuiSprites.ATTRIBUTE_FILTER_SELECTION, candidates, selectedIndex, onChange);
+    }
+
+    public AttributeSelectionWidget(int x, int y, int width, int height, GuiSprite sprite, Supplier<List<AttributeCandidate>> candidates, IntSupplier selectedIndex, IntConsumer onChange) {
         super(x, y, width, height, Component.empty());
+        this.sprite = Objects.requireNonNull(sprite);
         this.candidates = candidates;
         this.selectedIndex = selectedIndex;
         this.onChange = onChange;
@@ -43,7 +51,7 @@ public class AttributeSelectionWidget extends AbstractWidget {
 
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        GuiSprites.ATTRIBUTE_FILTER_SELECTION.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        this.sprite.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
         List<AttributeCandidate> entries = this.candidates.get();
         Component text = entries.isEmpty()
                 ? Component.translatable("codedefinedgui.filter.attribute.no_reference")
