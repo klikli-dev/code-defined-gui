@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.gui.widget;
 
 import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiTextures;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import org.jspecify.annotations.Nullable;
 
 public class GuiBackgroundWidget extends TextureWidget {
@@ -24,7 +24,7 @@ public class GuiBackgroundWidget extends TextureWidget {
     }
 
     private GuiBackgroundWidget(GuiHost host, @Nullable Integer xOverride, @Nullable Integer yOverride, @Nullable Integer widthOverride, @Nullable Integer heightOverride) {
-        super(0, 0, GuiTextures.GUI_BACKGROUND);
+        super(0, 0, GuiSprites.GUI_BACKGROUND);
         this.host = host;
         this.xOverride = xOverride;
         this.yOverride = yOverride;

@@ -4,7 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.gui.widget;
 
-import com.klikli_dev.codedefinedgui.gui.texture.GuiTextures;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import java.util.function.IntSupplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -20,7 +20,7 @@ public class AttributeRuleSummaryWidget extends AbstractWidget {
     private final Supplier<ItemStack> stack;
 
     public AttributeRuleSummaryWidget(int x, int y, IntSupplier ruleCount, Supplier<ItemStack> stack) {
-        super(x, y, GuiTextures.ATTRIBUTE_FILTER_SUMMARY.width(), GuiTextures.ATTRIBUTE_FILTER_SUMMARY.height(), Component.empty());
+        super(x, y, GuiSprites.ATTRIBUTE_FILTER_SUMMARY.width(), GuiSprites.ATTRIBUTE_FILTER_SUMMARY.height(), Component.empty());
         this.ruleCount = ruleCount;
         this.stack = stack;
         this.active = false;
@@ -28,7 +28,7 @@ public class AttributeRuleSummaryWidget extends AbstractWidget {
 
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        GuiTextures.ATTRIBUTE_FILTER_SUMMARY.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        GuiSprites.ATTRIBUTE_FILTER_SUMMARY.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
         ItemStack itemStack = this.stack.get();
         if (!itemStack.isEmpty()) {
             graphics.item(itemStack, this.getX() + 4, this.getY() + 4);

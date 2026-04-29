@@ -10,7 +10,7 @@ import com.klikli_dev.codedefinedgui.gui.core.GuiRootWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.TextureWidget;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiTextures;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -135,12 +135,12 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         int inventoryTop = this.playerInventoryTop();
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
-                this.root.addChild(new TextureWidget(inventoryLeft + 7 + col * 18, inventoryTop + 18 + row * 18, GuiTextures.INVENTORY_SLOT));
+                this.root.addChild(new TextureWidget(inventoryLeft + 7 + col * 18, inventoryTop + 18 + row * 18, GuiSprites.INVENTORY_SLOT));
             }
         }
 
         for (int col = 0; col < 9; col++) {
-            this.root.addChild(new TextureWidget(inventoryLeft + 7 + col * 18, inventoryTop + 76, GuiTextures.INVENTORY_SLOT));
+            this.root.addChild(new TextureWidget(inventoryLeft + 7 + col * 18, inventoryTop + 76, GuiSprites.INVENTORY_SLOT));
         }
     }
 

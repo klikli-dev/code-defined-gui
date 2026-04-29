@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.gui.widget;
 
 import com.klikli_dev.codedefinedgui.gui.core.GuiSyncable;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiTexture;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -13,9 +13,9 @@ import net.minecraft.network.chat.Component;
 import org.jspecify.annotations.NonNull;
 
 public class TextureWidget extends AbstractWidget implements GuiSyncable {
-    private final GuiTexture texture;
+    private final GuiSprite texture;
 
-    public TextureWidget(int x, int y, GuiTexture texture) {
+    public TextureWidget(int x, int y, GuiSprite texture) {
         super(x, y, texture.width(), texture.height(), Component.empty());
         this.texture = texture;
         this.active = false;

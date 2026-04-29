@@ -14,7 +14,7 @@ The repo already contains sprite assets for `gui_background`, `inventory_slot`, 
 - Support both `Screen` and `AbstractContainerScreen` through a single host interface that exposes all required screen metrics.
 - Keep child widgets as `AbstractWidget` instances so they can use normal Minecraft screen input, focus, and rendering behavior.
 - Automatically register and deregister root-managed children with the host screen during init and re-init.
-- Introduce a `GuiTexture` style wrapper with default render sizing and a `GuiTextures` constants holder for built-in sprites.
+- Introduce a `GuiSprite` style wrapper with default render sizing and a `GuiSprites` constants holder for built-in sprites.
 - Add a minimal first component set centered on background and crafting/inventory slot visuals.
 
 **Non-Goals:**
@@ -46,7 +46,7 @@ Alternative considered: mixing render-only components with widgets. This was rej
 
 ### Separate texture wrappers from GUI components
 
-`GuiTexture` objects will describe a sprite identifier, default render size, and an optional tint value that defaults to `-1`, while GUI components remain separate widget classes that decide how to use those textures. This keeps rendering assets reusable without turning the texture wrapper layer into a component framework.
+`GuiSprite` objects will describe a sprite identifier, default render size, and an optional tint value that defaults to `-1`, while GUI components remain separate widget classes that decide how to use those textures. This keeps rendering assets reusable without turning the texture wrapper layer into a component framework.
 
 Alternative considered: embedding component behavior or 9-slice parameters directly in texture definitions. This was rejected because 9-slice metadata is already provided by Minecraft resource metadata and the user explicitly wants widgets/components to remain separate from texture wrappers.
 

@@ -8,7 +8,7 @@ The mod currently renders a test GUI directly from a screen class, which does no
 - Add a host interface that exposes screen metrics and GUI placement data such as `leftPos`, `topPos`, `width`, `height`, `imageWidth`, and `imageHeight`.
 - Add automatic child widget registration and deregistration so root-managed components participate in normal screen input and focus handling.
 - Add a minimal initial component set: a 9-slice background, inventory slot, crafting result slot, and crafting arrow component.
-- Add an object-oriented GUI texture wrapper class plus a `GuiTextures` constants holder for built-in sprite definitions with default render sizes and an optional tint value.
+- Add an object-oriented GUI texture wrapper class plus a `GuiSprites` constants holder for built-in sprite definitions with default render sizes and an optional tint value.
 - Define resize and re-init behavior so the root widget can resync with the host screen and rebuild child registration cleanly.
 - Leave clipping and scissoring out of scope for the initial implementation.
 
@@ -17,7 +17,7 @@ The mod currently renders a test GUI directly from a screen class, which does no
 ### New Capabilities
 - `code-defined-gui-root`: A reusable root widget and host contract for screen-wide code-defined GUI composition, child lifecycle, and re-init behavior.
 - `gui-components`: A minimal starter component set built on `AbstractWidget`, including background and slot-style GUI elements.
-- `gui-textures`: Object-oriented GUI texture definitions with default render sizing through `GuiTexture` instances exposed by `GuiTextures`.
+- `gui-textures`: Object-oriented GUI texture definitions with default render sizing through `GuiSprite` instances exposed by `GuiSprites`.
 
 ### Modified Capabilities
 

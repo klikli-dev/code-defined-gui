@@ -11,12 +11,12 @@ The system SHALL provide a GUI texture wrapper class that represents a sprite re
 - **WHEN** a GUI texture definition is created without an explicit tint
 - **THEN** the definition MUST use `-1` as its tint value
 
-### Requirement: Built-in GUI textures are exposed through GuiTextures
-The system SHALL provide a plural constants holder named `GuiTextures` that exposes built-in GUI texture definitions as reusable object instances rather than enum values.
+### Requirement: Built-in GUI textures are exposed through GuiSprites
+The system SHALL provide a plural constants holder named `GuiSprites` that exposes built-in GUI texture definitions as reusable object instances rather than enum values.
 
-#### Scenario: Built-in sprite definitions are available from GuiTextures
+#### Scenario: Built-in sprite definitions are available from GuiSprites
 - **WHEN** code needs the packaged background, inventory slot, crafting result slot, or crafting arrow texture definitions
-- **THEN** it MUST be able to reference them through `GuiTextures`
+- **THEN** it MUST be able to reference them through `GuiSprites`
 
 ### Requirement: Texture definitions support sized copies
 The system SHALL allow a GUI texture definition to produce a copy with different render dimensions while preserving the underlying sprite resource.

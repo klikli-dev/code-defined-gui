@@ -4,7 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.gui.widget;
 
-import com.klikli_dev.codedefinedgui.gui.texture.GuiTextures;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeCandidate;
 import java.util.List;
 import java.util.function.IntConsumer;
@@ -43,7 +43,7 @@ public class AttributeSelectionWidget extends AbstractWidget {
 
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        GuiTextures.ATTRIBUTE_FILTER_SELECTION.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        GuiSprites.ATTRIBUTE_FILTER_SELECTION.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
         List<AttributeCandidate> entries = this.candidates.get();
         Component text = entries.isEmpty()
                 ? Component.translatable("codedefinedgui.filter.attribute.no_reference")

@@ -2,7 +2,7 @@
 
 - [x] 1.1 Add a GUI host interface that exposes `leftPos`, `topPos`, `width`, `height`, `imageWidth`, and `imageHeight`, plus the screen registration operations the root widget needs.
 - [x] 1.2 Implement the GUI texture wrapper class with sprite identity, default render size, an optional tint defaulting to `-1`, and a method for producing sized copies.
-- [x] 1.3 Add the `GuiTextures` constants holder for the built-in `gui_background`, `inventory_slot`, `crafting_result_slot`, and `crafting_arrow` sprite definitions.
+- [x] 1.3 Add the `GuiSprites` constants holder for the built-in `gui_background`, `inventory_slot`, `crafting_result_slot`, and `crafting_arrow` sprite definitions.
 
 ## 2. Root Widget Lifecycle
 
@@ -13,9 +13,9 @@
 ## 3. Initial GUI Components
 
 - [x] 3.1 Implement the 9-slice background widget so it defaults to the host `imageWidth` and `imageHeight` but supports explicit screen-space position and size overrides.
-- [x] 3.2 Implement the inventory slot widget using the packaged sprite definition from `GuiTextures`.
-- [x] 3.3 Implement the crafting result slot widget using the packaged sprite definition from `GuiTextures`.
-- [x] 3.4 Implement the crafting arrow widget using the packaged sprite definition from `GuiTextures`.
+- [x] 3.2 Implement the inventory slot widget using the packaged sprite definition from `GuiSprites`.
+- [x] 3.3 Implement the crafting result slot widget using the packaged sprite definition from `GuiSprites`.
+- [x] 3.4 Implement the crafting arrow widget using the packaged sprite definition from `GuiSprites`.
 
 ## 4. Screen Integration And Validation
 

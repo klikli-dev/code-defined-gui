@@ -8,7 +8,7 @@ import com.klikli_dev.codedefinedgui.filter.attribute.AttributeCandidate;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterDefinition;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMenu;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMode;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiTextures;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.AttributeRuleSummaryWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.AttributeSelectionWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.FilterIndicatorWidget;
@@ -46,8 +46,8 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
 
     @Override
     protected void addFilterSlotWidgets() {
-        this.root.addChild(new TextureWidget(this.leftPos + 15, this.topPos + 23, GuiTextures.INVENTORY_SLOT));
-        this.root.addChild(new TextureWidget(this.leftPos + 21, this.topPos + 58, GuiTextures.INVENTORY_SLOT));
+        this.root.addChild(new TextureWidget(this.leftPos + 15, this.topPos + 23, GuiSprites.INVENTORY_SLOT));
+        this.root.addChild(new TextureWidget(this.leftPos + 21, this.topPos + 58, GuiSprites.INVENTORY_SLOT));
     }
 
     @Override
@@ -55,21 +55,21 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         this.resetButton = this.root.addChild(new IconButtonWidget(
                 this.leftPos + 179,
                 this.topPos + 61,
-                GuiTextures.FILTER_ICON_RESET,
+                GuiSprites.FILTER_ICON_RESET,
                 Component.translatable("codedefinedgui.filter.button.reset"),
                 () -> this.pressButton(AttributeFilterMenu.BUTTON_RESET)
         ).withTooltip(Component.translatable("codedefinedgui.filter.button.reset")));
         this.confirmButton = this.root.addChild(new IconButtonWidget(
                 this.leftPos + 208,
                 this.topPos + 61,
-                GuiTextures.FILTER_ICON_CONFIRM,
+                GuiSprites.FILTER_ICON_CONFIRM,
                 Component.translatable("codedefinedgui.filter.button.done"),
                 this::onClose
         ).withTooltip(Component.translatable("codedefinedgui.filter.button.done")));
 
-        this.matchAnyButton = this.root.addChild(new IconButtonWidget(this.leftPos + 47, this.topPos + 61, GuiTextures.FILTER_ICON_MATCH_ANY, Component.translatable("codedefinedgui.filter.attribute.mode.match_any"), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ANY)));
-        this.matchAllButton = this.root.addChild(new IconButtonWidget(this.leftPos + 65, this.topPos + 61, GuiTextures.FILTER_ICON_MATCH_ALL, Component.translatable("codedefinedgui.filter.attribute.mode.match_all"), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ALL)));
-        this.denyButton = this.root.addChild(new IconButtonWidget(this.leftPos + 83, this.topPos + 61, GuiTextures.FILTER_ICON_DENY_ALT, Component.translatable("codedefinedgui.filter.attribute.mode.deny"), () -> this.pressButton(AttributeFilterMenu.BUTTON_DENY)));
+        this.matchAnyButton = this.root.addChild(new IconButtonWidget(this.leftPos + 47, this.topPos + 61, GuiSprites.FILTER_ICON_MATCH_ANY, Component.translatable("codedefinedgui.filter.attribute.mode.match_any"), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ANY)));
+        this.matchAllButton = this.root.addChild(new IconButtonWidget(this.leftPos + 65, this.topPos + 61, GuiSprites.FILTER_ICON_MATCH_ALL, Component.translatable("codedefinedgui.filter.attribute.mode.match_all"), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ALL)));
+        this.denyButton = this.root.addChild(new IconButtonWidget(this.leftPos + 83, this.topPos + 61, GuiSprites.FILTER_ICON_DENY_ALT, Component.translatable("codedefinedgui.filter.attribute.mode.deny"), () -> this.pressButton(AttributeFilterMenu.BUTTON_DENY)));
         this.matchAnyIndicator = this.root.addChild(new FilterIndicatorWidget(this.leftPos + 47, this.topPos + 55));
         this.matchAllIndicator = this.root.addChild(new FilterIndicatorWidget(this.leftPos + 65, this.topPos + 55));
         this.denyIndicator = this.root.addChild(new FilterIndicatorWidget(this.leftPos + 83, this.topPos + 55));
@@ -83,8 +83,8 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
                 this.menu::selectedCandidateIndex,
                 this::changeSelection
         ).withTitle(Component.translatable("codedefinedgui.filter.attribute.available")));
-        this.addButton = this.root.addChild(new IconButtonWidget(this.leftPos + 182, this.topPos + 23, GuiTextures.FILTER_ICON_ADD, Component.translatable("codedefinedgui.filter.attribute.add"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED)));
-        this.addInvertedButton = this.root.addChild(new IconButtonWidget(this.leftPos + 200, this.topPos + 23, GuiTextures.FILTER_ICON_ADD_INVERTED, Component.translatable("codedefinedgui.filter.attribute.add_inverted"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED)));
+        this.addButton = this.root.addChild(new IconButtonWidget(this.leftPos + 182, this.topPos + 23, GuiSprites.FILTER_ICON_ADD, Component.translatable("codedefinedgui.filter.attribute.add"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED)));
+        this.addInvertedButton = this.root.addChild(new IconButtonWidget(this.leftPos + 200, this.topPos + 23, GuiSprites.FILTER_ICON_ADD_INVERTED, Component.translatable("codedefinedgui.filter.attribute.add_inverted"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED)));
         this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.leftPos + 18, this.topPos + 55, () -> this.menu.state().rules().size(), this.menu::summaryStack));
     }
 
