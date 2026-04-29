@@ -14,6 +14,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.client.input.MouseButtonEvent;
 
 public class IconButtonWidget extends AbstractWidget {
+    private static final int WIDTH = 18;
+    private static final int HEIGHT = 18;
+
     private final GuiSprite icon;
     private final Runnable onPress;
     private final IconButtonBackgroundSprites backgroundSprites;
@@ -23,7 +26,7 @@ public class IconButtonWidget extends AbstractWidget {
     }
 
     public IconButtonWidget(int x, int y, GuiSprite icon, IconButtonBackgroundSprites backgroundSprites, Component message, Runnable onPress) {
-        super(x, y, backgroundSprites.normal().width(), backgroundSprites.normal().height(), message);
+        super(x, y, WIDTH, HEIGHT, message);
         this.icon = icon;
         this.backgroundSprites = backgroundSprites;
         this.onPress = Objects.requireNonNull(onPress);
