@@ -27,13 +27,13 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     protected AbstractFilterScreen(M menu, Inventory playerInventory, Component title, int imageWidth, int imageHeight) {
         super(menu, playerInventory, title, imageWidth, imageHeight);
         this.root = new GuiRootWidget(this);
-        this.inventoryLabelX = (this.imageWidth - 176) / 2 + 8;
-        this.inventoryLabelY = this.imageHeight - 94;
     }
 
     @Override
     protected void init() {
         super.init();
+        this.inventoryLabelX = this.playerInventoryLabelX();
+        this.inventoryLabelY = this.playerInventoryLabelY();
         this.addRenderableWidget(this.root);
         this.root.clearChildren();
         this.addBackgroundWidgets();
@@ -122,9 +122,14 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
      * Override to replace or suppress the default background while keeping the inventory slot widgets.
      */
     protected void addPlayerInventoryBackgroundWidgets() {
-        int inventoryLeft = this.centeredPlayerInventoryLeft();
-        int inventoryTop = this.playerInventoryTop();
-        this.root.addChild(new GuiBackgroundWidget(this, inventoryLeft, inventoryTop, 176, 108));
+        this.root.addChild(new GuiBackgroundWidget(
+                this,
+                this.centeredPlayerInventoryLeft(),
+                this.playerInventoryTop(),
+                this.playerInventoryBackgroundWidth(),
+                this.playerInventoryBackgroundHeight(),
+                this.playerInventoryBackgroundSprite()
+        ));
     }
 
     protected final void addStaticWidgets() {
@@ -135,15 +140,15 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     private void addPlayerInventorySlotWidgets() {
         int inventoryLeft = this.centeredPlayerInventoryLeft();
         int inventoryTop = this.playerInventoryTop();
-        GuiSprite inventorySlotSprite = this.inventorySlotSprite();
+        GuiSprite inventorySlotSprite = this.playerInventorySlotSprite();
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
-                this.root.addChild(new GuiSpriteWidget(inventoryLeft + 7 + col * 18, inventoryTop + 18 + row * 18, inventorySlotSprite));
+                this.root.addChild(new GuiSpriteWidget(inventoryLeft + this.playerInventorySlotXOffset() + col * 18, inventoryTop + this.playerInventoryMainSlotYOffset() + row * 18, inventorySlotSprite));
             }
         }
 
         for (int col = 0; col < 9; col++) {
-            this.root.addChild(new GuiSpriteWidget(inventoryLeft + 7 + col * 18, inventoryTop + 76, inventorySlotSprite));
+            this.root.addChild(new GuiSpriteWidget(inventoryLeft + this.playerInventorySlotXOffset() + col * 18, inventoryTop + this.playerInventoryHotbarSlotYOffset(), inventorySlotSprite));
         }
     }
 
@@ -173,6 +178,42 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
 
     protected GuiSprite inventorySlotSprite() {
         return GuiSprites.INVENTORY_SLOT;
+    }
+
+    protected GuiSprite playerInventoryBackgroundSprite() {
+        return GuiSprites.GUI_BACKGROUND;
+    }
+
+    protected GuiSprite playerInventorySlotSprite() {
+        return GuiSprites.INVENTORY_SLOT;
+    }
+
+    protected int playerInventoryBackgroundWidth() {
+        return 176;
+    }
+
+    protected int playerInventoryBackgroundHeight() {
+        return 108;
+    }
+
+    protected int playerInventorySlotXOffset() {
+        return 7;
+    }
+
+    protected int playerInventoryMainSlotYOffset() {
+        return 18;
+    }
+
+    protected int playerInventoryHotbarSlotYOffset() {
+        return 76;
+    }
+
+    protected int playerInventoryLabelX() {
+        return (this.imageWidth - 176) / 2 + 8;
+    }
+
+    protected int playerInventoryLabelY() {
+        return this.imageHeight - 94;
     }
 
     protected abstract int titleColor();
