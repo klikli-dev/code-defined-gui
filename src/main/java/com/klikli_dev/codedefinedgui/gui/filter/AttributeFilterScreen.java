@@ -15,9 +15,7 @@ import com.klikli_dev.codedefinedgui.gui.widget.AttributeSelectionWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.FilterIndicatorWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.HorizontalSeparatorWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.VerticalSeparatorWidget;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -93,8 +91,6 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         ).withTitle(Component.translatable("codedefinedgui.filter.attribute.available")));
         this.addButton = this.root.addChild(new IconButtonWidget(this.leftPos + 182, this.topPos + 23, GuiSprites.FILTER_ICON_ADD, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.attribute.add"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED)));
         this.addInvertedButton = this.root.addChild(new IconButtonWidget(this.leftPos + 200, this.topPos + 23, GuiSprites.FILTER_ICON_ADD_INVERTED, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.attribute.add_inverted"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED)));
-        this.root.addChild(new HorizontalSeparatorWidget(this.leftPos + 179, this.topPos + 51, 47));
-        this.root.addChild(new VerticalSeparatorWidget(this.leftPos + 202, this.topPos + 61, 18));
         this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.leftPos + 18, this.topPos + 55, this.attributeSummarySprite(), () -> this.menu.state().rules().size(), this.menu::summaryStack));
     }
 
