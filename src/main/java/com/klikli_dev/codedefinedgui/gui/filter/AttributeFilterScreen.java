@@ -23,6 +23,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
 public class AttributeFilterScreen<M extends AttributeFilterMenu> extends AbstractFilterScreen<M> {
+    private static final int REFERENCE_SLOT_X = 18;
+    private static final int ATTRIBUTE_SELECTION_X = 42;
+    private static final int ADD_BUTTON_X = 190;
+    private static final int ADD_INVERTED_BUTTON_X = 208;
+
     private IconButtonWidget matchAnyButton;
     private IconButtonWidget matchAllButton;
     private IconButtonWidget denyButton;
@@ -48,7 +53,7 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
     @Override
     protected void addFilterSlotWidgets() {
         GuiSprite filterSlotSprite = this.filterSlotSprite();
-        this.root.addChild(new GuiSpriteWidget(this.leftPos + 15, this.topPos + 23, filterSlotSprite));
+        this.root.addChild(new GuiSpriteWidget(this.leftPos + REFERENCE_SLOT_X, this.topPos + 23, filterSlotSprite));
         this.root.addChild(new GuiSpriteWidget(this.leftPos + 21, this.topPos + 58, filterSlotSprite));
     }
 
@@ -80,7 +85,7 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         this.denyIndicator = this.root.addChild(new FilterIndicatorWidget(this.leftPos + 83, this.topPos + 55));
 
         this.selectionWidget = this.root.addChild(new AttributeSelectionWidget(
-                this.leftPos + 39,
+                this.leftPos + ATTRIBUTE_SELECTION_X,
                 this.topPos + 23,
                 137,
                 18,
@@ -89,8 +94,8 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
                 this.menu::selectedCandidateIndex,
                 this::changeSelection
         ).withTitle(Component.translatable("codedefinedgui.filter.attribute.available")));
-        this.addButton = this.root.addChild(new IconButtonWidget(this.leftPos + 182, this.topPos + 23, GuiSprites.FILTER_ICON_ADD, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.attribute.add"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED)));
-        this.addInvertedButton = this.root.addChild(new IconButtonWidget(this.leftPos + 200, this.topPos + 23, GuiSprites.FILTER_ICON_ADD_INVERTED, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.attribute.add_inverted"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED)));
+        this.addButton = this.root.addChild(new IconButtonWidget(this.leftPos + ADD_BUTTON_X, this.topPos + 23, GuiSprites.FILTER_ICON_ADD, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.attribute.add"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED)));
+        this.addInvertedButton = this.root.addChild(new IconButtonWidget(this.leftPos + ADD_INVERTED_BUTTON_X, this.topPos + 23, GuiSprites.FILTER_ICON_ADD_INVERTED, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.attribute.add_inverted"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED)));
         this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.leftPos + 18, this.topPos + 55, this.attributeSummarySprite(), () -> this.menu.state().rules().size(), this.menu::summaryStack));
     }
 
