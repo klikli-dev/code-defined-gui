@@ -219,7 +219,7 @@ public class AttributeFilterMenu extends FilterMenu {
 
     @Override
     protected void addFilterSlots() {
-        this.addGhostSlot(0, 16, 24);
+        this.addGhostSlot(0, 19, 24);
         this.addGhostSlot(1, 22, 59);
     }
 
