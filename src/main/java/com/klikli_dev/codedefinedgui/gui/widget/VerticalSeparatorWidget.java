@@ -11,31 +11,22 @@ import net.minecraft.network.chat.Component;
 import org.jspecify.annotations.NonNull;
 
 public class VerticalSeparatorWidget extends AbstractWidget {
-    private static final int DEFAULT_LEFT_COLOR = 0xFF555555;
-    private static final int DEFAULT_RIGHT_COLOR = 0xFFFFFFFF;
+    private static final int DEFAULT_COLOR = 0xFF000000;
 
-    private final boolean doubleLine;
-    private final int leftColor;
-    private final int rightColor;
+    private final int color;
 
     public VerticalSeparatorWidget(int x, int y, int height) {
-        this(x, y, height, DEFAULT_LEFT_COLOR, DEFAULT_RIGHT_COLOR);
+        this(x, y, height, DEFAULT_COLOR);
     }
 
     public VerticalSeparatorWidget(int x, int y, int height, int color) {
-        this(x, y, height, false, color, color);
+        super(x, y, 1, height, Component.empty());
+        this.color = color;
+        this.active = false;
     }
 
     public VerticalSeparatorWidget(int x, int y, int height, int leftColor, int rightColor) {
-        this(x, y, height, true, leftColor, rightColor);
-    }
-
-    private VerticalSeparatorWidget(int x, int y, int height, boolean doubleLine, int leftColor, int rightColor) {
-        super(x, y, doubleLine ? 2 : 1, height, Component.empty());
-        this.doubleLine = doubleLine;
-        this.leftColor = leftColor;
-        this.rightColor = rightColor;
-        this.active = false;
+        this(x, y, height, leftColor);
     }
 
     @Override
@@ -44,10 +35,7 @@ public class VerticalSeparatorWidget extends AbstractWidget {
         int top = this.getY();
         int bottom = top + this.getHeight();
 
-        guiGraphicsExtractor.fill(left, top, left + 1, bottom, this.leftColor);
-        if (this.doubleLine) {
-            guiGraphicsExtractor.fill(left + 1, top, left + this.getWidth(), bottom, this.rightColor);
-        }
+        guiGraphicsExtractor.fill(left, top, left + this.getWidth(), bottom, this.color);
     }
 
     @Override

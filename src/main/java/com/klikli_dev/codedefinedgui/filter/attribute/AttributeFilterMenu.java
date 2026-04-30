@@ -34,9 +34,14 @@ public class AttributeFilterMenu extends FilterMenu {
     public static final int BUTTON_PREVIOUS_CANDIDATE = 5;
     public static final int BUTTON_ADD_SELECTED = 6;
     public static final int BUTTON_ADD_SELECTED_INVERTED = 7;
+    public static final int BUTTON_CONFIRM = 8;
+    public static final int BUTTON_CANCEL = 9;
 
+    private final AttributeFilterState initialState;
     private final DataSlot mode = DataSlot.standalone();
     private final DataSlot selectedCandidateIndex = DataSlot.standalone();
+    private boolean addLocked;
+    private boolean sessionCommitted;
 
     public AttributeFilterMenu(int containerId, Inventory inventory, RegistryFriendlyByteBuf buffer) {
         this(MenuTypeRegistry.ATTRIBUTE_FILTER.get(), containerId, inventory, buffer.readEnum(InteractionHand.class));
@@ -50,6 +55,7 @@ public class AttributeFilterMenu extends FilterMenu {
         super(menuType, containerId, inventory, hand, 2, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
 
         AttributeFilterState state = AttributeFilterStateAccessor.INSTANCE.read(this.filterStack());
+        this.initialState = state;
         this.mode.set(state.mode().ordinal());
         this.selectedCandidateIndex.set(0);
         this.addDataSlot(this.mode);
@@ -64,6 +70,10 @@ public class AttributeFilterMenu extends FilterMenu {
 
     public int selectedCandidateIndex() {
         return this.selectedCandidateIndex.get();
+    }
+
+    public boolean addLocked() {
+        return this.addLocked;
     }
 
     public ItemStack referenceStack() {
@@ -111,6 +121,7 @@ public class AttributeFilterMenu extends FilterMenu {
     public boolean clickMenuButton(Player player, int buttonId) {
         switch (buttonId) {
             case BUTTON_RESET -> {
+                this.addLocked = false;
                 this.writeState(new AttributeFilterState(this.referenceStack(), this.mode(), List.of()));
                 return true;
             }
@@ -149,10 +160,28 @@ public class AttributeFilterMenu extends FilterMenu {
             case BUTTON_ADD_SELECTED_INVERTED -> {
                 return this.addSelectedRule(true);
             }
+            case BUTTON_CONFIRM -> {
+                this.sessionCommitted = true;
+                return true;
+            }
+            case BUTTON_CANCEL -> {
+                this.restoreInitialState();
+                this.sessionCommitted = true;
+                return true;
+            }
             default -> {
                 return false;
             }
         }
+    }
+
+    @Override
+    public void removed(@NotNull Player player) {
+        if (!this.sessionCommitted) {
+            this.restoreInitialState();
+        }
+
+        super.removed(player);
     }
 
     @Override
@@ -224,6 +253,10 @@ public class AttributeFilterMenu extends FilterMenu {
     }
 
     private boolean addSelectedRule(boolean inverted) {
+        if (this.addLocked()) {
+            return false;
+        }
+
         AttributeFilterState state = this.state();
         Optional<AttributeCandidate> selected = this.selectedCandidate();
         if (selected.isEmpty()) {
@@ -239,6 +272,7 @@ public class AttributeFilterMenu extends FilterMenu {
         List<AttributeRule> rules = new ArrayList<>(state.rules());
         rules.add(rule);
         this.writeState(new AttributeFilterState(this.referenceStack(), this.mode(), List.copyOf(rules)));
+        this.addLocked = true;
         return true;
     }
 
@@ -254,5 +288,12 @@ public class AttributeFilterMenu extends FilterMenu {
 
     private void syncSummarySlot() {
         this.ghostStorage.setStackInSlot(1, this.summaryStack());
+    }
+
+    private void restoreInitialState() {
+        this.mode.set(this.initialState.mode().ordinal());
+        this.selectedCandidateIndex.set(0);
+        this.addLocked = false;
+        this.writeState(this.initialState);
     }
 }
