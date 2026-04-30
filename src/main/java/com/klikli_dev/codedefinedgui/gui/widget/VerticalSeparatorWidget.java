@@ -14,6 +14,7 @@ public class VerticalSeparatorWidget extends AbstractWidget {
     private static final int DEFAULT_LEFT_COLOR = 0xFF555555;
     private static final int DEFAULT_RIGHT_COLOR = 0xFFFFFFFF;
 
+    private final boolean doubleLine;
     private final int leftColor;
     private final int rightColor;
 
@@ -21,8 +22,17 @@ public class VerticalSeparatorWidget extends AbstractWidget {
         this(x, y, height, DEFAULT_LEFT_COLOR, DEFAULT_RIGHT_COLOR);
     }
 
+    public VerticalSeparatorWidget(int x, int y, int height, int color) {
+        this(x, y, height, false, color, color);
+    }
+
     public VerticalSeparatorWidget(int x, int y, int height, int leftColor, int rightColor) {
-        super(x, y, 2, height, Component.empty());
+        this(x, y, height, true, leftColor, rightColor);
+    }
+
+    private VerticalSeparatorWidget(int x, int y, int height, boolean doubleLine, int leftColor, int rightColor) {
+        super(x, y, doubleLine ? 2 : 1, height, Component.empty());
+        this.doubleLine = doubleLine;
         this.leftColor = leftColor;
         this.rightColor = rightColor;
         this.active = false;
@@ -35,7 +45,9 @@ public class VerticalSeparatorWidget extends AbstractWidget {
         int bottom = top + this.getHeight();
 
         guiGraphicsExtractor.fill(left, top, left + 1, bottom, this.leftColor);
-        guiGraphicsExtractor.fill(left + 1, top, left + this.getWidth(), bottom, this.rightColor);
+        if (this.doubleLine) {
+            guiGraphicsExtractor.fill(left + 1, top, left + this.getWidth(), bottom, this.rightColor);
+        }
     }
 
     @Override
