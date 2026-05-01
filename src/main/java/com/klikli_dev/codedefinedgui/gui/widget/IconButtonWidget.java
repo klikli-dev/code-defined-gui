@@ -54,14 +54,13 @@ public class IconButtonWidget extends AbstractWidget {
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         this.refreshTooltip();
-        GuiSprite background = this.active && this.isMouseOver(mouseX, mouseY) ? this.backgroundSprites.hovered() : this.backgroundSprites.normal();
+        GuiSprite background = !this.active
+                ? this.backgroundSprites.pressed()
+                : this.isMouseOver(mouseX, mouseY) ? this.backgroundSprites.hovered() : this.backgroundSprites.normal();
         background.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
         int iconX = this.getX() + (this.getWidth() - this.icon.width()) / 2;
         int iconY = this.getY() + (this.getHeight() - this.icon.height()) / 2;
         this.icon.extractRenderState(graphics, iconX, iconY, this.icon.width(), this.icon.height());
-        if (!this.active) {
-            graphics.fill(this.getX(), this.getY(), this.getX() + this.getWidth(), this.getY() + this.getHeight(), 0x88000000);
-        }
     }
 
     @Override
