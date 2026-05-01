@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [release/v26.1.2-1.2.0] - 2026-05-01
+### :sparkles: New Features
+- [`cae05a0`](https://github.com/klikli-dev/code-defined-gui/commit/cae05a02261fae1b3b0885ccc3ab60a70b63213f) - filter screen styling *(PR [#4](https://github.com/klikli-dev/code-defined-gui/pull/4) by [@klikli-dev](https://github.com/klikli-dev))*
+
+
 ## [release/v26.1.2-1.1.1] - 2026-04-29
 ### :bug: Bug Fixes
 - [`962a3cf`](https://github.com/klikli-dev/code-defined-gui/commit/962a3cf6b0d619bf830c8273301ab4128a4e5531) - attribute selection border *(commit by [@klikli-dev](https://github.com/klikli-dev))*
@@ -43,3 +48,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [release/v26.1.2-1.0.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-0.0.0...release/v26.1.2-1.0.0
 [release/v26.1.2-1.1.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.0.0...release/v26.1.2-1.1.0
 [release/v26.1.2-1.1.1]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.1.0...release/v26.1.2-1.1.1
+[release/v26.1.2-1.2.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.1.1...release/v26.1.2-1.2.0
