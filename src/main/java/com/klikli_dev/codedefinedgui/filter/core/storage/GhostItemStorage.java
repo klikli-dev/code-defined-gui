@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.filter.support;
+package com.klikli_dev.codedefinedgui.filter.core.storage;
 
 import java.util.Objects;
 import net.minecraft.core.NonNullList;
@@ -66,7 +66,12 @@ public class GhostItemStorage extends ItemAccessItemHandler {
         }
 
         this.writeContents(contents);
-        return true;
+        return changed;
+    }
+
+    public boolean hasItem(int index) {
+        Objects.checkIndex(index, this.size);
+        return !this.getResource(index).isEmpty();
     }
 
     private NonNullList<ItemStack> readContents() {

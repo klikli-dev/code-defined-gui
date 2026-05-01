@@ -12,10 +12,18 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 
 public class FilterIndicatorWidget extends AbstractWidget {
+    private final GuiSprite onSprite;
+    private final GuiSprite offSprite;
     private boolean on;
 
     public FilterIndicatorWidget(int x, int y) {
-        super(x, y, GuiSprites.FILTER_INDICATOR_OFF.width(), GuiSprites.FILTER_INDICATOR_OFF.height(), Component.empty());
+        this(x, y, GuiSprites.FILTER_INDICATOR_ON, GuiSprites.FILTER_INDICATOR_OFF);
+    }
+
+    public FilterIndicatorWidget(int x, int y, GuiSprite onSprite, GuiSprite offSprite) {
+        super(x, y, offSprite.width(), offSprite.height(), Component.empty());
+        this.onSprite = onSprite;
+        this.offSprite = offSprite;
         this.active = false;
     }
 
@@ -25,7 +33,7 @@ public class FilterIndicatorWidget extends AbstractWidget {
 
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        GuiSprite texture = this.on ? GuiSprites.FILTER_INDICATOR_ON : GuiSprites.FILTER_INDICATOR_OFF;
+        GuiSprite texture = this.on ? this.onSprite : this.offSprite;
         texture.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 

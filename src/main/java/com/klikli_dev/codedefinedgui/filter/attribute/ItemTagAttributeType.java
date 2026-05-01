@@ -4,7 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
-import com.klikli_dev.codedefinedgui.infrastructure.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import java.util.List;
 import java.util.stream.Collectors;
 import net.minecraft.core.HolderLookup;
@@ -12,7 +13,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
@@ -43,7 +43,7 @@ public class ItemTagAttributeType implements ItemAttributeType {
 
     @Override
     public Component describe(CustomData payload, HolderLookup.Provider registries, boolean inverted) {
-        Component base = Component.translatable("codedefinedgui.filter.attribute.in_tag", "#" + AttributePayloads.getString(payload, "id"));
-        return inverted ? Component.translatable("codedefinedgui.filter.attribute.inverted", base) : base;
+        Component base = Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.IN_TAG, "#" + AttributePayloads.getString(payload, "id"));
+        return inverted ? Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.INVERTED, base) : base;
     }
 }

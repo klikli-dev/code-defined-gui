@@ -4,12 +4,16 @@
 
 package com.klikli_dev.codedefinedgui.gui.filter;
 
+import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
 import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
 import com.klikli_dev.codedefinedgui.gui.core.GuiRootWidget;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.FilterIndicatorWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.IconButtonBackgroundSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.TextureWidget;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -18,20 +22,28 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
 public abstract class AbstractFilterScreen<M extends FilterMenu> extends AbstractContainerScreen<M> implements GuiHost {
+    private static final int PLAYER_INVENTORY_BACKGROUND_WIDTH = 176;
+    private static final int PLAYER_INVENTORY_BACKGROUND_HEIGHT = 90;
+    private static final int PLAYER_INVENTORY_BACKGROUND_Y_OFFSET = 11;
+    private static final int PLAYER_INVENTORY_SLOT_X_OFFSET = 7;
+    private static final int PLAYER_INVENTORY_MAIN_SLOT_Y_OFFSET = 18;
+    private static final int PLAYER_INVENTORY_HOTBAR_SLOT_Y_OFFSET = 76;
+
     protected final GuiRootWidget root;
     protected IconButtonWidget resetButton;
     protected IconButtonWidget confirmButton;
+    private boolean closingHandled;
 
     protected AbstractFilterScreen(M menu, Inventory playerInventory, Component title, int imageWidth, int imageHeight) {
         super(menu, playerInventory, title, imageWidth, imageHeight);
         this.root = new GuiRootWidget(this);
-        this.inventoryLabelX = (this.imageWidth - 176) / 2 + 8;
-        this.inventoryLabelY = this.imageHeight - 94;
     }
 
     @Override
     protected void init() {
         super.init();
+        this.inventoryLabelX = (this.imageWidth - PLAYER_INVENTORY_BACKGROUND_WIDTH) / 2 + 8;
+        this.inventoryLabelY = this.imageHeight - 94 + PLAYER_INVENTORY_BACKGROUND_Y_OFFSET;
         this.addRenderableWidget(this.root);
         this.root.clearChildren();
         this.addBackgroundWidgets();
@@ -58,6 +70,11 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         }
 
         return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
+    }
+
+    @Override
+    public void onClose() {
+        this.closeScreen(false);
     }
 
     @Override
@@ -107,7 +124,7 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     }
 
     protected int centeredPlayerInventoryLeft() {
-        return this.leftPos + (this.imageWidth - 176) / 2;
+        return this.leftPos + (this.imageWidth - PLAYER_INVENTORY_BACKGROUND_WIDTH) / 2;
     }
 
     protected int playerInventoryTop() {
@@ -120,9 +137,14 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
      * Override to replace or suppress the default background while keeping the inventory slot widgets.
      */
     protected void addPlayerInventoryBackgroundWidgets() {
-        int inventoryLeft = this.centeredPlayerInventoryLeft();
-        int inventoryTop = this.playerInventoryTop();
-        this.root.addChild(new GuiBackgroundWidget(this, inventoryLeft, inventoryTop, 176, 108));
+        this.root.addChild(new GuiBackgroundWidget(
+                this,
+                this.centeredPlayerInventoryLeft(),
+                this.playerInventoryTop() + PLAYER_INVENTORY_BACKGROUND_Y_OFFSET,
+                PLAYER_INVENTORY_BACKGROUND_WIDTH,
+                PLAYER_INVENTORY_BACKGROUND_HEIGHT,
+                this.playerInventoryBackgroundSprite()
+        ));
     }
 
     protected final void addStaticWidgets() {
@@ -133,14 +155,15 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     private void addPlayerInventorySlotWidgets() {
         int inventoryLeft = this.centeredPlayerInventoryLeft();
         int inventoryTop = this.playerInventoryTop();
+        GuiSprite inventorySlotSprite = this.playerInventorySlotSprite();
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
-                this.root.addChild(new TextureWidget(inventoryLeft + 7 + col * 18, inventoryTop + 18 + row * 18, GuiSprites.INVENTORY_SLOT));
+                this.root.addChild(new GuiSpriteWidget(inventoryLeft + PLAYER_INVENTORY_SLOT_X_OFFSET + col * 18, inventoryTop + PLAYER_INVENTORY_MAIN_SLOT_Y_OFFSET + row * 18, inventorySlotSprite));
             }
         }
 
         for (int col = 0; col < 9; col++) {
-            this.root.addChild(new TextureWidget(inventoryLeft + 7 + col * 18, inventoryTop + 76, GuiSprites.INVENTORY_SLOT));
+            this.root.addChild(new GuiSpriteWidget(inventoryLeft + PLAYER_INVENTORY_SLOT_X_OFFSET + col * 18, inventoryTop + PLAYER_INVENTORY_HOTBAR_SLOT_Y_OFFSET, inventorySlotSprite));
         }
     }
 
@@ -163,6 +186,82 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     protected abstract void addScreenWidgets();
 
     protected abstract void refreshWidgetState();
+
+    protected final IconButtonWidget addIconButton(int x, int y, GuiSprite icon, Component message, Runnable onPress) {
+        return this.root.addChild(new IconButtonWidget(x, y, icon, this.buttonBackgroundSprites(), message, onPress));
+    }
+
+    protected final IconButtonWidget addResetButton(int x, int y, int buttonId) {
+        return this.addIconButton(
+                x,
+                y,
+                GuiSprites.FILTER_ICON_RESET,
+                Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.RESET),
+                () -> this.pressButton(buttonId)
+        ).withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.RESET_TOOLTIP));
+    }
+
+    protected final IconButtonWidget addConfirmButton(int x, int y) {
+        return this.addIconButton(
+                x,
+                y,
+                GuiSprites.FILTER_ICON_CONFIRM,
+                Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.DONE),
+                () -> this.closeScreen(true)
+        ).withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.DONE_TOOLTIP));
+    }
+
+    protected final FilterIndicatorWidget addFilterIndicator(int x, int y) {
+        return this.root.addChild(new FilterIndicatorWidget(x, y, this.filterIndicatorOnSprite(), this.filterIndicatorOffSprite()));
+    }
+
+    protected final void pressButton(int buttonId) {
+        if (this.minecraft == null || this.minecraft.player == null || this.minecraft.gameMode == null) {
+            return;
+        }
+
+        if (this.menu.clickMenuButton(this.minecraft.player, buttonId)) {
+            this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, buttonId);
+        }
+    }
+
+    protected final void closeScreen(boolean confirm) {
+        if (this.closingHandled) {
+            return;
+        }
+
+        this.closingHandled = true;
+        this.pressButton(confirm ? this.confirmButtonId() : this.cancelButtonId());
+        super.onClose();
+    }
+
+    protected IconButtonBackgroundSprites buttonBackgroundSprites() {
+        return IconButtonBackgroundSprites.DEFAULT;
+    }
+
+    protected GuiSprite filterIndicatorOnSprite() {
+        return GuiSprites.FILTER_INDICATOR_ON;
+    }
+
+    protected GuiSprite filterIndicatorOffSprite() {
+        return GuiSprites.FILTER_INDICATOR_OFF;
+    }
+
+    protected GuiSprite inventorySlotSprite() {
+        return GuiSprites.INVENTORY_SLOT;
+    }
+
+    protected GuiSprite playerInventoryBackgroundSprite() {
+        return GuiSprites.GUI_BACKGROUND;
+    }
+
+    protected GuiSprite playerInventorySlotSprite() {
+        return GuiSprites.INVENTORY_SLOT;
+    }
+
+    protected abstract int confirmButtonId();
+
+    protected abstract int cancelButtonId();
 
     protected abstract int titleColor();
 }

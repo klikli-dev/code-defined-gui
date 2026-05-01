@@ -5,8 +5,8 @@
 package com.klikli_dev.codedefinedgui.filter.list;
 
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
-import com.klikli_dev.codedefinedgui.infrastructure.registry.DataComponentRegistry;
-import com.klikli_dev.codedefinedgui.infrastructure.registry.MenuTypeRegistry;
+import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
+import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,6 +22,8 @@ public class ListFilterMenu extends FilterMenu {
     public static final int BUTTON_DENY = 2;
     public static final int BUTTON_RESPECT_DATA = 3;
     public static final int BUTTON_IGNORE_DATA = 4;
+    public static final int BUTTON_CONFIRM = 5;
+    public static final int BUTTON_CANCEL = 6;
     private static final int FILTER_SLOTS = 18;
 
     private final DataSlot mode = DataSlot.standalone();
@@ -62,22 +64,25 @@ public class ListFilterMenu extends FilterMenu {
             }
             case BUTTON_ALLOW -> {
                 this.mode.set(ListFilterMode.ALLOW.ordinal());
-                this.saveState();
                 return true;
             }
             case BUTTON_DENY -> {
                 this.mode.set(ListFilterMode.DENY.ordinal());
-                this.saveState();
                 return true;
             }
             case BUTTON_RESPECT_DATA -> {
                 this.respectDataComponents.set(1);
-                this.saveState();
                 return true;
             }
             case BUTTON_IGNORE_DATA -> {
                 this.respectDataComponents.set(0);
-                this.saveState();
+                return true;
+            }
+            case BUTTON_CONFIRM -> {
+                this.commitDraft();
+                return true;
+            }
+            case BUTTON_CANCEL -> {
                 return true;
             }
             default -> {
@@ -138,7 +143,7 @@ public class ListFilterMenu extends FilterMenu {
         }
     }
 
-    private void saveState() {
+    private void commitDraft() {
         ListFilterStateAccessor.INSTANCE.write(this.filterStack(), new ListFilterState(
                 this.ghostStorage.contents(),
                 this.isDenyList() ? ListFilterMode.DENY : ListFilterMode.ALLOW,

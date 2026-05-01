@@ -4,6 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.filter.core;
 
+import com.klikli_dev.codedefinedgui.filter.core.storage.GhostItemStorage;
+import com.klikli_dev.codedefinedgui.filter.core.storage.GhostResourceHandlerSlot;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -19,15 +21,12 @@ import net.minecraft.world.item.component.ItemContainerContents;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import org.jetbrains.annotations.NotNull;
 
-import com.klikli_dev.codedefinedgui.filter.support.GhostItemStorage;
-import com.klikli_dev.codedefinedgui.filter.support.GhostResourceHandlerSlot;
-
 public abstract class FilterMenu extends AbstractContainerMenu {
     private static final int PLAYER_SLOT_COUNT = 36;
     private static final int OFFHAND_SLOT = 40;
 
     protected final Player player;
-    protected final ItemAccess filterAccess;
+    protected final ItemStack draftFilterStack;
     protected final GhostItemStorage ghostStorage;
     private final Item filterItem;
     private final int heldSlot;
@@ -38,11 +37,11 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         super(menuType, containerId);
         this.player = inventory.player;
         this.heldSlot = heldSlot(inventory.player, hand);
-        this.filterAccess = ItemAccess.forPlayerSlot(inventory.player, this.heldSlot);
-        this.filterItem = this.filterAccess.getResource().getItem();
+        this.filterItem = this.filterStack().getItem();
+        this.draftFilterStack = this.filterStack().copy();
         this.ghostSlots = ghostSlots;
         this.lockedPlayerSlotId = playerSlotId(this.heldSlot);
-        this.ghostStorage = new GhostItemStorage(this.filterAccess, ghostComponent, ghostSlots);
+        this.ghostStorage = new GhostItemStorage(ItemAccess.forStack(this.draftFilterStack), ghostComponent, ghostSlots);
 
         this.addStandardInventorySlots(inventory, this.playerInventoryX(), this.playerInventoryY());
         this.addFilterSlots();
@@ -118,6 +117,7 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         boolean changed = this.ghostStorage.setStackInSlot(ghostSlot, stack);
         if (changed) {
             this.onGhostContentsChanged();
+            this.broadcastChanges();
         }
         return changed;
     }
@@ -130,12 +130,17 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         boolean changed = this.ghostStorage.clearContent();
         if (changed) {
             this.onGhostContentsChanged();
+            this.broadcastChanges();
         }
         return changed;
     }
 
     protected Slot addGhostSlot(int slot, int xPosition, int yPosition) {
         return this.addSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition));
+    }
+
+    protected final int ghostMenuSlotId(int ghostSlot) {
+        return PLAYER_SLOT_COUNT + ghostSlot;
     }
 
     private boolean isGhostSlotId(int slotId) {

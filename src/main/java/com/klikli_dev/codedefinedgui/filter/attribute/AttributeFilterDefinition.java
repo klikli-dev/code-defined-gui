@@ -4,7 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
-import com.klikli_dev.codedefinedgui.infrastructure.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.filter.core.FilterDefinition;
 import com.klikli_dev.codedefinedgui.filter.core.FilterMatchContext;
 import com.klikli_dev.codedefinedgui.filter.core.FilterStateAccessor;
@@ -58,7 +59,7 @@ public final class AttributeFilterDefinition implements FilterDefinition<Attribu
             return lines;
         }
 
-        lines.add(Component.translatable("codedefinedgui.filter.attribute.summary.mode", Component.translatable("codedefinedgui.filter.attribute.mode." + state.mode().getSerializedName()))
+        lines.add(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.SUMMARY_MODE, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.key(state.mode().getSerializedName())))
                 .withStyle(ChatFormatting.GOLD));
         int previewCount = Math.min(state.rules().size(), 4);
         for (int i = 0; i < previewCount; i++) {
@@ -70,7 +71,7 @@ public final class AttributeFilterDefinition implements FilterDefinition<Attribu
         }
 
         if (state.rules().size() > previewCount) {
-            lines.add(Component.translatable("codedefinedgui.filter.summary.more", state.rules().size() - previewCount)
+            lines.add(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.SUMMARY_MORE, state.rules().size() - previewCount)
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
 

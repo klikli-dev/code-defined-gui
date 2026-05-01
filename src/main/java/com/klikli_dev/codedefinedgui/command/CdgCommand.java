@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.command;
 
 import com.klikli_dev.codedefinedgui.example.network.OpenTestScreenMessage;
-import com.klikli_dev.codedefinedgui.infrastructure.network.Networking;
+import com.klikli_dev.codedefinedgui.network.Networking;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;

@@ -4,7 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
-import com.klikli_dev.codedefinedgui.infrastructure.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiPredicate;
@@ -55,8 +56,8 @@ public class StandardAttributeType implements ItemAttributeType {
     @Override
     public Component describe(CustomData payload, HolderLookup.Provider registries, boolean inverted) {
         String value = AttributePayloads.getString(payload, "value");
-        Component base = Component.translatable("codedefinedgui.filter.attribute.standard." + value);
-        return inverted ? Component.translatable("codedefinedgui.filter.attribute.inverted", base) : base;
+        Component base = Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Standard.key(value));
+        return inverted ? Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.INVERTED, base) : base;
     }
 
     private enum StandardAttribute {

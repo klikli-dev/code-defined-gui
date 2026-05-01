@@ -4,7 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
-import com.klikli_dev.codedefinedgui.infrastructure.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -66,8 +67,8 @@ public class FluidContentsAttributeType implements ItemAttributeType {
     public Component describe(CustomData payload, HolderLookup.Provider registries, boolean inverted) {
         Identifier id = Identifier.tryParse(AttributePayloads.getString(payload, "id"));
         Fluid fluid = id == null ? Fluids.EMPTY : BuiltInRegistries.FLUID.getOptional(id).orElse(Fluids.EMPTY);
-        Component base = Component.translatable("codedefinedgui.filter.attribute.has_fluid", fluid.getFluidType().getDescription());
-        return inverted ? Component.translatable("codedefinedgui.filter.attribute.inverted", base) : base;
+        Component base = Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.HAS_FLUID, fluid.getFluidType().getDescription());
+        return inverted ? Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.INVERTED, base) : base;
     }
 
     private Set<Fluid> extractFluids(ItemStack stack) {

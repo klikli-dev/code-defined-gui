@@ -4,9 +4,12 @@
 
 package com.klikli_dev.codedefinedgui.gui.widget;
 
+import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeCandidate;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
@@ -21,14 +24,21 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.client.input.MouseButtonEvent;
 
 public class AttributeSelectionWidget extends AbstractWidget {
+    private static final int HEADER_RGB = 0x5391E1;
     private static final int VISIBLE_TOOLTIP_ENTRIES = 8;
+    private final GuiSprite sprite;
     private final Supplier<List<AttributeCandidate>> candidates;
     private final IntSupplier selectedIndex;
     private final IntConsumer onChange;
     private Component title = Component.empty();
 
     public AttributeSelectionWidget(int x, int y, int width, int height, Supplier<List<AttributeCandidate>> candidates, IntSupplier selectedIndex, IntConsumer onChange) {
+        this(x, y, width, height, GuiSprites.ATTRIBUTE_FILTER_SELECTION, candidates, selectedIndex, onChange);
+    }
+
+    public AttributeSelectionWidget(int x, int y, int width, int height, GuiSprite sprite, Supplier<List<AttributeCandidate>> candidates, IntSupplier selectedIndex, IntConsumer onChange) {
         super(x, y, width, height, Component.empty());
+        this.sprite = Objects.requireNonNull(sprite);
         this.candidates = candidates;
         this.selectedIndex = selectedIndex;
         this.onChange = onChange;
@@ -43,12 +53,17 @@ public class AttributeSelectionWidget extends AbstractWidget {
 
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        GuiSprites.ATTRIBUTE_FILTER_SELECTION.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        this.sprite.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
         List<AttributeCandidate> entries = this.candidates.get();
         Component text = entries.isEmpty()
-                ? Component.translatable("codedefinedgui.filter.attribute.no_reference")
+                ? Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.NO_REFERENCE)
                 : entries.get(Math.max(0, Math.min(this.selectedIndex.getAsInt(), entries.size() - 1))).label();
-        graphics.text(Minecraft.getInstance().font, text, this.getX() + 6, this.getY() + (this.getHeight() - 8) / 2, 0xFFF3EBDE, false);
+        int textLeft = this.getX() + 6;
+        int textTop = this.getY() + (this.getHeight() - 8) / 2;
+        int textRight = this.getX() + this.getWidth() - 6;
+        graphics.enableScissor(textLeft, this.getY() + 1, textRight, this.getY() + this.getHeight() - 1);
+        graphics.text(Minecraft.getInstance().font, text, textLeft, textTop, 0xFFF3EBDE, false);
+        graphics.disableScissor();
     }
 
     @Override
@@ -84,7 +99,7 @@ public class AttributeSelectionWidget extends AbstractWidget {
     public void updateTooltip() {
         List<AttributeCandidate> entries = this.candidates.get();
         if (entries.isEmpty()) {
-            MutableComponent tooltip = this.title.copy().append(Component.literal("\n")).append(Component.translatable("codedefinedgui.filter.attribute.no_reference")
+            MutableComponent tooltip = this.title.copy().withStyle(style -> style.withColor(HEADER_RGB)).append(Component.literal("\n")).append(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.NO_REFERENCE)
                     .withStyle(ChatFormatting.GRAY));
             this.setTooltip(Tooltip.create(tooltip));
             return;
@@ -98,7 +113,7 @@ public class AttributeSelectionWidget extends AbstractWidget {
             start = end - VISIBLE_TOOLTIP_ENTRIES;
         }
 
-        MutableComponent tooltip = this.title.copy();
+        MutableComponent tooltip = this.title.copy().withStyle(style -> style.withColor(HEADER_RGB));
         if (start > 0) {
             tooltip.append(Component.literal("\n")).append(Component.literal("> ...").withStyle(ChatFormatting.GRAY));
         }
@@ -113,7 +128,7 @@ public class AttributeSelectionWidget extends AbstractWidget {
             tooltip.append(Component.literal("\n")).append(Component.literal("> ...").withStyle(ChatFormatting.GRAY));
         }
 
-        tooltip.append(Component.literal("\n")).append(Component.translatable("codedefinedgui.filter.attribute.scroll_to_select")
+        tooltip.append(Component.literal("\n")).append(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.SCROLL_TO_SELECT)
                 .withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
         this.setTooltip(Tooltip.create(tooltip));
     }

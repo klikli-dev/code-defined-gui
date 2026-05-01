@@ -4,7 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.gui.texture;
 
-import com.klikli_dev.codedefinedgui.infrastructure.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.CodeDefinedGui;
 import net.minecraft.resources.Identifier;
 
 public final class GuiSprites {

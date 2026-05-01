@@ -12,18 +12,22 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import org.jspecify.annotations.NonNull;
 
-public class TextureWidget extends AbstractWidget implements GuiSyncable {
-    private final GuiSprite texture;
+/**
+ * Renders a GuiSprite at the given position.
+ * Can be used to e.g. render slot backgrounds.
+ */
+public class GuiSpriteWidget extends AbstractWidget implements GuiSyncable {
+    private final GuiSprite sprite;
 
-    public TextureWidget(int x, int y, GuiSprite texture) {
-        super(x, y, texture.width(), texture.height(), Component.empty());
-        this.texture = texture;
+    public GuiSpriteWidget(int x, int y, GuiSprite sprite) {
+        super(x, y, sprite.width(), sprite.height(), Component.empty());
+        this.sprite = sprite;
         this.active = false;
     }
 
     @Override
-    protected void extractWidgetRenderState(@NonNull GuiGraphicsExtractor guiGraphicsExtractor, int mouseX, int mouseY, float a) {
-        this.texture.extractRenderState(guiGraphicsExtractor, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+    protected void extractWidgetRenderState(@NonNull GuiGraphicsExtractor guiGraphicsExtractor, int mouseX, int mouseY, float partialTick) {
+        this.sprite.extractRenderState(guiGraphicsExtractor, this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 
     @Override

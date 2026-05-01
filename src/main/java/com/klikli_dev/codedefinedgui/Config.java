@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.infrastructure;
+package com.klikli_dev.codedefinedgui;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
