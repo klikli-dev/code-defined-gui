@@ -28,7 +28,6 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
     private static final int ADD_BUTTON_X = 190;
     private static final int ADD_INVERTED_BUTTON_X = 208;
 
-    private boolean closingHandled;
     private IconButtonWidget matchAnyButton;
     private IconButtonWidget matchAllButton;
     private IconButtonWidget denyButton;
@@ -60,33 +59,18 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
 
     @Override
     protected void addScreenWidgets() {
-        var buttonBackgroundSprites = this.buttonBackgroundSprites();
-        this.resetButton = this.root.addChild(new IconButtonWidget(
-                this.leftPos + 179,
-                this.topPos + 61,
-                GuiSprites.FILTER_ICON_RESET,
-                buttonBackgroundSprites,
-                Component.translatable("codedefinedgui.filter.button.reset"),
-                () -> this.pressButton(AttributeFilterMenu.BUTTON_RESET)
-        ).withTooltip(Component.translatable("codedefinedgui.filter.button.reset.tooltip")));
-        this.confirmButton = this.root.addChild(new IconButtonWidget(
-                this.leftPos + 208,
-                this.topPos + 61,
-                GuiSprites.FILTER_ICON_CONFIRM,
-                buttonBackgroundSprites,
-                Component.translatable("codedefinedgui.filter.button.done"),
-                () -> this.closeScreen(true)
-        ).withTooltip(Component.translatable("codedefinedgui.filter.button.done.tooltip")));
+        this.resetButton = this.addResetButton(this.leftPos + 179, this.topPos + 61, AttributeFilterMenu.BUTTON_RESET);
+        this.confirmButton = this.addConfirmButton(this.leftPos + 208, this.topPos + 61);
 
-        this.matchAnyButton = this.root.addChild(new IconButtonWidget(this.leftPos + 47, this.topPos + 61, GuiSprites.FILTER_ICON_MATCH_ANY, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.attribute.mode.match_any"), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ANY))
-                .withTooltip(Component.translatable("codedefinedgui.filter.attribute.mode.match_any.tooltip"), Component.translatable("codedefinedgui.filter.attribute.mode.match_any.tooltip.shift")));
-        this.matchAllButton = this.root.addChild(new IconButtonWidget(this.leftPos + 65, this.topPos + 61, GuiSprites.FILTER_ICON_MATCH_ALL, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.attribute.mode.match_all"), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ALL))
-                .withTooltip(Component.translatable("codedefinedgui.filter.attribute.mode.match_all.tooltip"), Component.translatable("codedefinedgui.filter.attribute.mode.match_all.tooltip.shift")));
-        this.denyButton = this.root.addChild(new IconButtonWidget(this.leftPos + 83, this.topPos + 61, GuiSprites.FILTER_ICON_DENY_ALT, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.attribute.mode.deny"), () -> this.pressButton(AttributeFilterMenu.BUTTON_DENY))
-                .withTooltip(Component.translatable("codedefinedgui.filter.attribute.mode.deny.tooltip"), Component.translatable("codedefinedgui.filter.attribute.mode.deny.tooltip.shift")));
-        this.matchAnyIndicator = this.root.addChild(new FilterIndicatorWidget(this.leftPos + 47, this.topPos + 55));
-        this.matchAllIndicator = this.root.addChild(new FilterIndicatorWidget(this.leftPos + 65, this.topPos + 55));
-        this.denyIndicator = this.root.addChild(new FilterIndicatorWidget(this.leftPos + 83, this.topPos + 55));
+        this.matchAnyButton = this.addIconButton(this.leftPos + 47, this.topPos + 61, GuiSprites.FILTER_ICON_MATCH_ANY, Component.translatable("codedefinedgui.filter.attribute.mode.match_any"), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ANY))
+                .withTooltip(Component.translatable("codedefinedgui.filter.attribute.mode.match_any.tooltip"), Component.translatable("codedefinedgui.filter.attribute.mode.match_any.tooltip.shift"));
+        this.matchAllButton = this.addIconButton(this.leftPos + 65, this.topPos + 61, GuiSprites.FILTER_ICON_MATCH_ALL, Component.translatable("codedefinedgui.filter.attribute.mode.match_all"), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ALL))
+                .withTooltip(Component.translatable("codedefinedgui.filter.attribute.mode.match_all.tooltip"), Component.translatable("codedefinedgui.filter.attribute.mode.match_all.tooltip.shift"));
+        this.denyButton = this.addIconButton(this.leftPos + 83, this.topPos + 61, GuiSprites.FILTER_ICON_DENY_ALT, Component.translatable("codedefinedgui.filter.attribute.mode.deny"), () -> this.pressButton(AttributeFilterMenu.BUTTON_DENY))
+                .withTooltip(Component.translatable("codedefinedgui.filter.attribute.mode.deny.tooltip"), Component.translatable("codedefinedgui.filter.attribute.mode.deny.tooltip.shift"));
+        this.matchAnyIndicator = this.addFilterIndicator(this.leftPos + 47, this.topPos + 55);
+        this.matchAllIndicator = this.addFilterIndicator(this.leftPos + 65, this.topPos + 55);
+        this.denyIndicator = this.addFilterIndicator(this.leftPos + 83, this.topPos + 55);
 
         this.selectionWidget = this.root.addChild(new AttributeSelectionWidget(
                 this.leftPos + ATTRIBUTE_SELECTION_X,
@@ -98,10 +82,10 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
                 this.menu::selectedCandidateIndex,
                 this::changeSelection
         ).withTitle(Component.translatable("codedefinedgui.filter.attribute.available")));
-        this.addButton = this.root.addChild(new IconButtonWidget(this.leftPos + ADD_BUTTON_X, this.topPos + 23, GuiSprites.FILTER_ICON_ADD, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.attribute.add"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED))
-                .withTooltip(Component.translatable("codedefinedgui.filter.attribute.add.tooltip")));
-        this.addInvertedButton = this.root.addChild(new IconButtonWidget(this.leftPos + ADD_INVERTED_BUTTON_X, this.topPos + 23, GuiSprites.FILTER_ICON_ADD_INVERTED, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.attribute.add_inverted"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED))
-                .withTooltip(Component.translatable("codedefinedgui.filter.attribute.add_inverted.tooltip")));
+        this.addButton = this.addIconButton(this.leftPos + ADD_BUTTON_X, this.topPos + 23, GuiSprites.FILTER_ICON_ADD, Component.translatable("codedefinedgui.filter.attribute.add"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED))
+                .withTooltip(Component.translatable("codedefinedgui.filter.attribute.add.tooltip"));
+        this.addInvertedButton = this.addIconButton(this.leftPos + ADD_INVERTED_BUTTON_X, this.topPos + 23, GuiSprites.FILTER_ICON_ADD_INVERTED, Component.translatable("codedefinedgui.filter.attribute.add_inverted"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED))
+                .withTooltip(Component.translatable("codedefinedgui.filter.attribute.add_inverted.tooltip"));
         this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.leftPos + 18, this.topPos + 55, this.attributeSummarySprite(), () -> this.menu.state().rules().size(), this.menu::summaryStack));
     }
 
@@ -126,6 +110,16 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         return 0x592424;
     }
 
+    @Override
+    protected int confirmButtonId() {
+        return AttributeFilterMenu.BUTTON_CONFIRM;
+    }
+
+    @Override
+    protected int cancelButtonId() {
+        return AttributeFilterMenu.BUTTON_CANCEL;
+    }
+
     protected GuiSprite filterSlotSprite() {
         return this.inventorySlotSprite();
     }
@@ -139,14 +133,9 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
     }
 
     @Override
-    public void onClose() {
-        this.closeScreen(false);
-    }
-
-    @Override
     protected void extractTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
         if (this.summaryWidget != null && this.summaryWidget.isHovered() && this.minecraft != null && this.minecraft.player != null) {
-            List<Component> tooltip = new ArrayList<>(AttributeFilterDefinition.INSTANCE.summary(this.menu.state(), this.minecraft.player.registryAccess()));
+            List<Component> tooltip = new ArrayList<>(this.menu.summary(this.minecraft.player.registryAccess()));
             if (tooltip.isEmpty()) {
                 tooltip.add(Component.translatable("codedefinedgui.filter.attribute.no_rules"));
             }
@@ -159,12 +148,6 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
 
     private List<AttributeCandidate> candidates() {
         return this.menu.candidates();
-    }
-
-    private void pressButton(int buttonId) {
-        if (this.menu.clickMenuButton(this.minecraft.player, buttonId)) {
-            this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, buttonId);
-        }
     }
 
     private void changeSelection(int nextIndex) {
@@ -184,15 +167,5 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         }
 
         this.selectionWidget.updateTooltip();
-    }
-
-    private void closeScreen(boolean confirm) {
-        if (this.closingHandled) {
-            return;
-        }
-
-        this.closingHandled = true;
-        this.pressButton(confirm ? AttributeFilterMenu.BUTTON_CONFIRM : AttributeFilterMenu.BUTTON_CANCEL);
-        super.onClose();
     }
 }

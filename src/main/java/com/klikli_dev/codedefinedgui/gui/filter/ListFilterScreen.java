@@ -15,7 +15,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
 public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterScreen<M> {
-    private boolean closingHandled;
     private IconButtonWidget allowButton;
     private IconButtonWidget denyButton;
     private IconButtonWidget respectDataButton;
@@ -48,37 +47,22 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
 
     @Override
     protected void addScreenWidgets() {
-        var buttonBackgroundSprites = this.buttonBackgroundSprites();
-        this.resetButton = this.root.addChild(new IconButtonWidget(
-                this.leftPos + 152,
-                this.topPos + 75,
-                GuiSprites.FILTER_ICON_RESET,
-                buttonBackgroundSprites,
-                Component.translatable("codedefinedgui.filter.button.reset"),
-                () -> this.pressButton(ListFilterMenu.BUTTON_RESET)
-        ).withTooltip(Component.translatable("codedefinedgui.filter.button.reset.tooltip")));
-        this.confirmButton = this.root.addChild(new IconButtonWidget(
-                this.leftPos + 181,
-                this.topPos + 75,
-                GuiSprites.FILTER_ICON_CONFIRM,
-                buttonBackgroundSprites,
-                Component.translatable("codedefinedgui.filter.button.done"),
-                () -> this.closeScreen(true)
-        ).withTooltip(Component.translatable("codedefinedgui.filter.button.done.tooltip")));
+        this.resetButton = this.addResetButton(this.leftPos + 152, this.topPos + 75, ListFilterMenu.BUTTON_RESET);
+        this.confirmButton = this.addConfirmButton(this.leftPos + 181, this.topPos + 75);
 
-        this.denyButton = this.root.addChild(new IconButtonWidget(this.leftPos + 18, this.topPos + 75, GuiSprites.FILTER_ICON_DENY_LIST, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.list.mode.deny"), () -> this.pressButton(ListFilterMenu.BUTTON_DENY))
-                .withTooltip(Component.translatable("codedefinedgui.filter.list.mode.deny.tooltip"), Component.translatable("codedefinedgui.filter.list.mode.deny.tooltip.shift")));
-        this.allowButton = this.root.addChild(new IconButtonWidget(this.leftPos + 36, this.topPos + 75, GuiSprites.FILTER_ICON_ALLOW_LIST, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.list.mode.allow"), () -> this.pressButton(ListFilterMenu.BUTTON_ALLOW))
-                .withTooltip(Component.translatable("codedefinedgui.filter.list.mode.allow.tooltip"), Component.translatable("codedefinedgui.filter.list.mode.allow.tooltip.shift")));
-        this.respectDataButton = this.root.addChild(new IconButtonWidget(this.leftPos + 60, this.topPos + 75, GuiSprites.FILTER_ICON_RESPECT_DATA_COMPONENTS, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.list.respect_data"), () -> this.pressButton(ListFilterMenu.BUTTON_RESPECT_DATA))
-                .withTooltip(Component.translatable("codedefinedgui.filter.list.respect_data.tooltip"), Component.translatable("codedefinedgui.filter.list.respect_data.tooltip.shift")));
-        this.ignoreDataButton = this.root.addChild(new IconButtonWidget(this.leftPos + 78, this.topPos + 75, GuiSprites.FILTER_ICON_IGNORE_DATA_COMPONENTS, buttonBackgroundSprites, Component.translatable("codedefinedgui.filter.list.ignore_data"), () -> this.pressButton(ListFilterMenu.BUTTON_IGNORE_DATA))
-                .withTooltip(Component.translatable("codedefinedgui.filter.list.ignore_data.tooltip"), Component.translatable("codedefinedgui.filter.list.ignore_data.tooltip.shift")));
+        this.denyButton = this.addIconButton(this.leftPos + 18, this.topPos + 75, GuiSprites.FILTER_ICON_DENY_LIST, Component.translatable("codedefinedgui.filter.list.mode.deny"), () -> this.pressButton(ListFilterMenu.BUTTON_DENY))
+                .withTooltip(Component.translatable("codedefinedgui.filter.list.mode.deny.tooltip"), Component.translatable("codedefinedgui.filter.list.mode.deny.tooltip.shift"));
+        this.allowButton = this.addIconButton(this.leftPos + 36, this.topPos + 75, GuiSprites.FILTER_ICON_ALLOW_LIST, Component.translatable("codedefinedgui.filter.list.mode.allow"), () -> this.pressButton(ListFilterMenu.BUTTON_ALLOW))
+                .withTooltip(Component.translatable("codedefinedgui.filter.list.mode.allow.tooltip"), Component.translatable("codedefinedgui.filter.list.mode.allow.tooltip.shift"));
+        this.respectDataButton = this.addIconButton(this.leftPos + 60, this.topPos + 75, GuiSprites.FILTER_ICON_RESPECT_DATA_COMPONENTS, Component.translatable("codedefinedgui.filter.list.respect_data"), () -> this.pressButton(ListFilterMenu.BUTTON_RESPECT_DATA))
+                .withTooltip(Component.translatable("codedefinedgui.filter.list.respect_data.tooltip"), Component.translatable("codedefinedgui.filter.list.respect_data.tooltip.shift"));
+        this.ignoreDataButton = this.addIconButton(this.leftPos + 78, this.topPos + 75, GuiSprites.FILTER_ICON_IGNORE_DATA_COMPONENTS, Component.translatable("codedefinedgui.filter.list.ignore_data"), () -> this.pressButton(ListFilterMenu.BUTTON_IGNORE_DATA))
+                .withTooltip(Component.translatable("codedefinedgui.filter.list.ignore_data.tooltip"), Component.translatable("codedefinedgui.filter.list.ignore_data.tooltip.shift"));
 
-        this.denyIndicator = this.root.addChild(new FilterIndicatorWidget(this.leftPos + 18, this.topPos + 69));
-        this.allowIndicator = this.root.addChild(new FilterIndicatorWidget(this.leftPos + 36, this.topPos + 69));
-        this.respectDataIndicator = this.root.addChild(new FilterIndicatorWidget(this.leftPos + 60, this.topPos + 69));
-        this.ignoreDataIndicator = this.root.addChild(new FilterIndicatorWidget(this.leftPos + 78, this.topPos + 69));
+        this.denyIndicator = this.addFilterIndicator(this.leftPos + 18, this.topPos + 69);
+        this.allowIndicator = this.addFilterIndicator(this.leftPos + 36, this.topPos + 69);
+        this.respectDataIndicator = this.addFilterIndicator(this.leftPos + 60, this.topPos + 69);
+        this.ignoreDataIndicator = this.addFilterIndicator(this.leftPos + 78, this.topPos + 69);
     }
 
     @Override
@@ -101,27 +85,16 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
     }
 
     @Override
-    public void onClose() {
-        this.closeScreen(false);
+    protected int confirmButtonId() {
+        return ListFilterMenu.BUTTON_CONFIRM;
+    }
+
+    @Override
+    protected int cancelButtonId() {
+        return ListFilterMenu.BUTTON_CANCEL;
     }
 
     protected GuiSprite filterSlotSprite() {
         return this.inventorySlotSprite();
-    }
-
-    private void pressButton(int buttonId) {
-        if (this.menu.clickMenuButton(this.minecraft.player, buttonId)) {
-            this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, buttonId);
-        }
-    }
-
-    private void closeScreen(boolean confirm) {
-        if (this.closingHandled) {
-            return;
-        }
-
-        this.closingHandled = true;
-        this.pressButton(confirm ? ListFilterMenu.BUTTON_CONFIRM : ListFilterMenu.BUTTON_CANCEL);
-        super.onClose();
     }
 }

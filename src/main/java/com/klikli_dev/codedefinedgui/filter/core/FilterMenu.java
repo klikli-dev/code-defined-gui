@@ -139,6 +139,10 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         return this.addSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition));
     }
 
+    protected final int ghostMenuSlotId(int ghostSlot) {
+        return PLAYER_SLOT_COUNT + ghostSlot;
+    }
+
     private boolean isGhostSlotId(int slotId) {
         return slotId >= PLAYER_SLOT_COUNT && slotId < PLAYER_SLOT_COUNT + this.ghostSlots;
     }

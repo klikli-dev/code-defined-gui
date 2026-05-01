@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -36,6 +37,9 @@ public class AttributeFilterMenu extends FilterMenu {
     public static final int BUTTON_ADD_SELECTED_INVERTED = 7;
     public static final int BUTTON_CONFIRM = 8;
     public static final int BUTTON_CANCEL = 9;
+    private static final int REFERENCE_SLOT = 0;
+    private static final int SUMMARY_SLOT = 1;
+    private static final int GHOST_SLOT_COUNT = 2;
 
     private final DataSlot mode = DataSlot.standalone();
     private final DataSlot selectedCandidateIndex = DataSlot.standalone();
@@ -51,7 +55,7 @@ public class AttributeFilterMenu extends FilterMenu {
     }
 
     protected AttributeFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand) {
-        super(menuType, containerId, inventory, hand, 2, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
+        super(menuType, containerId, inventory, hand, GHOST_SLOT_COUNT, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
 
         AttributeFilterState state = AttributeFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());
@@ -77,13 +81,17 @@ public class AttributeFilterMenu extends FilterMenu {
     }
 
     public ItemStack referenceStack() {
-        return this.ghostStack(0);
+        return this.ghostStack(REFERENCE_SLOT);
     }
 
     public ItemStack summaryStack() {
         ItemStack stack = new ItemStack(Items.NAME_TAG);
         stack.set(DataComponents.ITEM_NAME, Component.literal("Selected Tags").withStyle(ChatFormatting.RESET, ChatFormatting.BLUE));
         return stack;
+    }
+
+    public List<Component> summary(HolderLookup.Provider registries) {
+        return AttributeFilterDefinition.INSTANCE.summary(this.state(), registries);
     }
 
     public AttributeFilterState state() {
@@ -174,47 +182,25 @@ public class AttributeFilterMenu extends FilterMenu {
 
     @Override
     public @NotNull ItemStack quickMoveStack(@NotNull Player player, int index) {
-        if (index == 37) {
+        if (index == this.ghostMenuSlotId(SUMMARY_SLOT)) {
             return ItemStack.EMPTY;
         }
 
         if (index < 36) {
             ItemStack stack = this.slots.get(index).getItem();
             if (!stack.isEmpty()) {
-                this.setGhostStack(0, stack);
+                this.setGhostStack(REFERENCE_SLOT, stack);
             }
             return ItemStack.EMPTY;
         }
 
-        this.clearGhostStack(0);
+        this.clearGhostStack(REFERENCE_SLOT);
         return ItemStack.EMPTY;
     }
 
     @Override
-    public void clicked(int slotId, int dragType, @NotNull ContainerInput clickTypeIn, @NotNull Player player) {
-        if (slotId == 37) {
-            return;
-        }
-
-        super.clicked(slotId, dragType, clickTypeIn, player);
-    }
-
-    @Override
-    public boolean canDragTo(Slot slotIn) {
-        if (slotIn.index == 37) {
-            return false;
-        }
-
-        return super.canDragTo(slotIn);
-    }
-
-    @Override
-    public boolean canTakeItemForPickAll(@NotNull ItemStack stack, Slot slotIn) {
-        if (slotIn.index == 37) {
-            return false;
-        }
-
-        return super.canTakeItemForPickAll(stack, slotIn);
+    protected boolean isGhostSlotInteractive(int ghostSlot) {
+        return ghostSlot == REFERENCE_SLOT;
     }
 
     @Override
@@ -236,8 +222,8 @@ public class AttributeFilterMenu extends FilterMenu {
 
     @Override
     protected void addFilterSlots() {
-        this.addGhostSlot(0, 19, 24);
-        this.addGhostSlot(1, 22, 59);
+        this.addGhostSlot(REFERENCE_SLOT, 19, 24);
+        this.addGhostSlot(SUMMARY_SLOT, 22, 59);
     }
 
     private boolean addSelectedRule(boolean inverted) {
@@ -267,7 +253,7 @@ public class AttributeFilterMenu extends FilterMenu {
     }
 
     private void syncSummarySlot() {
-        this.ghostStorage.setStackInSlot(1, this.summaryStack());
+        this.ghostStorage.setStackInSlot(SUMMARY_SLOT, this.summaryStack());
     }
 
     private void commitDraft() {
