@@ -59,6 +59,9 @@ public class IconButtonWidget extends AbstractWidget {
         int iconX = this.getX() + (this.getWidth() - this.icon.width()) / 2;
         int iconY = this.getY() + (this.getHeight() - this.icon.height()) / 2;
         this.icon.extractRenderState(graphics, iconX, iconY, this.icon.width(), this.icon.height());
+        if (!this.active) {
+            graphics.fill(this.getX(), this.getY(), this.getX() + this.getWidth(), this.getY() + this.getHeight(), 0x88000000);
+        }
     }
 
     @Override
