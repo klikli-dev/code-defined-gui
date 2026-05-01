@@ -5,6 +5,7 @@
 package com.klikli_dev.codedefinedgui.datagen.lang;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.registry.ItemRegistry;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
@@ -23,11 +24,11 @@ public class ENUSLanguageProvider extends LanguageProvider {
     }
 
     protected void addConfig() {
-        this.add(CodeDefinedGui.MODID + ".configuration.title", "Code Defined Gui Configs");
+        this.add(CodeDefinedGuiConstants.Config.TITLE, "Code Defined Gui Configs");
     }
 
     protected void addCreativeTabs() {
-        this.add("itemGroup." + CodeDefinedGui.MODID, "Code Defined GUI");
+        this.add(CodeDefinedGuiConstants.ItemGroup.MAIN, "Code Defined GUI");
     }
 
     protected void addItems() {
@@ -36,64 +37,65 @@ public class ENUSLanguageProvider extends LanguageProvider {
     }
 
     protected void addFilters() {
-        this.add("codedefinedgui.filter.button.reset", "Reset");
-        this.add("codedefinedgui.filter.button.done", "Done");
-        this.add("codedefinedgui.filter.button.reset.tooltip", "Reset Filter Settings");
-        this.add("codedefinedgui.filter.button.done.tooltip", "Save Filter Settings");
-        this.add("codedefinedgui.filter.summary.more", "...and %s more");
-        this.add("codedefinedgui.tooltip.show_extended", "§6[§dshift §7show more§6]");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Button.RESET, "Reset");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Button.DONE, "Done");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Button.RESET_TOOLTIP, "Reset Filter Settings");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Button.DONE_TOOLTIP, "Save Filter Settings");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.SUMMARY_MORE, "...and %s more");
+        this.add(CodeDefinedGuiConstants.I18n.Tooltip.SHOW_EXTENDED, "§6[§dshift §7show more§6]");
 
-        this.add("codedefinedgui.filter.list.mode.allow", "Allow List");
-        this.add("codedefinedgui.filter.list.mode.deny", "Deny List");
-        this.add("codedefinedgui.filter.list.respect_data", "Respect Data Components");
-        this.add("codedefinedgui.filter.list.ignore_data", "Ignore Data Components");
-        this.add("codedefinedgui.filter.list.mode.allow.tooltip", "Allow-List");
-        this.add("codedefinedgui.filter.list.mode.allow.tooltip.shift", "Items pass if they match any of the above. An empty Allow-List rejects everything.");
-        this.add("codedefinedgui.filter.list.mode.deny.tooltip", "Deny-List");
-        this.add("codedefinedgui.filter.list.mode.deny.tooltip.shift", "Items pass if they DO NOT match any of the above. An empty Deny-List accepts everything.");
-        this.add("codedefinedgui.filter.list.respect_data.tooltip", "Respect Data");
-        this.add("codedefinedgui.filter.list.respect_data.tooltip.shift", "Items pass if they match the data components of the filter item (durability, enchantments and others).");
-        this.add("codedefinedgui.filter.list.ignore_data.tooltip", "Ignore Data");
-        this.add("codedefinedgui.filter.list.ignore_data.tooltip.shift", "Items pass regardless of their data components (durability, enchantments and others).");
-        this.add("codedefinedgui.filter.list.summary.mode", "Mode: %s");
-        this.add("codedefinedgui.filter.list.summary.respect_data", "Matches item components");
-        this.add("codedefinedgui.filter.list.summary.ignore_data", "Ignores item components");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.List.Mode.ALLOW, "Allow List");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.List.Mode.DENY, "Deny List");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.List.RESPECT_DATA, "Respect Data Components");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.List.IGNORE_DATA, "Ignore Data Components");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.List.Mode.ALLOW_TOOLTIP, "Allow-List");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.List.Mode.ALLOW_TOOLTIP_SHIFT, "Items pass if they match any of the above. An empty Allow-List rejects everything.");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.List.Mode.DENY_TOOLTIP, "Deny-List");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.List.Mode.DENY_TOOLTIP_SHIFT, "Items pass if they DO NOT match any of the above. An empty Deny-List accepts everything.");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.List.RESPECT_DATA_TOOLTIP, "Respect Data");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.List.RESPECT_DATA_TOOLTIP_SHIFT, "Items pass if they match the data components of the filter item (durability, enchantments and others).");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.List.IGNORE_DATA_TOOLTIP, "Ignore Data");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.List.IGNORE_DATA_TOOLTIP_SHIFT, "Items pass regardless of their data components (durability, enchantments and others).");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.List.SUMMARY_MODE, "Mode: %s");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.List.SUMMARY_RESPECT_DATA, "Matches item components");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.List.SUMMARY_IGNORE_DATA, "Ignores item components");
 
-        this.add("codedefinedgui.filter.attribute.mode.match_any", "Match Any");
-        this.add("codedefinedgui.filter.attribute.mode.match_all", "Match All");
-        this.add("codedefinedgui.filter.attribute.mode.deny", "Deny Matching");
-        this.add("codedefinedgui.filter.attribute.mode.match_any.tooltip", "Allow-List (Any)");
-        this.add("codedefinedgui.filter.attribute.mode.match_any.tooltip.shift", "Items pass if they have ANY of the selected attributes.");
-        this.add("codedefinedgui.filter.attribute.mode.match_all.tooltip", "Allow-List (All)");
-        this.add("codedefinedgui.filter.attribute.mode.match_all.tooltip.shift", "Items pass if they have ALL of the selected attributes.");
-        this.add("codedefinedgui.filter.attribute.mode.deny.tooltip", "Deny-List");
-        this.add("codedefinedgui.filter.attribute.mode.deny.tooltip.shift", "Items pass if they do NOT have any of the selected attributes.");
-        this.add("codedefinedgui.filter.attribute.summary.mode", "Mode: %s");
-        this.add("codedefinedgui.filter.attribute.add", "Add Rule");
-        this.add("codedefinedgui.filter.attribute.add_inverted", "Add Inverted Rule");
-        this.add("codedefinedgui.filter.attribute.add.tooltip", "Add attribute to list");
-        this.add("codedefinedgui.filter.attribute.add_inverted.tooltip", "Add opposite attribute to list");
-        this.add("codedefinedgui.filter.attribute.no_reference", "Add a reference item");
-        this.add("codedefinedgui.filter.attribute.no_rules", "No rules selected");
-        this.add("codedefinedgui.filter.attribute.inverted", "Not %s");
-        this.add("codedefinedgui.filter.attribute.in_tag", "In tag %s");
-        this.add("codedefinedgui.filter.attribute.added_by", "Added by %s");
-        this.add("codedefinedgui.filter.attribute.has_enchantment", "Has enchantment %s");
-        this.add("codedefinedgui.filter.attribute.has_fluid", "Contains %s");
-        this.add("codedefinedgui.filter.attribute.has_name", "Named \"%s\"");
-        this.add("codedefinedgui.filter.attribute.standard.placeable", "Placeable");
-        this.add("codedefinedgui.filter.attribute.standard.consumable", "Consumable");
-        this.add("codedefinedgui.filter.attribute.standard.fluid_container", "Fluid Container");
-        this.add("codedefinedgui.filter.attribute.standard.enchanted", "Enchanted");
-        this.add("codedefinedgui.filter.attribute.standard.renamed", "Renamed");
-        this.add("codedefinedgui.filter.attribute.standard.damaged", "Damaged");
-        this.add("codedefinedgui.filter.attribute.standard.badly_damaged", "Badly Damaged");
-        this.add("codedefinedgui.filter.attribute.standard.not_stackable", "Not Stackable");
-        this.add("codedefinedgui.filter.attribute.standard.equipable", "Equipable");
-        this.add("codedefinedgui.filter.attribute.standard.furnace_fuel", "Furnace Fuel");
-        this.add("codedefinedgui.filter.attribute.standard.smeltable", "Smeltable");
-        this.add("codedefinedgui.filter.attribute.standard.smokable", "Smokable");
-        this.add("codedefinedgui.filter.attribute.standard.blastable", "Blastable");
-        this.add("codedefinedgui.filter.attribute.standard.compostable", "Compostable");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY, "Match Any");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL, "Match All");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY, "Deny Matching");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY_TOOLTIP, "Allow-List (Any)");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY_TOOLTIP_SHIFT, "Items pass if they have ANY of the selected attributes.");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL_TOOLTIP, "Allow-List (All)");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL_TOOLTIP_SHIFT, "Items pass if they have ALL of the selected attributes.");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY_TOOLTIP, "Deny-List");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY_TOOLTIP_SHIFT, "Items pass if they do NOT have any of the selected attributes.");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.SUMMARY_MODE, "Mode: %s");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.AVAILABLE, "Available");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD, "Add Rule");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED, "Add Inverted Rule");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_TOOLTIP, "Add attribute to list");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED_TOOLTIP, "Add opposite attribute to list");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.NO_REFERENCE, "Add a reference item");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.NO_RULES, "No rules selected");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.INVERTED, "Not %s");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.IN_TAG, "In tag %s");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADDED_BY, "Added by %s");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.HAS_ENCHANTMENT, "Has enchantment %s");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.HAS_FLUID, "Contains %s");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.HAS_NAME, "Named \"%s\"");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Standard.key("placeable"), "Placeable");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Standard.key("consumable"), "Consumable");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Standard.key("fluid_container"), "Fluid Container");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Standard.key("enchanted"), "Enchanted");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Standard.key("renamed"), "Renamed");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Standard.key("damaged"), "Damaged");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Standard.key("badly_damaged"), "Badly Damaged");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Standard.key("not_stackable"), "Not Stackable");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Standard.key("equipable"), "Equipable");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Standard.key("furnace_fuel"), "Furnace Fuel");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Standard.key("smeltable"), "Smeltable");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Standard.key("smokable"), "Smokable");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Standard.key("blastable"), "Blastable");
+        this.add(CodeDefinedGuiConstants.I18n.Filter.Attribute.Standard.key("compostable"), "Compostable");
     }
 }
