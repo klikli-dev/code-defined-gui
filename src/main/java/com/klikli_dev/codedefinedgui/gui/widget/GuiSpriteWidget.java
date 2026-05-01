@@ -12,6 +12,10 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import org.jspecify.annotations.NonNull;
 
+/**
+ * Renders a GuiSprite at the given position.
+ * Can be used to e.g. render slot backgrounds.
+ */
 public class GuiSpriteWidget extends AbstractWidget implements GuiSyncable {
     private final GuiSprite sprite;
 
