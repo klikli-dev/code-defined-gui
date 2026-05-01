@@ -4,6 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.gui.widget;
 
+import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import java.util.Objects;
 import net.minecraft.client.Minecraft;
@@ -89,7 +90,7 @@ public class IconButtonWidget extends AbstractWidget {
         if (this.shiftTooltip != null) {
             message = shiftDown
                     ? Component.empty().append(this.tooltip).append("\n").append(this.shiftTooltip)
-                    : Component.empty().append(this.tooltip).append("\n").append(Component.translatable("codedefinedgui.tooltip.show_extended"));
+                    : Component.empty().append(this.tooltip).append("\n").append(Component.translatable(CodeDefinedGuiConstants.I18n.Tooltip.SHOW_EXTENDED));
         }
 
         this.setTooltip(Tooltip.create(message));

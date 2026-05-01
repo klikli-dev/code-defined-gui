@@ -4,6 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.gui.widget;
 
+import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeCandidate;
@@ -55,7 +56,7 @@ public class AttributeSelectionWidget extends AbstractWidget {
         this.sprite.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
         List<AttributeCandidate> entries = this.candidates.get();
         Component text = entries.isEmpty()
-                ? Component.translatable("codedefinedgui.filter.attribute.no_reference")
+                ? Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.NO_REFERENCE)
                 : entries.get(Math.max(0, Math.min(this.selectedIndex.getAsInt(), entries.size() - 1))).label();
         int textLeft = this.getX() + 6;
         int textTop = this.getY() + (this.getHeight() - 8) / 2;
@@ -98,7 +99,7 @@ public class AttributeSelectionWidget extends AbstractWidget {
     public void updateTooltip() {
         List<AttributeCandidate> entries = this.candidates.get();
         if (entries.isEmpty()) {
-            MutableComponent tooltip = this.title.copy().withStyle(style -> style.withColor(HEADER_RGB)).append(Component.literal("\n")).append(Component.translatable("codedefinedgui.filter.attribute.no_reference")
+            MutableComponent tooltip = this.title.copy().withStyle(style -> style.withColor(HEADER_RGB)).append(Component.literal("\n")).append(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.NO_REFERENCE)
                     .withStyle(ChatFormatting.GRAY));
             this.setTooltip(Tooltip.create(tooltip));
             return;
@@ -127,7 +128,7 @@ public class AttributeSelectionWidget extends AbstractWidget {
             tooltip.append(Component.literal("\n")).append(Component.literal("> ...").withStyle(ChatFormatting.GRAY));
         }
 
-        tooltip.append(Component.literal("\n")).append(Component.translatable("codedefinedgui.filter.attribute.scroll_to_select")
+        tooltip.append(Component.literal("\n")).append(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.SCROLL_TO_SELECT)
                 .withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
         this.setTooltip(Tooltip.create(tooltip));
     }

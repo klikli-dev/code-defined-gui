@@ -4,6 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.gui.filter;
 
+import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
 import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
 import com.klikli_dev.codedefinedgui.gui.core.GuiRootWidget;
@@ -195,9 +196,9 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
                 x,
                 y,
                 GuiSprites.FILTER_ICON_RESET,
-                Component.translatable("codedefinedgui.filter.button.reset"),
+                Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.RESET),
                 () -> this.pressButton(buttonId)
-        ).withTooltip(Component.translatable("codedefinedgui.filter.button.reset.tooltip"));
+        ).withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.RESET_TOOLTIP));
     }
 
     protected final IconButtonWidget addConfirmButton(int x, int y) {
@@ -205,9 +206,9 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
                 x,
                 y,
                 GuiSprites.FILTER_ICON_CONFIRM,
-                Component.translatable("codedefinedgui.filter.button.done"),
+                Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.DONE),
                 () -> this.closeScreen(true)
-        ).withTooltip(Component.translatable("codedefinedgui.filter.button.done.tooltip"));
+        ).withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.DONE_TOOLTIP));
     }
 
     protected final FilterIndicatorWidget addFilterIndicator(int x, int y) {

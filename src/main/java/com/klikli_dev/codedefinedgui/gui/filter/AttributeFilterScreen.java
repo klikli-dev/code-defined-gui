@@ -4,6 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.gui.filter;
 
+import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeCandidate;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterDefinition;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMenu;
@@ -62,12 +63,12 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         this.resetButton = this.addResetButton(this.leftPos + 179, this.topPos + 61, AttributeFilterMenu.BUTTON_RESET);
         this.confirmButton = this.addConfirmButton(this.leftPos + 208, this.topPos + 61);
 
-        this.matchAnyButton = this.addIconButton(this.leftPos + 47, this.topPos + 61, GuiSprites.FILTER_ICON_MATCH_ANY, Component.translatable("codedefinedgui.filter.attribute.mode.match_any"), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ANY))
-                .withTooltip(Component.translatable("codedefinedgui.filter.attribute.mode.match_any.tooltip"), Component.translatable("codedefinedgui.filter.attribute.mode.match_any.tooltip.shift"));
-        this.matchAllButton = this.addIconButton(this.leftPos + 65, this.topPos + 61, GuiSprites.FILTER_ICON_MATCH_ALL, Component.translatable("codedefinedgui.filter.attribute.mode.match_all"), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ALL))
-                .withTooltip(Component.translatable("codedefinedgui.filter.attribute.mode.match_all.tooltip"), Component.translatable("codedefinedgui.filter.attribute.mode.match_all.tooltip.shift"));
-        this.denyButton = this.addIconButton(this.leftPos + 83, this.topPos + 61, GuiSprites.FILTER_ICON_DENY_ALT, Component.translatable("codedefinedgui.filter.attribute.mode.deny"), () -> this.pressButton(AttributeFilterMenu.BUTTON_DENY))
-                .withTooltip(Component.translatable("codedefinedgui.filter.attribute.mode.deny.tooltip"), Component.translatable("codedefinedgui.filter.attribute.mode.deny.tooltip.shift"));
+        this.matchAnyButton = this.addIconButton(this.leftPos + 47, this.topPos + 61, GuiSprites.FILTER_ICON_MATCH_ANY, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ANY))
+                .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY_TOOLTIP_SHIFT));
+        this.matchAllButton = this.addIconButton(this.leftPos + 65, this.topPos + 61, GuiSprites.FILTER_ICON_MATCH_ALL, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ALL))
+                .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL_TOOLTIP_SHIFT));
+        this.denyButton = this.addIconButton(this.leftPos + 83, this.topPos + 61, GuiSprites.FILTER_ICON_DENY_ALT, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY), () -> this.pressButton(AttributeFilterMenu.BUTTON_DENY))
+                .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY_TOOLTIP_SHIFT));
         this.matchAnyIndicator = this.addFilterIndicator(this.leftPos + 47, this.topPos + 55);
         this.matchAllIndicator = this.addFilterIndicator(this.leftPos + 65, this.topPos + 55);
         this.denyIndicator = this.addFilterIndicator(this.leftPos + 83, this.topPos + 55);
@@ -81,11 +82,11 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
                 this::candidates,
                 this.menu::selectedCandidateIndex,
                 this::changeSelection
-        ).withTitle(Component.translatable("codedefinedgui.filter.attribute.available")));
-        this.addButton = this.addIconButton(this.leftPos + ADD_BUTTON_X, this.topPos + 23, GuiSprites.FILTER_ICON_ADD, Component.translatable("codedefinedgui.filter.attribute.add"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED))
-                .withTooltip(Component.translatable("codedefinedgui.filter.attribute.add.tooltip"));
-        this.addInvertedButton = this.addIconButton(this.leftPos + ADD_INVERTED_BUTTON_X, this.topPos + 23, GuiSprites.FILTER_ICON_ADD_INVERTED, Component.translatable("codedefinedgui.filter.attribute.add_inverted"), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED))
-                .withTooltip(Component.translatable("codedefinedgui.filter.attribute.add_inverted.tooltip"));
+        ).withTitle(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.AVAILABLE)));
+        this.addButton = this.addIconButton(this.leftPos + ADD_BUTTON_X, this.topPos + 23, GuiSprites.FILTER_ICON_ADD, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED))
+                .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_TOOLTIP));
+        this.addInvertedButton = this.addIconButton(this.leftPos + ADD_INVERTED_BUTTON_X, this.topPos + 23, GuiSprites.FILTER_ICON_ADD_INVERTED, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED))
+                .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED_TOOLTIP));
         this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.leftPos + 18, this.topPos + 55, this.attributeSummarySprite(), () -> this.menu.state().rules().size(), this.menu::summaryStack));
     }
 
@@ -137,7 +138,7 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         if (this.summaryWidget != null && this.summaryWidget.isHovered() && this.minecraft != null && this.minecraft.player != null) {
             List<Component> tooltip = new ArrayList<>(this.menu.summary(this.minecraft.player.registryAccess()));
             if (tooltip.isEmpty()) {
-                tooltip.add(Component.translatable("codedefinedgui.filter.attribute.no_rules"));
+                tooltip.add(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.NO_RULES));
             }
             graphics.setComponentTooltipForNextFrame(this.font, tooltip, mouseX, mouseY);
             return;

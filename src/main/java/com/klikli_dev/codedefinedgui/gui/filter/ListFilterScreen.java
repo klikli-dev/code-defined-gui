@@ -4,6 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.gui.filter;
 
+import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.filter.list.ListFilterMenu;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
@@ -50,14 +51,14 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
         this.resetButton = this.addResetButton(this.leftPos + 152, this.topPos + 75, ListFilterMenu.BUTTON_RESET);
         this.confirmButton = this.addConfirmButton(this.leftPos + 181, this.topPos + 75);
 
-        this.denyButton = this.addIconButton(this.leftPos + 18, this.topPos + 75, GuiSprites.FILTER_ICON_DENY_LIST, Component.translatable("codedefinedgui.filter.list.mode.deny"), () -> this.pressButton(ListFilterMenu.BUTTON_DENY))
-                .withTooltip(Component.translatable("codedefinedgui.filter.list.mode.deny.tooltip"), Component.translatable("codedefinedgui.filter.list.mode.deny.tooltip.shift"));
-        this.allowButton = this.addIconButton(this.leftPos + 36, this.topPos + 75, GuiSprites.FILTER_ICON_ALLOW_LIST, Component.translatable("codedefinedgui.filter.list.mode.allow"), () -> this.pressButton(ListFilterMenu.BUTTON_ALLOW))
-                .withTooltip(Component.translatable("codedefinedgui.filter.list.mode.allow.tooltip"), Component.translatable("codedefinedgui.filter.list.mode.allow.tooltip.shift"));
-        this.respectDataButton = this.addIconButton(this.leftPos + 60, this.topPos + 75, GuiSprites.FILTER_ICON_RESPECT_DATA_COMPONENTS, Component.translatable("codedefinedgui.filter.list.respect_data"), () -> this.pressButton(ListFilterMenu.BUTTON_RESPECT_DATA))
-                .withTooltip(Component.translatable("codedefinedgui.filter.list.respect_data.tooltip"), Component.translatable("codedefinedgui.filter.list.respect_data.tooltip.shift"));
-        this.ignoreDataButton = this.addIconButton(this.leftPos + 78, this.topPos + 75, GuiSprites.FILTER_ICON_IGNORE_DATA_COMPONENTS, Component.translatable("codedefinedgui.filter.list.ignore_data"), () -> this.pressButton(ListFilterMenu.BUTTON_IGNORE_DATA))
-                .withTooltip(Component.translatable("codedefinedgui.filter.list.ignore_data.tooltip"), Component.translatable("codedefinedgui.filter.list.ignore_data.tooltip.shift"));
+        this.denyButton = this.addIconButton(this.leftPos + 18, this.topPos + 75, GuiSprites.FILTER_ICON_DENY_LIST, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.DENY), () -> this.pressButton(ListFilterMenu.BUTTON_DENY))
+                .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.DENY_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.DENY_TOOLTIP_SHIFT));
+        this.allowButton = this.addIconButton(this.leftPos + 36, this.topPos + 75, GuiSprites.FILTER_ICON_ALLOW_LIST, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.ALLOW), () -> this.pressButton(ListFilterMenu.BUTTON_ALLOW))
+                .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.ALLOW_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.ALLOW_TOOLTIP_SHIFT));
+        this.respectDataButton = this.addIconButton(this.leftPos + 60, this.topPos + 75, GuiSprites.FILTER_ICON_RESPECT_DATA_COMPONENTS, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.RESPECT_DATA), () -> this.pressButton(ListFilterMenu.BUTTON_RESPECT_DATA))
+                .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.RESPECT_DATA_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.RESPECT_DATA_TOOLTIP_SHIFT));
+        this.ignoreDataButton = this.addIconButton(this.leftPos + 78, this.topPos + 75, GuiSprites.FILTER_ICON_IGNORE_DATA_COMPONENTS, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.IGNORE_DATA), () -> this.pressButton(ListFilterMenu.BUTTON_IGNORE_DATA))
+                .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.IGNORE_DATA_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.IGNORE_DATA_TOOLTIP_SHIFT));
 
         this.denyIndicator = this.addFilterIndicator(this.leftPos + 18, this.topPos + 69);
         this.allowIndicator = this.addFilterIndicator(this.leftPos + 36, this.topPos + 69);

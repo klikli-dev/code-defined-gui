@@ -5,6 +5,7 @@
 package com.klikli_dev.codedefinedgui.filter.list;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.filter.core.FilterDefinition;
 import com.klikli_dev.codedefinedgui.filter.core.FilterMatchContext;
 import com.klikli_dev.codedefinedgui.filter.core.FilterStateAccessor;
@@ -70,10 +71,10 @@ public final class ListFilterDefinition implements FilterDefinition<ListFilterSt
             return lines;
         }
 
-        lines.add(Component.translatable("codedefinedgui.filter.list.summary.mode", Component.translatable("codedefinedgui.filter.list.mode." + state.mode().getSerializedName()))
+        lines.add(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.SUMMARY_MODE, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.key(state.mode().getSerializedName())))
                 .withStyle(ChatFormatting.GOLD));
         lines.add(Component.translatable(
-                state.respectDataComponents() ? "codedefinedgui.filter.list.summary.respect_data" : "codedefinedgui.filter.list.summary.ignore_data"
+                state.respectDataComponents() ? CodeDefinedGuiConstants.I18n.Filter.List.SUMMARY_RESPECT_DATA : CodeDefinedGuiConstants.I18n.Filter.List.SUMMARY_IGNORE_DATA
         ).withStyle(ChatFormatting.GRAY));
 
         int previewCount = Math.min(entries.size(), 4);
@@ -82,7 +83,7 @@ public final class ListFilterDefinition implements FilterDefinition<ListFilterSt
         }
 
         if (entries.size() > previewCount) {
-            lines.add(Component.translatable("codedefinedgui.filter.summary.more", entries.size() - previewCount)
+            lines.add(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.SUMMARY_MORE, entries.size() - previewCount)
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
 
