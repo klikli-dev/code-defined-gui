@@ -16,7 +16,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
-import net.neoforged.neoforge.transfer.access.ItemAccess;
 import org.jetbrains.annotations.NotNull;
 
 import com.klikli_dev.codedefinedgui.filter.support.GhostItemStorage;
@@ -27,7 +26,6 @@ public abstract class FilterMenu extends AbstractContainerMenu {
     private static final int OFFHAND_SLOT = 40;
 
     protected final Player player;
-    protected final ItemAccess filterAccess;
     protected final GhostItemStorage ghostStorage;
     private final Item filterItem;
     private final int heldSlot;
@@ -38,11 +36,11 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         super(menuType, containerId);
         this.player = inventory.player;
         this.heldSlot = heldSlot(inventory.player, hand);
-        this.filterAccess = ItemAccess.forPlayerSlot(inventory.player, this.heldSlot);
-        this.filterItem = this.filterAccess.getResource().getItem();
+        this.filterItem = this.filterStack().getItem();
         this.ghostSlots = ghostSlots;
         this.lockedPlayerSlotId = playerSlotId(this.heldSlot);
-        this.ghostStorage = new GhostItemStorage(this.filterAccess, ghostComponent, ghostSlots);
+        ItemContainerContents initialGhostContents = this.filterStack().get(ghostComponent);
+        this.ghostStorage = new GhostItemStorage(initialGhostContents, ghostSlots);
 
         this.addStandardInventorySlots(inventory, this.playerInventoryX(), this.playerInventoryY());
         this.addFilterSlots();
@@ -118,6 +116,7 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         boolean changed = this.ghostStorage.setStackInSlot(ghostSlot, stack);
         if (changed) {
             this.onGhostContentsChanged();
+            this.broadcastChanges();
         }
         return changed;
     }
@@ -130,6 +129,7 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         boolean changed = this.ghostStorage.clearContent();
         if (changed) {
             this.onGhostContentsChanged();
+            this.broadcastChanges();
         }
         return changed;
     }

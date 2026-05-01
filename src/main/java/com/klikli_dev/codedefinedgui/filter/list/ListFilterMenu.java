@@ -26,10 +26,8 @@ public class ListFilterMenu extends FilterMenu {
     public static final int BUTTON_CANCEL = 6;
     private static final int FILTER_SLOTS = 18;
 
-    private final ListFilterState initialState;
     private final DataSlot mode = DataSlot.standalone();
     private final DataSlot respectDataComponents = DataSlot.standalone();
-    private boolean sessionCommitted;
 
     public ListFilterMenu(int containerId, Inventory inventory, RegistryFriendlyByteBuf buffer) {
         this(MenuTypeRegistry.LIST_FILTER.get(), containerId, inventory, buffer.readEnum(InteractionHand.class));
@@ -43,7 +41,6 @@ public class ListFilterMenu extends FilterMenu {
         super(menuType, containerId, inventory, hand, FILTER_SLOTS, DataComponentRegistry.LIST_FILTER_CONTENTS.get());
 
         ListFilterState state = ListFilterStateAccessor.INSTANCE.read(this.filterStack());
-        this.initialState = state;
         this.mode.set(state.mode().ordinal());
         this.respectDataComponents.set(state.respectDataComponents() ? 1 : 0);
         this.addDataSlot(this.mode);
@@ -67,46 +64,31 @@ public class ListFilterMenu extends FilterMenu {
             }
             case BUTTON_ALLOW -> {
                 this.mode.set(ListFilterMode.ALLOW.ordinal());
-                this.saveState();
                 return true;
             }
             case BUTTON_DENY -> {
                 this.mode.set(ListFilterMode.DENY.ordinal());
-                this.saveState();
                 return true;
             }
             case BUTTON_RESPECT_DATA -> {
                 this.respectDataComponents.set(1);
-                this.saveState();
                 return true;
             }
             case BUTTON_IGNORE_DATA -> {
                 this.respectDataComponents.set(0);
-                this.saveState();
                 return true;
             }
             case BUTTON_CONFIRM -> {
-                this.sessionCommitted = true;
+                this.commitDraft();
                 return true;
             }
             case BUTTON_CANCEL -> {
-                this.restoreInitialState();
-                this.sessionCommitted = true;
                 return true;
             }
             default -> {
                 return false;
             }
         }
-    }
-
-    @Override
-    public void removed(@NotNull Player player) {
-        if (!this.sessionCommitted) {
-            this.restoreInitialState();
-        }
-
-        super.removed(player);
     }
 
     @Override
@@ -161,17 +143,11 @@ public class ListFilterMenu extends FilterMenu {
         }
     }
 
-    private void saveState() {
+    private void commitDraft() {
         ListFilterStateAccessor.INSTANCE.write(this.filterStack(), new ListFilterState(
                 this.ghostStorage.contents(),
                 this.isDenyList() ? ListFilterMode.DENY : ListFilterMode.ALLOW,
                 this.respectDataComponents()
         ));
-    }
-
-    private void restoreInitialState() {
-        this.mode.set(this.initialState.mode().ordinal());
-        this.respectDataComponents.set(this.initialState.respectDataComponents() ? 1 : 0);
-        ListFilterStateAccessor.INSTANCE.write(this.filterStack(), this.initialState);
     }
 }

@@ -37,11 +37,10 @@ public class AttributeFilterMenu extends FilterMenu {
     public static final int BUTTON_CONFIRM = 8;
     public static final int BUTTON_CANCEL = 9;
 
-    private final AttributeFilterState initialState;
     private final DataSlot mode = DataSlot.standalone();
     private final DataSlot selectedCandidateIndex = DataSlot.standalone();
+    private List<AttributeRule> draftRules;
     private boolean addLocked;
-    private boolean sessionCommitted;
 
     public AttributeFilterMenu(int containerId, Inventory inventory, RegistryFriendlyByteBuf buffer) {
         this(MenuTypeRegistry.ATTRIBUTE_FILTER.get(), containerId, inventory, buffer.readEnum(InteractionHand.class));
@@ -55,9 +54,10 @@ public class AttributeFilterMenu extends FilterMenu {
         super(menuType, containerId, inventory, hand, 2, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
 
         AttributeFilterState state = AttributeFilterStateAccessor.INSTANCE.read(this.filterStack());
-        this.initialState = state;
         this.mode.set(state.mode().ordinal());
         this.selectedCandidateIndex.set(0);
+        this.draftRules = new ArrayList<>(state.rules());
+        this.addLocked = !this.draftRules.isEmpty();
         this.addDataSlot(this.mode);
         this.addDataSlot(this.selectedCandidateIndex);
 
@@ -87,7 +87,7 @@ public class AttributeFilterMenu extends FilterMenu {
     }
 
     public AttributeFilterState state() {
-        return AttributeFilterStateAccessor.INSTANCE.read(this.filterStack());
+        return new AttributeFilterState(this.referenceStack(), this.mode(), List.copyOf(this.draftRules));
     }
 
     public List<AttributeCandidate> candidates() {
@@ -122,22 +122,21 @@ public class AttributeFilterMenu extends FilterMenu {
         switch (buttonId) {
             case BUTTON_RESET -> {
                 this.addLocked = false;
-                this.writeState(new AttributeFilterState(this.referenceStack(), this.mode(), List.of()));
+                this.draftRules = new ArrayList<>();
+                this.syncSummarySlot();
+                this.broadcastChanges();
                 return true;
             }
             case BUTTON_MATCH_ANY -> {
                 this.mode.set(AttributeFilterMode.MATCH_ANY.ordinal());
-                this.saveState();
                 return true;
             }
             case BUTTON_MATCH_ALL -> {
                 this.mode.set(AttributeFilterMode.MATCH_ALL.ordinal());
-                this.saveState();
                 return true;
             }
             case BUTTON_DENY -> {
                 this.mode.set(AttributeFilterMode.DENY.ordinal());
-                this.saveState();
                 return true;
             }
             case BUTTON_NEXT_CANDIDATE -> {
@@ -161,27 +160,16 @@ public class AttributeFilterMenu extends FilterMenu {
                 return this.addSelectedRule(true);
             }
             case BUTTON_CONFIRM -> {
-                this.sessionCommitted = true;
+                this.commitDraft();
                 return true;
             }
             case BUTTON_CANCEL -> {
-                this.restoreInitialState();
-                this.sessionCommitted = true;
                 return true;
             }
             default -> {
                 return false;
             }
         }
-    }
-
-    @Override
-    public void removed(@NotNull Player player) {
-        if (!this.sessionCommitted) {
-            this.restoreInitialState();
-        }
-
-        super.removed(player);
     }
 
     @Override
@@ -271,29 +259,18 @@ public class AttributeFilterMenu extends FilterMenu {
 
         List<AttributeRule> rules = new ArrayList<>(state.rules());
         rules.add(rule);
-        this.writeState(new AttributeFilterState(this.referenceStack(), this.mode(), List.copyOf(rules)));
+        this.draftRules = rules;
         this.addLocked = true;
-        return true;
-    }
-
-    private void writeState(AttributeFilterState state) {
-        AttributeFilterStateAccessor.INSTANCE.write(this.filterStack(), state);
         this.syncSummarySlot();
-    }
-
-    private void saveState() {
-        AttributeFilterState state = this.state();
-        this.writeState(new AttributeFilterState(this.referenceStack(), this.mode(), state.rules()));
+        this.broadcastChanges();
+        return true;
     }
 
     private void syncSummarySlot() {
         this.ghostStorage.setStackInSlot(1, this.summaryStack());
     }
 
-    private void restoreInitialState() {
-        this.mode.set(this.initialState.mode().ordinal());
-        this.selectedCandidateIndex.set(0);
-        this.addLocked = false;
-        this.writeState(this.initialState);
+    private void commitDraft() {
+        AttributeFilterStateAccessor.INSTANCE.write(this.filterStack(), new AttributeFilterState(this.referenceStack(), this.mode(), List.copyOf(this.draftRules)));
     }
 }
