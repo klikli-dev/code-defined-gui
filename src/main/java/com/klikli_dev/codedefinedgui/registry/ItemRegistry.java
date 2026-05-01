@@ -2,9 +2,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.infrastructure.registry;
+package com.klikli_dev.codedefinedgui.registry;
 
-import com.klikli_dev.codedefinedgui.infrastructure.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.CodeDefinedGui;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterItem;
 import com.klikli_dev.codedefinedgui.filter.list.ListFilterItem;
 import net.neoforged.neoforge.registries.DeferredItem;

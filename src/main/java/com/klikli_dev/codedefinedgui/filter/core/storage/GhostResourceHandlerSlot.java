@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.filter.support;
+package com.klikli_dev.codedefinedgui.filter.core.storage;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

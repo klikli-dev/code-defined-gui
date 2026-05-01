@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.filter.list;
 
 import com.klikli_dev.codedefinedgui.filter.core.FilterStateAccessor;
-import com.klikli_dev.codedefinedgui.infrastructure.registry.DataComponentRegistry;
+import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;

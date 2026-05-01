@@ -4,6 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.filter.core;
 
+import com.klikli_dev.codedefinedgui.filter.core.storage.GhostItemStorage;
+import com.klikli_dev.codedefinedgui.filter.core.storage.GhostResourceHandlerSlot;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -18,9 +20,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import org.jetbrains.annotations.NotNull;
-
-import com.klikli_dev.codedefinedgui.filter.support.GhostItemStorage;
-import com.klikli_dev.codedefinedgui.filter.support.GhostResourceHandlerSlot;
 
 public abstract class FilterMenu extends AbstractContainerMenu {
     private static final int PLAYER_SLOT_COUNT = 36;

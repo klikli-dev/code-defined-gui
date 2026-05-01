@@ -4,7 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
-import com.klikli_dev.codedefinedgui.infrastructure.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.CodeDefinedGui;
 import com.klikli_dev.codedefinedgui.filter.core.FilterDefinition;
 import com.klikli_dev.codedefinedgui.filter.core.FilterMatchContext;
 import com.klikli_dev.codedefinedgui.filter.core.FilterStateAccessor;
