@@ -16,6 +16,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
 import org.jetbrains.annotations.NotNull;
 
 import com.klikli_dev.codedefinedgui.filter.support.GhostItemStorage;
@@ -26,6 +27,7 @@ public abstract class FilterMenu extends AbstractContainerMenu {
     private static final int OFFHAND_SLOT = 40;
 
     protected final Player player;
+    protected final ItemStack draftFilterStack;
     protected final GhostItemStorage ghostStorage;
     private final Item filterItem;
     private final int heldSlot;
@@ -37,10 +39,10 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         this.player = inventory.player;
         this.heldSlot = heldSlot(inventory.player, hand);
         this.filterItem = this.filterStack().getItem();
+        this.draftFilterStack = this.filterStack().copy();
         this.ghostSlots = ghostSlots;
         this.lockedPlayerSlotId = playerSlotId(this.heldSlot);
-        ItemContainerContents initialGhostContents = this.filterStack().get(ghostComponent);
-        this.ghostStorage = new GhostItemStorage(initialGhostContents, ghostSlots);
+        this.ghostStorage = new GhostItemStorage(ItemAccess.forStack(this.draftFilterStack), ghostComponent, ghostSlots);
 
         this.addStandardInventorySlots(inventory, this.playerInventoryX(), this.playerInventoryY());
         this.addFilterSlots();

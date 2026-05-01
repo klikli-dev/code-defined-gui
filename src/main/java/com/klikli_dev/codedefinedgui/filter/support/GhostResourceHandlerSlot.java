@@ -6,29 +6,11 @@ package com.klikli_dev.codedefinedgui.filter.support;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.world.inventory.StackCopySlot;
+import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
-public class GhostResourceHandlerSlot extends StackCopySlot {
-    private final GhostItemStorage storage;
-
+public class GhostResourceHandlerSlot extends ResourceHandlerSlot {
     public GhostResourceHandlerSlot(GhostItemStorage storage, int slot, int xPosition, int yPosition) {
-        super(slot, xPosition, yPosition);
-        this.storage = storage;
-    }
-
-    @Override
-    protected ItemStack getStackCopy() {
-        return this.storage.getStackInSlotCopy(this.getSlotIndex());
-    }
-
-    @Override
-    protected void setStackCopy(ItemStack stack) {
-        this.storage.setStackInSlot(this.getSlotIndex(), stack);
-    }
-
-    @Override
-    public boolean mayPlace(ItemStack stack) {
-        return !stack.isEmpty();
+        super(storage, (index, resource, amount) -> storage.setStackInSlot(index, resource.toStack(amount)), slot, xPosition, yPosition);
     }
 
     @Override
