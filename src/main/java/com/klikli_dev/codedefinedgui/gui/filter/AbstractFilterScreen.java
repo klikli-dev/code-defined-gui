@@ -24,8 +24,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
 public abstract class AbstractFilterScreen<M extends FilterMenu> extends AbstractContainerScreen<M> implements GuiHost {
-    private static final int PLAYER_INVENTORY_BACKGROUND_Y_OFFSET = 11;
     private static final int PLAYER_INVENTORY_BACKGROUND_PADDING = 7;
+    private static final int PLAYER_INVENTORY_LABEL_X_OFFSET = 8;
+    private static final int PLAYER_INVENTORY_LABEL_Y_OFFSET = 13;
 
     protected final GuiRootWidget root;
     protected IconButtonWidget resetButton;
@@ -40,8 +41,11 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     @Override
     protected void init() {
         super.init();
-        this.inventoryLabelX = this.playerInventoryLabelX();
-        this.inventoryLabelY = this.imageHeight - 94 + PLAYER_INVENTORY_BACKGROUND_Y_OFFSET;
+        SlotBounds playerInventoryBackgroundBounds = this.playerInventoryBackgroundBounds();
+        if (playerInventoryBackgroundBounds != null) {
+            this.inventoryLabelX = this.playerInventoryLabelX(playerInventoryBackgroundBounds);
+            this.inventoryLabelY = this.playerInventoryLabelY(playerInventoryBackgroundBounds);
+        }
         this.addRenderableWidget(this.root);
         this.root.clearChildren();
         this.addBackgroundWidgets();
@@ -78,7 +82,9 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     @Override
     protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
         graphics.text(this.font, this.title, this.titleLabelX, this.titleLabelY, this.titleColor(), false);
-        graphics.text(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 0x404040, false);
+        if (this.playerInventoryBackgroundBounds() != null) {
+            graphics.text(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 0x404040, false);
+        }
     }
 
     @Override
@@ -121,13 +127,12 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         this.removeWidget(widget);
     }
 
-    protected int playerInventoryLabelX() {
-        SlotBounds bounds = this.playerInventoryBounds();
-        if (bounds == null) {
-            return 8;
-        }
+    protected int playerInventoryLabelX(SlotBounds bounds) {
+        return bounds.minX() + PLAYER_INVENTORY_LABEL_X_OFFSET;
+    }
 
-        return bounds.minX() + 1;
+    protected int playerInventoryLabelY(SlotBounds bounds) {
+        return bounds.minY() + PLAYER_INVENTORY_LABEL_Y_OFFSET;
     }
 
     /**
@@ -136,17 +141,17 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
      * Override to replace or suppress the default background while keeping the inventory slot widgets.
      */
     protected void addPlayerInventoryBackgroundWidgets() {
-        SlotBounds bounds = this.playerInventoryBounds();
+        SlotBounds bounds = this.playerInventoryBackgroundBounds();
         if (bounds == null) {
             return;
         }
 
         this.root.addChild(new GuiBackgroundWidget(
                 this,
-                this.leftPos + bounds.minX() - PLAYER_INVENTORY_BACKGROUND_PADDING,
-                this.topPos + bounds.minY() - PLAYER_INVENTORY_BACKGROUND_PADDING,
-                bounds.width() + PLAYER_INVENTORY_BACKGROUND_PADDING * 2,
-                bounds.height() + PLAYER_INVENTORY_BACKGROUND_PADDING * 2,
+                this.leftPos + bounds.minX(),
+                this.topPos + bounds.minY(),
+                bounds.width(),
+                bounds.height(),
                 this.playerInventoryBackgroundSprite()
         ));
     }
@@ -239,20 +244,26 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         return GuiSprites.FILTER_INDICATOR_OFF;
     }
 
-    protected GuiSprite inventorySlotSprite() {
-        return GuiSprites.INVENTORY_SLOT;
-    }
-
     protected GuiSprite playerInventoryBackgroundSprite() {
         return GuiSprites.GUI_BACKGROUND;
     }
 
-    protected GuiSprite playerInventorySlotSprite() {
-        return GuiSprites.INVENTORY_SLOT;
-    }
-
     private SlotBounds playerInventoryBounds() {
         return this.slotBounds(slotView -> slotView.role().equals(BuiltinSlotRoles.PLAYER_MAIN) || slotView.role().equals(BuiltinSlotRoles.PLAYER_HOTBAR));
+    }
+
+    private SlotBounds playerInventoryBackgroundBounds() {
+        SlotBounds bounds = this.playerInventoryBounds();
+        if (bounds == null) {
+            return null;
+        }
+
+        return new SlotBounds(
+                bounds.minX() - PLAYER_INVENTORY_BACKGROUND_PADDING,
+                bounds.minY() - PLAYER_INVENTORY_BACKGROUND_PADDING,
+                bounds.width() + PLAYER_INVENTORY_BACKGROUND_PADDING * 2,
+                bounds.height() + PLAYER_INVENTORY_BACKGROUND_PADDING * 2
+        );
     }
 
     private SlotBounds slotBounds(java.util.function.Predicate<MenuSlotView> filter) {
