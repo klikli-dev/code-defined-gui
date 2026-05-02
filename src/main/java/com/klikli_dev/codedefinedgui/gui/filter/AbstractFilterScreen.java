@@ -11,12 +11,12 @@ import com.klikli_dev.codedefinedgui.filter.core.layout.MenuSlotView;
 import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
 import com.klikli_dev.codedefinedgui.gui.core.GuiRootWidget;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.FilterIndicatorWidget;
+import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonBackgroundSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
+import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -148,8 +148,8 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
 
         this.root.addChild(new GuiBackgroundWidget(
                 this,
-                this.leftPos + bounds.minX(),
-                this.topPos + bounds.minY(),
+                this.guiX(bounds.minX()),
+                this.guiY(bounds.minY()),
                 bounds.width(),
                 bounds.height(),
                 this.playerInventoryBackgroundSprite()

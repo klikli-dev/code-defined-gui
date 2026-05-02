@@ -41,18 +41,18 @@ public class TestScreen extends Screen implements GuiHost {
         this.addRenderableWidget(this.root);
 
         this.root.clearChildren();
-        GuiSpriteWidget craftingArrow = new GuiSpriteWidget(this.leftPos + 68, this.topPos + 20, GuiSprites.CRAFTING_ARROW);
+        GuiSpriteWidget craftingArrow = new GuiSpriteWidget(this.guiX(68), this.guiY(20), GuiSprites.CRAFTING_ARROW);
         FrameWidget beveledArrowFrame = new FrameWidget(craftingArrow).bevel(bevelPrimaryColor, bevelSecondaryColor, bevelCornerColor);
 
         this.root.addChild(new GuiBackgroundWidget(this));
-        this.root.addChild(new GuiSpriteWidget(this.leftPos + 8, this.topPos + 18, GuiSprites.INVENTORY_SLOT));
-        this.root.addChild(new GuiSpriteWidget(this.leftPos + 26, this.topPos + 18, GuiSprites.INVENTORY_SLOT));
-        this.root.addChild(new GuiSpriteWidget(this.leftPos + 44, this.topPos + 18, GuiSprites.INVENTORY_SLOT));
+        this.root.addChild(new GuiSpriteWidget(this.guiX(8), this.guiY(18), GuiSprites.INVENTORY_SLOT));
+        this.root.addChild(new GuiSpriteWidget(this.guiX(26), this.guiY(18), GuiSprites.INVENTORY_SLOT));
+        this.root.addChild(new GuiSpriteWidget(this.guiX(44), this.guiY(18), GuiSprites.INVENTORY_SLOT));
         this.root.addChild(craftingArrow);
         this.root.addChild(beveledArrowFrame);
         this.root.addChild(new FrameWidget(beveledArrowFrame.getX() - 1, beveledArrowFrame.getY() - 1, beveledArrowFrame.getWidth() + 2, beveledArrowFrame.getHeight() + 2));
-        this.root.addChild(new GuiSpriteWidget(this.leftPos + 94, this.topPos + 14, GuiSprites.CRAFTING_RESULT_SLOT));
-        this.root.addChild(new FrameWidget(this.leftPos + 120, this.topPos + 18, 40, 24));
+        this.root.addChild(new GuiSpriteWidget(this.guiX(94), this.guiY(14), GuiSprites.CRAFTING_RESULT_SLOT));
+        this.root.addChild(new FrameWidget(this.guiX(120), this.guiY(18), 40, 24));
 
         this.root.syncBoundsToHost();
     }

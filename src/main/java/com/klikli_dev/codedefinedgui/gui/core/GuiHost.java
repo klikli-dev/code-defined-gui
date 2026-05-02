@@ -11,6 +11,14 @@ public interface GuiHost {
 
     int topPos();
 
+    default int guiX(int x) {
+        return this.leftPos() + x;
+    }
+
+    default int guiY(int y) {
+        return this.topPos() + y;
+    }
+
     int width();
 
     int height();
