@@ -5,6 +5,7 @@
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.filter.core.FilterItem;
+import com.klikli_dev.codedefinedgui.gui.filter.FilterUiStyleKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -12,6 +13,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 public class AttributeFilterItem extends FilterItem<AttributeFilterState> {
     public AttributeFilterItem(Properties properties) {
         super(properties, AttributeFilterDefinition.INSTANCE);
+    }
+
+    public AttributeFilterItem(Properties properties, FilterUiStyleKey uiStyleKey) {
+        super(properties, AttributeFilterDefinition.INSTANCE, uiStyleKey);
     }
 
     @Override

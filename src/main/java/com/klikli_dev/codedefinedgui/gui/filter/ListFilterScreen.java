@@ -8,7 +8,6 @@ import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.filter.list.ListFilterMenu;
 import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -31,7 +30,7 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
 
     @Override
     protected void addBackgroundWidgets() {
-        this.root.addChild(new GuiBackgroundWidget(this, this.guiX(0), this.guiY(0), this.imageWidth, 99));
+        this.style().addListBackgroundWidgets(this);
     }
 
     @Override
@@ -52,6 +51,8 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
         this.allowIndicator = this.addFilterIndicator(this.guiX(36), this.guiY(69));
         this.respectDataIndicator = this.addFilterIndicator(this.guiX(60), this.guiY(69));
         this.ignoreDataIndicator = this.addFilterIndicator(this.guiX(78), this.guiY(69));
+
+        this.style().addListForegroundWidgets(this);
     }
 
     @Override
@@ -70,7 +71,7 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
 
     @Override
     protected int titleColor() {
-        return 0x303030;
+        return this.style().listTitleColor();
     }
 
     @Override

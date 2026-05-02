@@ -5,8 +5,9 @@
 package com.klikli_dev.codedefinedgui.filter.core.layout;
 
 import net.minecraft.world.inventory.Slot;
+import org.jspecify.annotations.Nullable;
 
-public record MenuSlotView(Slot slot, SlotRoleKey role, SlotSkinKey skin) {
+public record MenuSlotView(Slot slot, SlotRoleKey role, @Nullable SlotSkinKey skin) {
     public int x() {
         return this.slot.x;
     }

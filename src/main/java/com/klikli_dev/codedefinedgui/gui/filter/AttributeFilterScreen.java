@@ -14,7 +14,6 @@ import com.klikli_dev.codedefinedgui.gui.filter.widget.AttributeSelectionWidget;
 import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +45,7 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
 
     @Override
     protected void addBackgroundWidgets() {
-        this.root.addChild(new GuiBackgroundWidget(this, this.guiX(0), this.guiY(0), this.imageWidth, 85));
+        this.style().addAttributeBackgroundWidgets(this);
     }
 
     @Override
@@ -79,6 +78,8 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         this.addInvertedButton = this.addIconButton(this.guiX(ADD_INVERTED_BUTTON_X), this.guiY(23), GuiSprites.FILTER_ICON_ADD_INVERTED, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED))
                 .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED_TOOLTIP));
         this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.guiX(18), this.guiY(55), this.attributeSummarySprite(), () -> this.menu.state().rules().size(), this.menu::summaryStack));
+
+        this.style().addAttributeForegroundWidgets(this);
     }
 
     @Override
@@ -99,7 +100,7 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
 
     @Override
     protected int titleColor() {
-        return 0x592424;
+        return this.style().attributeTitleColor();
     }
 
     @Override
@@ -113,11 +114,11 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
     }
 
     protected GuiSprite attributeSelectionSprite() {
-        return GuiSprites.ATTRIBUTE_FILTER_SELECTION;
+        return this.style().attributeSelectionSprite();
     }
 
     protected GuiSprite attributeSummarySprite() {
-        return GuiSprites.ATTRIBUTE_FILTER_SUMMARY;
+        return this.style().attributeSummarySprite();
     }
 
     @Override

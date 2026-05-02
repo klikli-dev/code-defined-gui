@@ -4,6 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.filter.core;
 
+import com.klikli_dev.codedefinedgui.gui.filter.BuiltinFilterUiStyles;
+import com.klikli_dev.codedefinedgui.gui.filter.FilterUiStyleKey;
 import java.util.List;
 import java.util.function.Consumer;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -22,14 +24,24 @@ import net.minecraft.world.level.Level;
 
 public abstract class FilterItem<S extends FilterState> extends Item {
     private final FilterDefinition<S> definition;
+    private final FilterUiStyleKey uiStyleKey;
 
     protected FilterItem(Properties properties, FilterDefinition<S> definition) {
+        this(properties, definition, BuiltinFilterUiStyles.DEFAULT);
+    }
+
+    protected FilterItem(Properties properties, FilterDefinition<S> definition, FilterUiStyleKey uiStyleKey) {
         super(properties);
         this.definition = definition;
+        this.uiStyleKey = uiStyleKey;
     }
 
     public FilterDefinition<S> definition() {
         return this.definition;
+    }
+
+    public FilterUiStyleKey uiStyleKey(ItemStack stack) {
+        return this.uiStyleKey;
     }
 
     @Override
@@ -61,6 +73,7 @@ public abstract class FilterItem<S extends FilterState> extends Item {
      */
     protected void writeMenuData(RegistryFriendlyByteBuf buffer, Player player, InteractionHand hand, ItemStack stack) {
         buffer.writeEnum(hand);
+        buffer.writeUtf(this.uiStyleKey(stack).id().toString());
     }
 
     /**

@@ -12,9 +12,9 @@ import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
 import com.klikli_dev.codedefinedgui.gui.core.GuiRootWidget;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonBackgroundSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -120,6 +120,10 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     @Override
     public <T extends AbstractWidget> T addGuiWidget(T widget) {
         return this.addRenderableWidget(widget);
+    }
+
+    public final <T extends AbstractWidget> T addRootChild(T widget) {
+        return this.root.addChild(widget);
     }
 
     @Override
@@ -233,19 +237,19 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     }
 
     protected IconButtonBackgroundSprites buttonBackgroundSprites() {
-        return IconButtonBackgroundSprites.DEFAULT;
+        return this.style().buttonBackgroundSprites();
     }
 
     protected GuiSprite filterIndicatorOnSprite() {
-        return GuiSprites.FILTER_INDICATOR_ON;
+        return this.style().filterIndicatorOnSprite();
     }
 
     protected GuiSprite filterIndicatorOffSprite() {
-        return GuiSprites.FILTER_INDICATOR_OFF;
+        return this.style().filterIndicatorOffSprite();
     }
 
     protected GuiSprite playerInventoryBackgroundSprite() {
-        return GuiSprites.GUI_BACKGROUND;
+        return this.style().playerInventoryBackgroundSprite();
     }
 
     private SlotBounds playerInventoryBounds() {
@@ -283,7 +287,15 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     }
 
     protected SlotSkinRenderer slotRenderer(MenuSlotView slotView) {
-        return SlotSkinRendererRegistry.get(slotView.skin());
+        if (slotView.skin() != null) {
+            return SlotSkinRendererRegistry.get(slotView.skin());
+        }
+
+        return this.style().slotRenderer(slotView);
+    }
+
+    protected final FilterUiStyle style() {
+        return FilterUiStyleRegistry.get(this.menu.styleKey());
     }
 
     private record SlotBounds(int minX, int minY, int width, int height) {
