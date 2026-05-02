@@ -43,7 +43,7 @@ These are intentionally separated from the generic widget package:
 
 Screens still use fixed positions.
 
-`GuiHost` now provides small helpers for GUI-relative coordinates:
+`GuiHost` provides small helpers for GUI-relative coordinates:
 
 ```java
 this.guiX(8);
@@ -83,15 +83,12 @@ this.root.syncBoundsToHost();
 - Use `gui.filter.widget` only when you are building filter UIs.
 - Treat `GuiRootWidget` as composition infrastructure, not as a layout system.
 
-## Good usage pattern
-
-- keep widget positions fixed and explicit
-- use sprites and frames to assemble the background
-- keep feature-specific widgets in feature packages
-- reuse generic widgets for anything that is not filter-specific
-
 ## Examples in this repo
 
 - `example/screen/TestScreen.java` shows a small composed screen
 - `gui/filter/ListFilterScreen.java` shows a menu-backed screen with fixed-position widgets
 - `gui/filter/AttributeFilterScreen.java` shows a more complex feature screen using both generic and filter-specific widgets
+
+## Related docs
+
+- [Styling premade GUIs](./styling-premade-guis.md)

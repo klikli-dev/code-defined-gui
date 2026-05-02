@@ -9,13 +9,17 @@ import com.klikli_dev.codedefinedgui.filter.attribute.AttributeCandidate;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterDefinition;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMenu;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMode;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.gui.filter.widget.AttributeRuleSummaryWidget;
 import com.klikli_dev.codedefinedgui.gui.filter.widget.AttributeSelectionWidget;
 import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
+import com.klikli_dev.codedefinedgui.gui.style.GuiStyleProperties;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.HorizontalSeparatorWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.VerticalSeparatorWidget;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -46,7 +50,8 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
 
     @Override
     protected void addBackgroundWidgets() {
-        this.root.addChild(new GuiBackgroundWidget(this, this.guiX(0), this.guiY(0), this.imageWidth, 85));
+        this.addRootChild(new GuiBackgroundWidget(this, this.guiX(3), this.guiY(12), this.imageWidth() - 6, 75, this.partSprite(BuiltinFilterParts.ATTRIBUTE_PANEL, GuiSprites.GUI_BACKGROUND)));
+        this.addRootChild(new GuiBackgroundWidget(this, this.guiX(0), this.guiY(0), this.imageWidth(), 15, this.partSprite(BuiltinFilterParts.ATTRIBUTE_TOP_BAR, GuiSprites.GUI_BACKGROUND)));
     }
 
     @Override
@@ -69,7 +74,7 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
                 this.guiY(23),
                 137,
                 18,
-                this.attributeSelectionSprite(),
+                this.partSprite(BuiltinFilterParts.ATTRIBUTE_SELECTION, GuiSprites.ATTRIBUTE_FILTER_SELECTION),
                 this::candidates,
                 this.menu::selectedCandidateIndex,
                 this::changeSelection
@@ -78,7 +83,10 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
                 .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_TOOLTIP));
         this.addInvertedButton = this.addIconButton(this.guiX(ADD_INVERTED_BUTTON_X), this.guiY(23), GuiSprites.FILTER_ICON_ADD_INVERTED, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED))
                 .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED_TOOLTIP));
-        this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.guiX(18), this.guiY(55), this.attributeSummarySprite(), () -> this.menu.state().rules().size(), this.menu::summaryStack));
+        this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.guiX(18), this.guiY(55), this.partSprite(BuiltinFilterParts.ATTRIBUTE_SUMMARY, GuiSprites.ATTRIBUTE_FILTER_SUMMARY), () -> this.menu.state().rules().size(), this.menu::summaryStack));
+
+        this.addRootChild(new HorizontalSeparatorWidget(this.guiX(3), this.guiY(48), this.imageWidth() - 6, this.style().get(BuiltinFilterParts.ATTRIBUTE_HORIZONTAL_SEPARATOR, GuiStyleProperties.COLOR, 0xFF000000)));
+        this.addRootChild(new VerticalSeparatorWidget(this.guiX(202), this.guiY(48), 39, this.style().get(BuiltinFilterParts.ATTRIBUTE_VERTICAL_SEPARATOR, GuiStyleProperties.COLOR, 0xFF000000)));
     }
 
     @Override
@@ -99,7 +107,7 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
 
     @Override
     protected int titleColor() {
-        return 0x592424;
+        return this.style().get(BuiltinFilterParts.ATTRIBUTE_TITLE, GuiStyleProperties.TEXT_COLOR, 0x592424);
     }
 
     @Override
@@ -110,14 +118,6 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
     @Override
     protected int cancelButtonId() {
         return AttributeFilterMenu.BUTTON_CANCEL;
-    }
-
-    protected GuiSprite attributeSelectionSprite() {
-        return GuiSprites.ATTRIBUTE_FILTER_SELECTION;
-    }
-
-    protected GuiSprite attributeSummarySprite() {
-        return GuiSprites.ATTRIBUTE_FILTER_SUMMARY;
     }
 
     @Override

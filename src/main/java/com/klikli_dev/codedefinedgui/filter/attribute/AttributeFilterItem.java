@@ -5,6 +5,9 @@
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.filter.core.FilterItem;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
+import com.klikli_dev.codedefinedgui.gui.style.GuiLayoutKey;
+import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -14,8 +17,17 @@ public class AttributeFilterItem extends FilterItem<AttributeFilterState> {
         super(properties, AttributeFilterDefinition.INSTANCE);
     }
 
+    public AttributeFilterItem(Properties properties, GuiStyleKey guiStyleKey) {
+        super(properties, AttributeFilterDefinition.INSTANCE, guiStyleKey);
+    }
+
     @Override
     protected AbstractContainerMenu createMenu(int containerId, Inventory inventory, InteractionHand hand) {
         return new AttributeFilterMenu(containerId, inventory, hand);
+    }
+
+    @Override
+    protected GuiLayoutKey defaultLayoutKey() {
+        return BuiltinFilterLayouts.ATTRIBUTE_FILTER;
     }
 }

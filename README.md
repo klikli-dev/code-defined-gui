@@ -48,7 +48,7 @@ dependencies {
 
 ## Documentation
 
-- [Using the library](./docs/using-the-library.md)
+- [Docs index](./docs/README.md)
 
 ## Thanks
 

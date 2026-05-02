@@ -5,8 +5,9 @@
 package com.klikli_dev.codedefinedgui.filter.list;
 
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
-import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotSkins;
+import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
 import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
 import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -32,7 +33,7 @@ public class ListFilterMenu extends FilterMenu {
     private final DataSlot respectDataComponents = DataSlot.standalone();
 
     public ListFilterMenu(int containerId, Inventory inventory, RegistryFriendlyByteBuf buffer) {
-        this(MenuTypeRegistry.LIST_FILTER.get(), containerId, inventory, buffer.readEnum(InteractionHand.class));
+        this(MenuTypeRegistry.LIST_FILTER.get(), containerId, inventory, buffer.readEnum(InteractionHand.class), readStyleKey(buffer));
     }
 
     public ListFilterMenu(int containerId, Inventory inventory, InteractionHand hand) {
@@ -40,7 +41,11 @@ public class ListFilterMenu extends FilterMenu {
     }
 
     protected ListFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand) {
-        super(menuType, containerId, inventory, hand, FILTER_SLOTS, DataComponentRegistry.LIST_FILTER_CONTENTS.get());
+        this(menuType, containerId, inventory, hand, null);
+    }
+
+    protected ListFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, GuiStyleKey styleKey) {
+        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.LIST_FILTER, styleKey, FILTER_SLOTS, DataComponentRegistry.LIST_FILTER_CONTENTS.get());
 
         ListFilterState state = ListFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());
@@ -140,7 +145,7 @@ public class ListFilterMenu extends FilterMenu {
         int y = 24;
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 9; col++) {
-                this.addGhostSlot(col + row * 9, x + col * 18, y + row * 18, BuiltinSlotRoles.FILTER_GRID, BuiltinSlotSkins.FILTER);
+                this.addGhostSlot(col + row * 9, x + col * 18, y + row * 18, BuiltinSlotRoles.FILTER_GRID);
             }
         }
     }

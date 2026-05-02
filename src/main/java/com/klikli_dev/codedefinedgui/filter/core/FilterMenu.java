@@ -6,14 +6,20 @@ package com.klikli_dev.codedefinedgui.filter.core;
 
 import com.klikli_dev.codedefinedgui.filter.core.storage.GhostItemStorage;
 import com.klikli_dev.codedefinedgui.filter.core.storage.GhostResourceHandlerSlot;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
-import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotSkins;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
 import com.klikli_dev.codedefinedgui.filter.core.layout.MenuSlotView;
 import com.klikli_dev.codedefinedgui.filter.core.layout.SlotRoleKey;
-import com.klikli_dev.codedefinedgui.filter.core.layout.SlotSkinKey;
+import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiStyles;
+import com.klikli_dev.codedefinedgui.gui.style.GuiLayoutKey;
+import com.klikli_dev.codedefinedgui.gui.style.GuiPartKey;
+import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
@@ -39,9 +45,26 @@ public abstract class FilterMenu extends AbstractContainerMenu {
     private final int heldSlot;
     private final int ghostSlots;
     private final int lockedPlayerSlotId;
+    private final GuiLayoutKey layoutKey;
+    private final GuiStyleKey styleKey;
     private final List<MenuSlotView> slotViews = new ArrayList<>();
 
     protected FilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, int ghostSlots, DataComponentType<ItemContainerContents> ghostComponent) {
+        this(menuType, containerId, inventory, hand, BuiltinFilterLayouts.LIST_FILTER, null, ghostSlots, ghostComponent);
+    }
+
+    /**
+     * Base menu for filter layouts.
+     * <p>
+     * A filter menu resolves two pieces of style metadata when it opens:
+     * <ul>
+     *     <li>the {@link GuiLayoutKey} that identifies which premade layout is in use</li>
+     *     <li>the {@link GuiStyleKey} chosen for that layout</li>
+     * </ul>
+     * The menu then exposes that style key to the client screen, which resolves visual values from
+     * {@code GuiStyleRegistry}. This keeps layout/behavior in the screen and visuals in the style sheet.
+     */
+    protected FilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, GuiLayoutKey layoutKey, GuiStyleKey styleKey, int ghostSlots, DataComponentType<ItemContainerContents> ghostComponent) {
         super(menuType, containerId);
         this.player = inventory.player;
         this.heldSlot = heldSlot(inventory.player, hand);
@@ -50,6 +73,8 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         this.ghostSlots = ghostSlots;
         this.lockedPlayerSlotId = playerSlotId(this.heldSlot);
         this.ghostStorage = new GhostItemStorage(ItemAccess.forStack(this.draftFilterStack), ghostComponent, ghostSlots);
+        this.layoutKey = layoutKey;
+        this.styleKey = styleKey != null ? styleKey : this.resolveStyleKey(this.draftFilterStack, layoutKey);
 
         this.addPlayerInventorySlots(inventory, this.playerInventoryX(), this.playerInventoryY());
         this.addFilterSlots();
@@ -61,6 +86,14 @@ public abstract class FilterMenu extends AbstractContainerMenu {
 
     public ItemStack filterStack() {
         return this.player.getInventory().getItem(this.heldSlot);
+    }
+
+    public GuiLayoutKey layoutKey() {
+        return this.layoutKey;
+    }
+
+    public GuiStyleKey styleKey() {
+        return this.styleKey;
     }
 
     @Override
@@ -147,8 +180,12 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         return changed;
     }
 
-    protected Slot addGhostSlot(int slot, int xPosition, int yPosition, SlotRoleKey role, SlotSkinKey skin) {
-        return this.addLayoutSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition), role, skin);
+    protected Slot addGhostSlot(int slot, int xPosition, int yPosition, SlotRoleKey role) {
+        return this.addLayoutSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition), role);
+    }
+
+    protected Slot addGhostSlot(int slot, int xPosition, int yPosition, SlotRoleKey role, GuiPartKey part) {
+        return this.addLayoutSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition), role, part);
     }
 
     protected final int ghostMenuSlotId(int ghostSlot) {
@@ -194,22 +231,38 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         };
     }
 
+    protected static GuiStyleKey readStyleKey(RegistryFriendlyByteBuf buffer) {
+        return GuiStyleKey.of(Identifier.parse(buffer.readUtf()));
+    }
+
+    private GuiStyleKey resolveStyleKey(ItemStack stack, GuiLayoutKey layout) {
+        if (stack.getItem() instanceof FilterItem<?> filterItem) {
+            return filterItem.guiStyleKey(stack, layout);
+        }
+
+        return BuiltinGuiStyles.DEFAULT;
+    }
+
     private void addPlayerInventorySlots(Inventory inventory, int x, int y) {
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
                 int slot = col + row * 9 + 9;
-                this.addLayoutSlot(new Slot(inventory, slot, x + col * 18, y + row * 18), BuiltinSlotRoles.PLAYER_MAIN, BuiltinSlotSkins.PLAYER_INVENTORY);
+                this.addLayoutSlot(new Slot(inventory, slot, x + col * 18, y + row * 18), BuiltinSlotRoles.PLAYER_MAIN);
             }
         }
 
         for (int col = 0; col < 9; col++) {
-            this.addLayoutSlot(new Slot(inventory, col, x + col * 18, y + 58), BuiltinSlotRoles.PLAYER_HOTBAR, BuiltinSlotSkins.PLAYER_INVENTORY);
+            this.addLayoutSlot(new Slot(inventory, col, x + col * 18, y + 58), BuiltinSlotRoles.PLAYER_HOTBAR);
         }
     }
 
-    protected Slot addLayoutSlot(Slot slot, SlotRoleKey role, SlotSkinKey skin) {
+    protected Slot addLayoutSlot(Slot slot, SlotRoleKey role) {
+        return this.addLayoutSlot(slot, role, BuiltinFilterParts.slotPart(role));
+    }
+
+    protected Slot addLayoutSlot(Slot slot, SlotRoleKey role, GuiPartKey part) {
         Slot addedSlot = this.addSlot(slot);
-        this.slotViews.add(new MenuSlotView(addedSlot, role, skin));
+        this.slotViews.add(new MenuSlotView(addedSlot, role, part));
         return addedSlot;
     }
 

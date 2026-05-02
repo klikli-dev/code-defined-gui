@@ -5,8 +5,9 @@
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
-import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotSkins;
+import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
 import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
 import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class AttributeFilterMenu extends FilterMenu {
     private boolean addLocked;
 
     public AttributeFilterMenu(int containerId, Inventory inventory, RegistryFriendlyByteBuf buffer) {
-        this(MenuTypeRegistry.ATTRIBUTE_FILTER.get(), containerId, inventory, buffer.readEnum(InteractionHand.class));
+        this(MenuTypeRegistry.ATTRIBUTE_FILTER.get(), containerId, inventory, buffer.readEnum(InteractionHand.class), readStyleKey(buffer));
     }
 
     public AttributeFilterMenu(int containerId, Inventory inventory, InteractionHand hand) {
@@ -57,7 +58,11 @@ public class AttributeFilterMenu extends FilterMenu {
     }
 
     protected AttributeFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand) {
-        super(menuType, containerId, inventory, hand, GHOST_SLOT_COUNT, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
+        this(menuType, containerId, inventory, hand, null);
+    }
+
+    protected AttributeFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, GuiStyleKey styleKey) {
+        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.ATTRIBUTE_FILTER, styleKey, GHOST_SLOT_COUNT, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
 
         AttributeFilterState state = AttributeFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());
@@ -224,8 +229,8 @@ public class AttributeFilterMenu extends FilterMenu {
 
     @Override
     protected void addFilterSlots() {
-        this.addGhostSlot(REFERENCE_SLOT, 19, 24, BuiltinSlotRoles.FILTER_REFERENCE, BuiltinSlotSkins.FILTER);
-        this.addGhostSlot(SUMMARY_SLOT, 22, 59, BuiltinSlotRoles.FILTER_SUMMARY, BuiltinSlotSkins.FILTER);
+        this.addGhostSlot(REFERENCE_SLOT, 19, 24, BuiltinSlotRoles.FILTER_REFERENCE);
+        this.addGhostSlot(SUMMARY_SLOT, 22, 59, BuiltinSlotRoles.FILTER_SUMMARY);
     }
 
     private boolean addSelectedRule(boolean inverted) {

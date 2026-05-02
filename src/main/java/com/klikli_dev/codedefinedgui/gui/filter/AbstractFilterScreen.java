@@ -6,15 +6,20 @@ package com.klikli_dev.codedefinedgui.gui.filter;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
 import com.klikli_dev.codedefinedgui.filter.core.layout.MenuSlotView;
 import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
 import com.klikli_dev.codedefinedgui.gui.core.GuiRootWidget;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
+import com.klikli_dev.codedefinedgui.gui.style.GuiPartKey;
+import com.klikli_dev.codedefinedgui.gui.style.GuiStyle;
+import com.klikli_dev.codedefinedgui.gui.style.GuiStyleProperties;
+import com.klikli_dev.codedefinedgui.gui.style.GuiStyleRegistry;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonBackgroundSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -122,6 +127,10 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         return this.addRenderableWidget(widget);
     }
 
+    public final <T extends AbstractWidget> T addRootChild(T widget) {
+        return this.root.addChild(widget);
+    }
+
     @Override
     public void removeGuiWidget(AbstractWidget widget) {
         this.removeWidget(widget);
@@ -152,7 +161,7 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
                 this.guiY(bounds.minY()),
                 bounds.width(),
                 bounds.height(),
-                this.playerInventoryBackgroundSprite()
+                this.partSprite(BuiltinFilterParts.PLAYER_INVENTORY_BACKGROUND, GuiSprites.GUI_BACKGROUND)
         ));
     }
 
@@ -162,11 +171,13 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
 
     private void addSlotWidgets() {
         for (MenuSlotView slotView : this.menu.slotViews()) {
-            SlotSkinRenderer renderer = this.slotRenderer(slotView);
+            GuiSprite sprite = this.slotSprite(slotView);
+            int offsetX = this.style().get(slotView.part(), GuiStyleProperties.OFFSET_X, 1);
+            int offsetY = this.style().get(slotView.part(), GuiStyleProperties.OFFSET_Y, 1);
             this.root.addChild(new GuiSpriteWidget(
-                    renderer.renderX(this, slotView),
-                    renderer.renderY(this, slotView),
-                    renderer.sprite(slotView)
+                    this.leftPos() + slotView.x() - offsetX,
+                    this.topPos() + slotView.y() - offsetY,
+                    sprite
             ));
         }
     }
@@ -185,7 +196,7 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     protected abstract void refreshWidgetState();
 
     protected final IconButtonWidget addIconButton(int x, int y, GuiSprite icon, Component message, Runnable onPress) {
-        return this.root.addChild(new IconButtonWidget(x, y, icon, this.buttonBackgroundSprites(), message, onPress));
+        return this.root.addChild(new IconButtonWidget(x, y, icon, this.buttonBackgroundSprites(BuiltinFilterParts.BUTTON), message, onPress));
     }
 
     protected final IconButtonWidget addResetButton(int x, int y, int buttonId) {
@@ -209,7 +220,7 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     }
 
     protected final FilterIndicatorWidget addFilterIndicator(int x, int y) {
-        return this.root.addChild(new FilterIndicatorWidget(x, y, this.filterIndicatorOnSprite(), this.filterIndicatorOffSprite()));
+        return this.root.addChild(new FilterIndicatorWidget(x, y, this.filterIndicatorOnSprite(BuiltinFilterParts.INDICATOR), this.filterIndicatorOffSprite(BuiltinFilterParts.INDICATOR)));
     }
 
     protected final void pressButton(int buttonId) {
@@ -232,20 +243,24 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         super.onClose();
     }
 
-    protected IconButtonBackgroundSprites buttonBackgroundSprites() {
-        return IconButtonBackgroundSprites.DEFAULT;
+    protected IconButtonBackgroundSprites buttonBackgroundSprites(GuiPartKey part) {
+        return new IconButtonBackgroundSprites(
+                this.style().get(part, GuiStyleProperties.SPRITE, GuiSprites.FILTER_BUTTON),
+                this.style().get(part, GuiStyleProperties.PRESSED_SPRITE, GuiSprites.FILTER_BUTTON_DOWN),
+                this.style().get(part, GuiStyleProperties.HOVER_SPRITE, GuiSprites.FILTER_BUTTON_HOVER)
+        );
     }
 
-    protected GuiSprite filterIndicatorOnSprite() {
-        return GuiSprites.FILTER_INDICATOR_ON;
+    protected GuiSprite filterIndicatorOnSprite(GuiPartKey part) {
+        return this.style().get(part, GuiStyleProperties.ON_SPRITE, GuiSprites.FILTER_INDICATOR_ON);
     }
 
-    protected GuiSprite filterIndicatorOffSprite() {
-        return GuiSprites.FILTER_INDICATOR_OFF;
+    protected GuiSprite filterIndicatorOffSprite(GuiPartKey part) {
+        return this.style().get(part, GuiStyleProperties.OFF_SPRITE, GuiSprites.FILTER_INDICATOR_OFF);
     }
 
-    protected GuiSprite playerInventoryBackgroundSprite() {
-        return GuiSprites.GUI_BACKGROUND;
+    protected GuiSprite partSprite(GuiPartKey part, GuiSprite fallback) {
+        return this.style().get(part, GuiStyleProperties.SPRITE, fallback);
     }
 
     private SlotBounds playerInventoryBounds() {
@@ -273,17 +288,22 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
                 continue;
             }
 
-            SlotSkinRenderer renderer = this.slotRenderer(slotView);
-            GuiSprite sprite = renderer.sprite(slotView);
-            SlotBounds slotBounds = new SlotBounds(slotView.x() - renderer.offsetX(slotView), slotView.y() - renderer.offsetY(slotView), sprite.width(), sprite.height());
+            GuiSprite sprite = this.slotSprite(slotView);
+            int offsetX = this.style().get(slotView.part(), GuiStyleProperties.OFFSET_X, 1);
+            int offsetY = this.style().get(slotView.part(), GuiStyleProperties.OFFSET_Y, 1);
+            SlotBounds slotBounds = new SlotBounds(slotView.x() - offsetX, slotView.y() - offsetY, sprite.width(), sprite.height());
             bounds = bounds == null ? slotBounds : bounds.union(slotBounds);
         }
 
         return bounds;
     }
 
-    protected SlotSkinRenderer slotRenderer(MenuSlotView slotView) {
-        return SlotSkinRendererRegistry.get(slotView.skin());
+    protected GuiSprite slotSprite(MenuSlotView slotView) {
+        return this.partSprite(slotView.part(), GuiSprites.INVENTORY_SLOT);
+    }
+
+    protected final GuiStyle style() {
+        return GuiStyleRegistry.get(this.menu.styleKey());
     }
 
     private record SlotBounds(int minX, int minY, int width, int height) {
