@@ -6,7 +6,7 @@ package com.klikli_dev.codedefinedgui.filter.core.layout;
 
 import net.minecraft.world.inventory.Slot;
 
-public record MenuSlotView(Slot slot, MenuSlotRole role, MenuSlotSkin skin) {
+public record MenuSlotView(Slot slot, SlotRoleKey role, SlotSkinKey skin) {
     public int x() {
         return this.slot.x;
     }

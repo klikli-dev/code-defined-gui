@@ -5,8 +5,8 @@
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
-import com.klikli_dev.codedefinedgui.filter.core.layout.MenuSlotRole;
-import com.klikli_dev.codedefinedgui.filter.core.layout.MenuSlotSkin;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotSkins;
 import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
 import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
 import java.util.ArrayList;
@@ -224,8 +224,8 @@ public class AttributeFilterMenu extends FilterMenu {
 
     @Override
     protected void addFilterSlots() {
-        this.addGhostSlot(REFERENCE_SLOT, 19, 24, MenuSlotRole.FILTER_REFERENCE, MenuSlotSkin.FILTER);
-        this.addGhostSlot(SUMMARY_SLOT, 22, 59, MenuSlotRole.FILTER_SUMMARY, MenuSlotSkin.FILTER);
+        this.addGhostSlot(REFERENCE_SLOT, 19, 24, BuiltinSlotRoles.FILTER_REFERENCE, BuiltinSlotSkins.FILTER);
+        this.addGhostSlot(SUMMARY_SLOT, 22, 59, BuiltinSlotRoles.FILTER_SUMMARY, BuiltinSlotSkins.FILTER);
     }
 
     private boolean addSelectedRule(boolean inverted) {

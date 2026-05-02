@@ -5,8 +5,8 @@
 package com.klikli_dev.codedefinedgui.filter.list;
 
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
-import com.klikli_dev.codedefinedgui.filter.core.layout.MenuSlotRole;
-import com.klikli_dev.codedefinedgui.filter.core.layout.MenuSlotSkin;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotSkins;
 import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
 import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -140,7 +140,7 @@ public class ListFilterMenu extends FilterMenu {
         int y = 24;
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 9; col++) {
-                this.addGhostSlot(col + row * 9, x + col * 18, y + row * 18, MenuSlotRole.FILTER_GRID, MenuSlotSkin.FILTER);
+                this.addGhostSlot(col + row * 9, x + col * 18, y + row * 18, BuiltinSlotRoles.FILTER_GRID, BuiltinSlotSkins.FILTER);
             }
         }
     }

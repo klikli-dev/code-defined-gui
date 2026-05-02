@@ -6,8 +6,7 @@ package com.klikli_dev.codedefinedgui.gui.filter;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
-import com.klikli_dev.codedefinedgui.filter.core.layout.MenuSlotRole;
-import com.klikli_dev.codedefinedgui.filter.core.layout.MenuSlotSkin;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
 import com.klikli_dev.codedefinedgui.filter.core.layout.MenuSlotView;
 import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
 import com.klikli_dev.codedefinedgui.gui.core.GuiRootWidget;
@@ -158,11 +157,11 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
 
     private void addSlotWidgets() {
         for (MenuSlotView slotView : this.menu.slotViews()) {
-            GuiSprite sprite = this.slotSprite(slotView);
+            SlotSkinRenderer renderer = this.slotRenderer(slotView);
             this.root.addChild(new GuiSpriteWidget(
-                    this.leftPos + slotView.x() - this.slotBackgroundOffsetX(slotView),
-                    this.topPos + slotView.y() - this.slotBackgroundOffsetY(slotView),
-                    sprite
+                    renderer.renderX(this, slotView),
+                    renderer.renderY(this, slotView),
+                    renderer.sprite(slotView)
             ));
         }
     }
@@ -252,26 +251,8 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         return GuiSprites.INVENTORY_SLOT;
     }
 
-    protected GuiSprite filterSlotSprite() {
-        return this.inventorySlotSprite();
-    }
-
-    /**
-     * Slot textures render with a 1px frame around the logical slot position.
-     */
-    protected int slotBackgroundOffsetX(MenuSlotView slotView) {
-        return 1;
-    }
-
-    /**
-     * Slot textures render with a 1px frame around the logical slot position.
-     */
-    protected int slotBackgroundOffsetY(MenuSlotView slotView) {
-        return 1;
-    }
-
     private SlotBounds playerInventoryBounds() {
-        return this.slotBounds(slotView -> slotView.role() == MenuSlotRole.PLAYER_MAIN || slotView.role() == MenuSlotRole.PLAYER_HOTBAR);
+        return this.slotBounds(slotView -> slotView.role().equals(BuiltinSlotRoles.PLAYER_MAIN) || slotView.role().equals(BuiltinSlotRoles.PLAYER_HOTBAR));
     }
 
     private SlotBounds slotBounds(java.util.function.Predicate<MenuSlotView> filter) {
@@ -281,21 +262,17 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
                 continue;
             }
 
-            GuiSprite sprite = this.slotSprite(slotView);
-            int x = slotView.x() - this.slotBackgroundOffsetX(slotView);
-            int y = slotView.y() - this.slotBackgroundOffsetY(slotView);
-            SlotBounds slotBounds = new SlotBounds(x, y, sprite.width(), sprite.height());
+            SlotSkinRenderer renderer = this.slotRenderer(slotView);
+            GuiSprite sprite = renderer.sprite(slotView);
+            SlotBounds slotBounds = new SlotBounds(slotView.x() - renderer.offsetX(slotView), slotView.y() - renderer.offsetY(slotView), sprite.width(), sprite.height());
             bounds = bounds == null ? slotBounds : bounds.union(slotBounds);
         }
 
         return bounds;
     }
 
-    private GuiSprite slotSprite(MenuSlotView slotView) {
-        return switch (slotView.skin()) {
-            case PLAYER_INVENTORY -> this.playerInventorySlotSprite();
-            case FILTER -> this.filterSlotSprite();
-        };
+    protected SlotSkinRenderer slotRenderer(MenuSlotView slotView) {
+        return SlotSkinRendererRegistry.get(slotView.skin());
     }
 
     private record SlotBounds(int minX, int minY, int width, int height) {
