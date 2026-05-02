@@ -112,10 +112,6 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         return AttributeFilterMenu.BUTTON_CANCEL;
     }
 
-    protected GuiSprite filterSlotSprite() {
-        return this.inventorySlotSprite();
-    }
-
     protected GuiSprite attributeSelectionSprite() {
         return GuiSprites.ATTRIBUTE_FILTER_SELECTION;
     }

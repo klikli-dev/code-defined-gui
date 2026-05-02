@@ -6,7 +6,6 @@ package com.klikli_dev.codedefinedgui.gui.filter;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.filter.list.ListFilterMenu;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.FilterIndicatorWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
@@ -82,10 +81,5 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
     @Override
     protected int cancelButtonId() {
         return ListFilterMenu.BUTTON_CANCEL;
-    }
-
-    @Override
-    protected GuiSprite filterSlotSprite() {
-        return this.inventorySlotSprite();
     }
 }
