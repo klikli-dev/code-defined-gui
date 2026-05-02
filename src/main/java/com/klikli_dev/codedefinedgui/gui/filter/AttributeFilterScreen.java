@@ -15,7 +15,6 @@ import com.klikli_dev.codedefinedgui.gui.widget.AttributeRuleSummaryWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.AttributeSelectionWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.FilterIndicatorWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
 public class AttributeFilterScreen<M extends AttributeFilterMenu> extends AbstractFilterScreen<M> {
-    private static final int REFERENCE_SLOT_X = 18;
     private static final int ATTRIBUTE_SELECTION_X = 42;
     private static final int ADD_BUTTON_X = 190;
     private static final int ADD_INVERTED_BUTTON_X = 208;
@@ -49,13 +47,6 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
     @Override
     protected void addBackgroundWidgets() {
         this.root.addChild(new GuiBackgroundWidget(this, this.leftPos, this.topPos, this.imageWidth, 85));
-    }
-
-    @Override
-    protected void addFilterSlotWidgets() {
-        GuiSprite filterSlotSprite = this.filterSlotSprite();
-        this.root.addChild(new GuiSpriteWidget(this.leftPos + REFERENCE_SLOT_X, this.topPos + 23, filterSlotSprite));
-        this.root.addChild(new GuiSpriteWidget(this.leftPos + 21, this.topPos + 58, filterSlotSprite));
     }
 
     @Override

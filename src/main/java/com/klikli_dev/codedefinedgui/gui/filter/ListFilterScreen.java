@@ -10,7 +10,6 @@ import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.FilterIndicatorWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -34,16 +33,6 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
     @Override
     protected void addBackgroundWidgets() {
         this.root.addChild(new GuiBackgroundWidget(this, this.leftPos, this.topPos, this.imageWidth, 99));
-    }
-
-    @Override
-    protected void addFilterSlotWidgets() {
-        GuiSprite filterSlotSprite = this.filterSlotSprite();
-        for (int row = 0; row < 2; row++) {
-            for (int col = 0; col < 9; col++) {
-                this.root.addChild(new GuiSpriteWidget(this.leftPos + 24 + col * 18, this.topPos + 23 + row * 18, filterSlotSprite));
-            }
-        }
     }
 
     @Override
@@ -95,6 +84,7 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
         return ListFilterMenu.BUTTON_CANCEL;
     }
 
+    @Override
     protected GuiSprite filterSlotSprite() {
         return this.inventorySlotSprite();
     }
