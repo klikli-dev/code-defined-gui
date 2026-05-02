@@ -36,6 +36,9 @@ Do NOT use fully qualified class names in code. Always import classes and use th
 
 A full codemap is available at `codemap.md` in the project root.
 
+- Never create or keep a `codemap.md` anywhere under `src/main/templates/`.
+- Treat codemap artifacts (`codemap.md` files and `.slim/cartography.json`) as local documentation/state only: respect `.gitignore` and do not add them to git.
+
 Before working on any task, read `codemap.md` to understand:
 - Project architecture and entry points
 - Directory responsibilities and design patterns
