@@ -4,10 +4,10 @@
 
 package com.klikli_dev.codedefinedgui.filter.core.layout;
 
+import com.klikli_dev.codedefinedgui.gui.style.GuiPartKey;
 import net.minecraft.world.inventory.Slot;
-import org.jspecify.annotations.Nullable;
 
-public record MenuSlotView(Slot slot, SlotRoleKey role, @Nullable SlotSkinKey skin) {
+public record MenuSlotView(Slot slot, SlotRoleKey role, GuiPartKey part) {
     public int x() {
         return this.slot.x;
     }

@@ -4,8 +4,9 @@
 
 package com.klikli_dev.codedefinedgui.filter.core;
 
-import com.klikli_dev.codedefinedgui.gui.filter.BuiltinFilterUiStyles;
-import com.klikli_dev.codedefinedgui.gui.filter.FilterUiStyleKey;
+import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiStyles;
+import com.klikli_dev.codedefinedgui.gui.style.GuiLayoutKey;
+import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
 import java.util.List;
 import java.util.function.Consumer;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -24,24 +25,24 @@ import net.minecraft.world.level.Level;
 
 public abstract class FilterItem<S extends FilterState> extends Item {
     private final FilterDefinition<S> definition;
-    private final FilterUiStyleKey uiStyleKey;
+    private final GuiStyleKey guiStyleKey;
 
     protected FilterItem(Properties properties, FilterDefinition<S> definition) {
-        this(properties, definition, BuiltinFilterUiStyles.DEFAULT);
+        this(properties, definition, BuiltinGuiStyles.DEFAULT);
     }
 
-    protected FilterItem(Properties properties, FilterDefinition<S> definition, FilterUiStyleKey uiStyleKey) {
+    protected FilterItem(Properties properties, FilterDefinition<S> definition, GuiStyleKey guiStyleKey) {
         super(properties);
         this.definition = definition;
-        this.uiStyleKey = uiStyleKey;
+        this.guiStyleKey = guiStyleKey;
     }
 
     public FilterDefinition<S> definition() {
         return this.definition;
     }
 
-    public FilterUiStyleKey uiStyleKey(ItemStack stack) {
-        return this.uiStyleKey;
+    public GuiStyleKey guiStyleKey(ItemStack stack, GuiLayoutKey layout) {
+        return this.guiStyleKey;
     }
 
     @Override
@@ -73,8 +74,14 @@ public abstract class FilterItem<S extends FilterState> extends Item {
      */
     protected void writeMenuData(RegistryFriendlyByteBuf buffer, Player player, InteractionHand hand, ItemStack stack) {
         buffer.writeEnum(hand);
-        buffer.writeUtf(this.uiStyleKey(stack).id().toString());
+        buffer.writeUtf(this.guiStyleKey(stack, this.layoutKey()).id().toString());
     }
+
+    protected GuiLayoutKey layoutKey() {
+        return this.defaultLayoutKey();
+    }
+
+    protected abstract GuiLayoutKey defaultLayoutKey();
 
     /**
      * Creates the server-side menu for this filter item.

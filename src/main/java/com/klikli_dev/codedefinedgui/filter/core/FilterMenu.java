@@ -6,12 +6,15 @@ package com.klikli_dev.codedefinedgui.filter.core;
 
 import com.klikli_dev.codedefinedgui.filter.core.storage.GhostItemStorage;
 import com.klikli_dev.codedefinedgui.filter.core.storage.GhostResourceHandlerSlot;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
 import com.klikli_dev.codedefinedgui.filter.core.layout.MenuSlotView;
 import com.klikli_dev.codedefinedgui.filter.core.layout.SlotRoleKey;
-import com.klikli_dev.codedefinedgui.filter.core.layout.SlotSkinKey;
-import com.klikli_dev.codedefinedgui.gui.filter.BuiltinFilterUiStyles;
-import com.klikli_dev.codedefinedgui.gui.filter.FilterUiStyleKey;
+import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiStyles;
+import com.klikli_dev.codedefinedgui.gui.style.GuiLayoutKey;
+import com.klikli_dev.codedefinedgui.gui.style.GuiPartKey;
+import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.component.DataComponentType;
@@ -42,14 +45,15 @@ public abstract class FilterMenu extends AbstractContainerMenu {
     private final int heldSlot;
     private final int ghostSlots;
     private final int lockedPlayerSlotId;
-    private final FilterUiStyleKey styleKey;
+    private final GuiLayoutKey layoutKey;
+    private final GuiStyleKey styleKey;
     private final List<MenuSlotView> slotViews = new ArrayList<>();
 
     protected FilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, int ghostSlots, DataComponentType<ItemContainerContents> ghostComponent) {
-        this(menuType, containerId, inventory, hand, null, ghostSlots, ghostComponent);
+        this(menuType, containerId, inventory, hand, BuiltinFilterLayouts.LIST_FILTER, null, ghostSlots, ghostComponent);
     }
 
-    protected FilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, FilterUiStyleKey styleKey, int ghostSlots, DataComponentType<ItemContainerContents> ghostComponent) {
+    protected FilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, GuiLayoutKey layoutKey, GuiStyleKey styleKey, int ghostSlots, DataComponentType<ItemContainerContents> ghostComponent) {
         super(menuType, containerId);
         this.player = inventory.player;
         this.heldSlot = heldSlot(inventory.player, hand);
@@ -58,7 +62,8 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         this.ghostSlots = ghostSlots;
         this.lockedPlayerSlotId = playerSlotId(this.heldSlot);
         this.ghostStorage = new GhostItemStorage(ItemAccess.forStack(this.draftFilterStack), ghostComponent, ghostSlots);
-        this.styleKey = styleKey != null ? styleKey : this.resolveStyleKey(this.draftFilterStack);
+        this.layoutKey = layoutKey;
+        this.styleKey = styleKey != null ? styleKey : this.resolveStyleKey(this.draftFilterStack, layoutKey);
 
         this.addPlayerInventorySlots(inventory, this.playerInventoryX(), this.playerInventoryY());
         this.addFilterSlots();
@@ -72,7 +77,11 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         return this.player.getInventory().getItem(this.heldSlot);
     }
 
-    public FilterUiStyleKey styleKey() {
+    public GuiLayoutKey layoutKey() {
+        return this.layoutKey;
+    }
+
+    public GuiStyleKey styleKey() {
         return this.styleKey;
     }
 
@@ -164,8 +173,8 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         return this.addLayoutSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition), role);
     }
 
-    protected Slot addGhostSlot(int slot, int xPosition, int yPosition, SlotRoleKey role, SlotSkinKey skin) {
-        return this.addLayoutSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition), role, skin);
+    protected Slot addGhostSlot(int slot, int xPosition, int yPosition, SlotRoleKey role, GuiPartKey part) {
+        return this.addLayoutSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition), role, part);
     }
 
     protected final int ghostMenuSlotId(int ghostSlot) {
@@ -211,16 +220,16 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         };
     }
 
-    protected static FilterUiStyleKey readStyleKey(RegistryFriendlyByteBuf buffer) {
-        return FilterUiStyleKey.of(Identifier.parse(buffer.readUtf()));
+    protected static GuiStyleKey readStyleKey(RegistryFriendlyByteBuf buffer) {
+        return GuiStyleKey.of(Identifier.parse(buffer.readUtf()));
     }
 
-    private FilterUiStyleKey resolveStyleKey(ItemStack stack) {
+    private GuiStyleKey resolveStyleKey(ItemStack stack, GuiLayoutKey layout) {
         if (stack.getItem() instanceof FilterItem<?> filterItem) {
-            return filterItem.uiStyleKey(stack);
+            return filterItem.guiStyleKey(stack, layout);
         }
 
-        return BuiltinFilterUiStyles.DEFAULT;
+        return BuiltinGuiStyles.DEFAULT;
     }
 
     private void addPlayerInventorySlots(Inventory inventory, int x, int y) {
@@ -237,12 +246,12 @@ public abstract class FilterMenu extends AbstractContainerMenu {
     }
 
     protected Slot addLayoutSlot(Slot slot, SlotRoleKey role) {
-        return this.addLayoutSlot(slot, role, null);
+        return this.addLayoutSlot(slot, role, BuiltinFilterParts.slotPart(role));
     }
 
-    protected Slot addLayoutSlot(Slot slot, SlotRoleKey role, SlotSkinKey skin) {
+    protected Slot addLayoutSlot(Slot slot, SlotRoleKey role, GuiPartKey part) {
         Slot addedSlot = this.addSlot(slot);
-        this.slotViews.add(new MenuSlotView(addedSlot, role, skin));
+        this.slotViews.add(new MenuSlotView(addedSlot, role, part));
         return addedSlot;
     }
 

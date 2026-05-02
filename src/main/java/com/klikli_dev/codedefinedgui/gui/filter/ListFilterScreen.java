@@ -5,10 +5,15 @@
 package com.klikli_dev.codedefinedgui.gui.filter;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.filter.list.ListFilterMenu;
 import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
+import com.klikli_dev.codedefinedgui.gui.style.GuiStyleProperties;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
+import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.HorizontalSeparatorWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.VerticalSeparatorWidget;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -30,7 +35,8 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
 
     @Override
     protected void addBackgroundWidgets() {
-        this.style().addListBackgroundWidgets(this);
+        this.addRootChild(new GuiBackgroundWidget(this, this.guiX(3), this.guiY(12), this.imageWidth() - 6, 87, this.partSprite(BuiltinFilterParts.LIST_PANEL, GuiSprites.GUI_BACKGROUND)));
+        this.addRootChild(new GuiBackgroundWidget(this, this.guiX(0), this.guiY(0), this.imageWidth(), 15, this.partSprite(BuiltinFilterParts.LIST_TOP_BAR, GuiSprites.GUI_BACKGROUND)));
     }
 
     @Override
@@ -52,7 +58,8 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
         this.respectDataIndicator = this.addFilterIndicator(this.guiX(60), this.guiY(69));
         this.ignoreDataIndicator = this.addFilterIndicator(this.guiX(78), this.guiY(69));
 
-        this.style().addListForegroundWidgets(this);
+        this.addRootChild(new HorizontalSeparatorWidget(this.guiX(3), this.guiY(64), this.imageWidth() - 6, this.style().get(BuiltinFilterParts.LIST_HORIZONTAL_SEPARATOR, GuiStyleProperties.COLOR, 0xFF000000)));
+        this.addRootChild(new VerticalSeparatorWidget(this.guiX(145), this.guiY(64), 35, this.style().get(BuiltinFilterParts.LIST_VERTICAL_SEPARATOR, GuiStyleProperties.COLOR, 0xFF000000)));
     }
 
     @Override
@@ -71,7 +78,7 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
 
     @Override
     protected int titleColor() {
-        return this.style().listTitleColor();
+        return this.style().get(BuiltinFilterParts.LIST_TITLE, GuiStyleProperties.TEXT_COLOR, 0x303030);
     }
 
     @Override

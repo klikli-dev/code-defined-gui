@@ -5,8 +5,9 @@
 package com.klikli_dev.codedefinedgui.filter.list;
 
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
-import com.klikli_dev.codedefinedgui.gui.filter.FilterUiStyleKey;
+import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
 import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
 import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -43,8 +44,8 @@ public class ListFilterMenu extends FilterMenu {
         this(menuType, containerId, inventory, hand, null);
     }
 
-    protected ListFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, FilterUiStyleKey styleKey) {
-        super(menuType, containerId, inventory, hand, styleKey, FILTER_SLOTS, DataComponentRegistry.LIST_FILTER_CONTENTS.get());
+    protected ListFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, GuiStyleKey styleKey) {
+        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.LIST_FILTER, styleKey, FILTER_SLOTS, DataComponentRegistry.LIST_FILTER_CONTENTS.get());
 
         ListFilterState state = ListFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());

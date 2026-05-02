@@ -5,8 +5,9 @@
 package com.klikli_dev.codedefinedgui.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
-import com.klikli_dev.codedefinedgui.gui.filter.FilterUiStyleKey;
+import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
 import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
 import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
 import java.util.ArrayList;
@@ -60,8 +61,8 @@ public class AttributeFilterMenu extends FilterMenu {
         this(menuType, containerId, inventory, hand, null);
     }
 
-    protected AttributeFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, FilterUiStyleKey styleKey) {
-        super(menuType, containerId, inventory, hand, styleKey, GHOST_SLOT_COUNT, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
+    protected AttributeFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, GuiStyleKey styleKey) {
+        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.ATTRIBUTE_FILTER, styleKey, GHOST_SLOT_COUNT, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
 
         AttributeFilterState state = AttributeFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());

@@ -1,0 +1,27 @@
+// SPDX-FileCopyrightText: 2026 klikli-dev
+//
+// SPDX-License-Identifier: MIT
+
+package com.klikli_dev.codedefinedgui.gui.style;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public final class GuiStyleRegistry {
+    private static final GuiStyle EMPTY_STYLE = GuiStyle.builder().build();
+    private static final Map<GuiStyleKey, GuiStyle> STYLES = new ConcurrentHashMap<>();
+
+    private GuiStyleRegistry() {
+    }
+
+    public static void register(GuiStyleKey key, GuiStyle style) {
+        GuiStyle previous = STYLES.putIfAbsent(key, style);
+        if (previous != null) {
+            throw new IllegalStateException("A gui style is already registered for key " + key.id());
+        }
+    }
+
+    public static GuiStyle get(GuiStyleKey key) {
+        return STYLES.getOrDefault(key, EMPTY_STYLE);
+    }
+}
