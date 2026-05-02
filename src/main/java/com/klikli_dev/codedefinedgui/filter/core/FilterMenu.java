@@ -6,6 +6,13 @@ package com.klikli_dev.codedefinedgui.filter.core;
 
 import com.klikli_dev.codedefinedgui.filter.core.storage.GhostItemStorage;
 import com.klikli_dev.codedefinedgui.filter.core.storage.GhostResourceHandlerSlot;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotSkins;
+import com.klikli_dev.codedefinedgui.filter.core.layout.MenuSlotView;
+import com.klikli_dev.codedefinedgui.filter.core.layout.SlotRoleKey;
+import com.klikli_dev.codedefinedgui.filter.core.layout.SlotSkinKey;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -32,6 +39,7 @@ public abstract class FilterMenu extends AbstractContainerMenu {
     private final int heldSlot;
     private final int ghostSlots;
     private final int lockedPlayerSlotId;
+    private final List<MenuSlotView> slotViews = new ArrayList<>();
 
     protected FilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, int ghostSlots, DataComponentType<ItemContainerContents> ghostComponent) {
         super(menuType, containerId);
@@ -43,8 +51,12 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         this.lockedPlayerSlotId = playerSlotId(this.heldSlot);
         this.ghostStorage = new GhostItemStorage(ItemAccess.forStack(this.draftFilterStack), ghostComponent, ghostSlots);
 
-        this.addStandardInventorySlots(inventory, this.playerInventoryX(), this.playerInventoryY());
+        this.addPlayerInventorySlots(inventory, this.playerInventoryX(), this.playerInventoryY());
         this.addFilterSlots();
+    }
+
+    public List<MenuSlotView> slotViews() {
+        return List.copyOf(this.slotViews);
     }
 
     public ItemStack filterStack() {
@@ -135,8 +147,8 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         return changed;
     }
 
-    protected Slot addGhostSlot(int slot, int xPosition, int yPosition) {
-        return this.addSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition));
+    protected Slot addGhostSlot(int slot, int xPosition, int yPosition, SlotRoleKey role, SlotSkinKey skin) {
+        return this.addLayoutSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition), role, skin);
     }
 
     protected final int ghostMenuSlotId(int ghostSlot) {
@@ -180,6 +192,25 @@ public abstract class FilterMenu extends AbstractContainerMenu {
             case MAIN_HAND -> player.getInventory().getSelectedSlot();
             case OFF_HAND -> OFFHAND_SLOT;
         };
+    }
+
+    private void addPlayerInventorySlots(Inventory inventory, int x, int y) {
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 9; col++) {
+                int slot = col + row * 9 + 9;
+                this.addLayoutSlot(new Slot(inventory, slot, x + col * 18, y + row * 18), BuiltinSlotRoles.PLAYER_MAIN, BuiltinSlotSkins.PLAYER_INVENTORY);
+            }
+        }
+
+        for (int col = 0; col < 9; col++) {
+            this.addLayoutSlot(new Slot(inventory, col, x + col * 18, y + 58), BuiltinSlotRoles.PLAYER_HOTBAR, BuiltinSlotSkins.PLAYER_INVENTORY);
+        }
+    }
+
+    protected Slot addLayoutSlot(Slot slot, SlotRoleKey role, SlotSkinKey skin) {
+        Slot addedSlot = this.addSlot(slot);
+        this.slotViews.add(new MenuSlotView(addedSlot, role, skin));
+        return addedSlot;
     }
 
     protected abstract int playerInventoryX();

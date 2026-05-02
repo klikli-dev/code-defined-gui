@@ -9,13 +9,12 @@ import com.klikli_dev.codedefinedgui.filter.attribute.AttributeCandidate;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterDefinition;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMenu;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMode;
+import com.klikli_dev.codedefinedgui.gui.filter.widget.AttributeRuleSummaryWidget;
+import com.klikli_dev.codedefinedgui.gui.filter.widget.AttributeSelectionWidget;
+import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
-import com.klikli_dev.codedefinedgui.gui.widget.AttributeRuleSummaryWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.AttributeSelectionWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.FilterIndicatorWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
 public class AttributeFilterScreen<M extends AttributeFilterMenu> extends AbstractFilterScreen<M> {
-    private static final int REFERENCE_SLOT_X = 18;
     private static final int ATTRIBUTE_SELECTION_X = 42;
     private static final int ADD_BUTTON_X = 190;
     private static final int ADD_INVERTED_BUTTON_X = 208;
@@ -48,34 +46,27 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
 
     @Override
     protected void addBackgroundWidgets() {
-        this.root.addChild(new GuiBackgroundWidget(this, this.leftPos, this.topPos, this.imageWidth, 85));
-    }
-
-    @Override
-    protected void addFilterSlotWidgets() {
-        GuiSprite filterSlotSprite = this.filterSlotSprite();
-        this.root.addChild(new GuiSpriteWidget(this.leftPos + REFERENCE_SLOT_X, this.topPos + 23, filterSlotSprite));
-        this.root.addChild(new GuiSpriteWidget(this.leftPos + 21, this.topPos + 58, filterSlotSprite));
+        this.root.addChild(new GuiBackgroundWidget(this, this.guiX(0), this.guiY(0), this.imageWidth, 85));
     }
 
     @Override
     protected void addScreenWidgets() {
-        this.resetButton = this.addResetButton(this.leftPos + 179, this.topPos + 61, AttributeFilterMenu.BUTTON_RESET);
-        this.confirmButton = this.addConfirmButton(this.leftPos + 208, this.topPos + 61);
+        this.resetButton = this.addResetButton(this.guiX(179), this.guiY(61), AttributeFilterMenu.BUTTON_RESET);
+        this.confirmButton = this.addConfirmButton(this.guiX(208), this.guiY(61));
 
-        this.matchAnyButton = this.addIconButton(this.leftPos + 47, this.topPos + 61, GuiSprites.FILTER_ICON_MATCH_ANY, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ANY))
+        this.matchAnyButton = this.addIconButton(this.guiX(47), this.guiY(61), GuiSprites.FILTER_ICON_MATCH_ANY, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ANY))
                 .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY_TOOLTIP_SHIFT));
-        this.matchAllButton = this.addIconButton(this.leftPos + 65, this.topPos + 61, GuiSprites.FILTER_ICON_MATCH_ALL, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ALL))
+        this.matchAllButton = this.addIconButton(this.guiX(65), this.guiY(61), GuiSprites.FILTER_ICON_MATCH_ALL, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ALL))
                 .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL_TOOLTIP_SHIFT));
-        this.denyButton = this.addIconButton(this.leftPos + 83, this.topPos + 61, GuiSprites.FILTER_ICON_DENY_ALT, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY), () -> this.pressButton(AttributeFilterMenu.BUTTON_DENY))
+        this.denyButton = this.addIconButton(this.guiX(83), this.guiY(61), GuiSprites.FILTER_ICON_DENY_ALT, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY), () -> this.pressButton(AttributeFilterMenu.BUTTON_DENY))
                 .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY_TOOLTIP_SHIFT));
-        this.matchAnyIndicator = this.addFilterIndicator(this.leftPos + 47, this.topPos + 55);
-        this.matchAllIndicator = this.addFilterIndicator(this.leftPos + 65, this.topPos + 55);
-        this.denyIndicator = this.addFilterIndicator(this.leftPos + 83, this.topPos + 55);
+        this.matchAnyIndicator = this.addFilterIndicator(this.guiX(47), this.guiY(55));
+        this.matchAllIndicator = this.addFilterIndicator(this.guiX(65), this.guiY(55));
+        this.denyIndicator = this.addFilterIndicator(this.guiX(83), this.guiY(55));
 
         this.selectionWidget = this.root.addChild(new AttributeSelectionWidget(
-                this.leftPos + ATTRIBUTE_SELECTION_X,
-                this.topPos + 23,
+                this.guiX(ATTRIBUTE_SELECTION_X),
+                this.guiY(23),
                 137,
                 18,
                 this.attributeSelectionSprite(),
@@ -83,11 +74,11 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
                 this.menu::selectedCandidateIndex,
                 this::changeSelection
         ).withTitle(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.AVAILABLE)));
-        this.addButton = this.addIconButton(this.leftPos + ADD_BUTTON_X, this.topPos + 23, GuiSprites.FILTER_ICON_ADD, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED))
+        this.addButton = this.addIconButton(this.guiX(ADD_BUTTON_X), this.guiY(23), GuiSprites.FILTER_ICON_ADD, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED))
                 .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_TOOLTIP));
-        this.addInvertedButton = this.addIconButton(this.leftPos + ADD_INVERTED_BUTTON_X, this.topPos + 23, GuiSprites.FILTER_ICON_ADD_INVERTED, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED))
+        this.addInvertedButton = this.addIconButton(this.guiX(ADD_INVERTED_BUTTON_X), this.guiY(23), GuiSprites.FILTER_ICON_ADD_INVERTED, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED))
                 .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED_TOOLTIP));
-        this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.leftPos + 18, this.topPos + 55, this.attributeSummarySprite(), () -> this.menu.state().rules().size(), this.menu::summaryStack));
+        this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(this.guiX(18), this.guiY(55), this.attributeSummarySprite(), () -> this.menu.state().rules().size(), this.menu::summaryStack));
     }
 
     @Override
@@ -119,10 +110,6 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
     @Override
     protected int cancelButtonId() {
         return AttributeFilterMenu.BUTTON_CANCEL;
-    }
-
-    protected GuiSprite filterSlotSprite() {
-        return this.inventorySlotSprite();
     }
 
     protected GuiSprite attributeSelectionSprite() {

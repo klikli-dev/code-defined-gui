@@ -46,6 +46,10 @@ dependencies {
 }
 ```
 
+## Documentation
+
+- [Using the library](./docs/using-the-library.md)
+
 ## Thanks
 
 [![Hosted By: Cloudsmith](https://img.shields.io/badge/OSS%20hosting%20by-cloudsmith-blue?logo=cloudsmith&style=for-the-badge)](https://cloudsmith.com)
