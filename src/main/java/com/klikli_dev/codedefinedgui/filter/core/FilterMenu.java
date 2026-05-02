@@ -53,6 +53,17 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         this(menuType, containerId, inventory, hand, BuiltinFilterLayouts.LIST_FILTER, null, ghostSlots, ghostComponent);
     }
 
+    /**
+     * Base menu for filter layouts.
+     * <p>
+     * A filter menu resolves two pieces of style metadata when it opens:
+     * <ul>
+     *     <li>the {@link GuiLayoutKey} that identifies which premade layout is in use</li>
+     *     <li>the {@link GuiStyleKey} chosen for that layout</li>
+     * </ul>
+     * The menu then exposes that style key to the client screen, which resolves visual values from
+     * {@code GuiStyleRegistry}. This keeps layout/behavior in the screen and visuals in the style sheet.
+     */
     protected FilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, GuiLayoutKey layoutKey, GuiStyleKey styleKey, int ghostSlots, DataComponentType<ItemContainerContents> ghostComponent) {
         super(menuType, containerId);
         this.player = inventory.player;

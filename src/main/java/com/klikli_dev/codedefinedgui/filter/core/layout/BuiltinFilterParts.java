@@ -30,6 +30,13 @@ public final class BuiltinFilterParts {
     private BuiltinFilterParts() {
     }
 
+    /**
+     * Default slot part mapping for built-in filter menus.
+     * <p>
+     * Player inventory slots use {@link #PLAYER_SLOT}; all filter-owned ghost slots use
+     * {@link #FILTER_SLOT}. If a custom screen needs a more specific slot visual, it can pass an
+     * explicit part key when adding the slot view instead of relying on this default mapping.
+     */
     public static GuiPartKey slotPart(SlotRoleKey role) {
         if (role.equals(BuiltinSlotRoles.PLAYER_MAIN) || role.equals(BuiltinSlotRoles.PLAYER_HOTBAR)) {
             return PLAYER_SLOT;

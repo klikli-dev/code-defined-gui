@@ -41,6 +41,15 @@ public abstract class FilterItem<S extends FilterState> extends Item {
         return this.definition;
     }
 
+    /**
+     * Chooses the GUI style for the layout that is about to open.
+     * <p>
+     * The default implementation returns a single fixed style key, but downstream mods can
+     * override this and return different styles for different layouts or stack state.
+     * <p>
+     * Example: a mod could return one style for {@code BuiltinFilterLayouts.LIST_FILTER}
+     * and another for {@code BuiltinFilterLayouts.ATTRIBUTE_FILTER}.
+     */
     public GuiStyleKey guiStyleKey(ItemStack stack, GuiLayoutKey layout) {
         return this.guiStyleKey;
     }
@@ -71,6 +80,8 @@ public abstract class FilterItem<S extends FilterState> extends Item {
      * Writes client menu initialization data.
      * <p>
      * Subclasses can override this to send additional data for custom menu and screen implementations.
+     * Always call {@code super.writeMenuData(...)} first so the hand and chosen gui style key are written
+     * in the expected order for the client menu constructor.
      */
     protected void writeMenuData(RegistryFriendlyByteBuf buffer, Player player, InteractionHand hand, ItemStack stack) {
         buffer.writeEnum(hand);
