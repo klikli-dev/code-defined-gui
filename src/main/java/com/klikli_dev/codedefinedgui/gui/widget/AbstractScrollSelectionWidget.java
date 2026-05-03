@@ -39,7 +39,6 @@ public abstract class AbstractScrollSelectionWidget<T> extends AbstractWidget {
         this.entries = Objects.requireNonNull(entries);
         this.selectedIndex = Objects.requireNonNull(selectedIndex);
         this.onChange = Objects.requireNonNull(onChange);
-        this.updateTooltip();
     }
 
     public AbstractScrollSelectionWidget<T> withTitle(Component title) {
