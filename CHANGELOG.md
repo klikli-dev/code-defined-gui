@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [release/v26.1.2-1.5.0] - 2026-05-04
+### :sparkles: New Features
+- [`d155866`](https://github.com/klikli-dev/code-defined-gui/commit/d155866bc712702c9b080a36eb9c7ed187d7c0a4) - reusable scroll selection widget *(PR [#7](https://github.com/klikli-dev/code-defined-gui/pull/7) by [@klikli-dev](https://github.com/klikli-dev))*
+
+
 ## [release/v26.1.2-1.4.0] - 2026-05-02
 ### :sparkles: New Features
 - [`ed83eb6`](https://github.com/klikli-dev/code-defined-gui/commit/ed83eb6de14a6223d87a30fbffbc29ab215cf273) - set up extensible styles *(PR [#6](https://github.com/klikli-dev/code-defined-gui/pull/6) by [@klikli-dev](https://github.com/klikli-dev))*
@@ -67,3 +72,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [release/v26.1.2-1.2.1]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.2.0...release/v26.1.2-1.2.1
 [release/v26.1.2-1.3.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.2.1...release/v26.1.2-1.3.0
 [release/v26.1.2-1.4.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.3.0...release/v26.1.2-1.4.0
+[release/v26.1.2-1.5.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.4.0...release/v26.1.2-1.5.0
