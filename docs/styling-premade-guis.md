@@ -52,7 +52,6 @@ Common properties live in `GuiStyleProperties`, for example:
 - `PRESSED_SPRITE`
 - `ON_SPRITE`
 - `OFF_SPRITE`
-- `OFFSET_X`, `OFFSET_Y`
 - `TEXT_COLOR`
 - `COLOR`
 
@@ -62,8 +61,6 @@ Common properties live in `GuiStyleProperties`, for example:
 GuiStyleRegistry.register(MY_STYLE, GuiStyle.builder()
     .set(BuiltinFilterParts.PLAYER_INVENTORY_BACKGROUND, GuiStyleProperties.SPRITE, GuiSprites.GUI_BACKGROUND.tinted(0xFFC2AA88))
     .set(BuiltinFilterParts.PLAYER_SLOT, GuiStyleProperties.SPRITE, GuiSprites.INVENTORY_SLOT.tinted(0xFFB8946A))
-    .set(BuiltinFilterParts.PLAYER_SLOT, GuiStyleProperties.OFFSET_X, 1)
-    .set(BuiltinFilterParts.PLAYER_SLOT, GuiStyleProperties.OFFSET_Y, 1)
     .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.SPRITE, GuiSprites.FILTER_BUTTON.tinted(0xFFB78F63))
     .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.HOVER_SPRITE, GuiSprites.FILTER_BUTTON_HOVER.tinted(0xFFC89E70))
     .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.PRESSED_SPRITE, GuiSprites.FILTER_BUTTON_DOWN.tinted(0xFFB78F63))

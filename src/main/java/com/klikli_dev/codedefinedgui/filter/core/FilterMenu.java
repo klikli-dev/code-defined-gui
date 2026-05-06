@@ -7,11 +7,16 @@ package com.klikli_dev.codedefinedgui.filter.core;
 import com.klikli_dev.codedefinedgui.filter.core.storage.GhostItemStorage;
 import com.klikli_dev.codedefinedgui.filter.core.storage.GhostResourceHandlerSlot;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterParts;
-import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
 import com.klikli_dev.codedefinedgui.filter.core.layout.MenuSlotView;
 import com.klikli_dev.codedefinedgui.filter.core.layout.SlotRoleKey;
 import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiStyles;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutMenu;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutNodeView;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutSpec;
+import com.klikli_dev.codedefinedgui.gui.layout.MenuBindingContext;
+import com.klikli_dev.codedefinedgui.gui.layout.MenuBindingRegistry;
+import com.klikli_dev.codedefinedgui.gui.layout.MenuLayoutController;
 import com.klikli_dev.codedefinedgui.gui.style.GuiLayoutKey;
 import com.klikli_dev.codedefinedgui.gui.style.GuiPartKey;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
@@ -34,7 +39,7 @@ import net.minecraft.world.item.component.ItemContainerContents;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class FilterMenu extends AbstractContainerMenu {
+public abstract class FilterMenu extends AbstractContainerMenu implements LayoutMenu {
     private static final int PLAYER_SLOT_COUNT = 36;
     private static final int OFFHAND_SLOT = 40;
 
@@ -47,10 +52,13 @@ public abstract class FilterMenu extends AbstractContainerMenu {
     private final int lockedPlayerSlotId;
     private final GuiLayoutKey layoutKey;
     private final GuiStyleKey styleKey;
+    private final LayoutSpec layoutSpec;
+    private final MenuLayoutController layoutController;
     private final List<MenuSlotView> slotViews = new ArrayList<>();
 
     protected FilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, int ghostSlots, DataComponentType<ItemContainerContents> ghostComponent) {
-        this(menuType, containerId, inventory, hand, BuiltinFilterLayouts.LIST_FILTER, null, ghostSlots, ghostComponent);
+        this(menuType, containerId, inventory, hand, BuiltinFilterLayouts.LIST_FILTER, null, ghostSlots, ghostComponent, LayoutSpec.create(root -> {
+        }));
     }
 
     /**
@@ -64,7 +72,7 @@ public abstract class FilterMenu extends AbstractContainerMenu {
      * The menu then exposes that style key to the client screen, which resolves visual values from
      * {@code GuiStyleRegistry}. This keeps layout/behavior in the screen and visuals in the style sheet.
      */
-    protected FilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, GuiLayoutKey layoutKey, GuiStyleKey styleKey, int ghostSlots, DataComponentType<ItemContainerContents> ghostComponent) {
+    protected FilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, GuiLayoutKey layoutKey, GuiStyleKey styleKey, int ghostSlots, DataComponentType<ItemContainerContents> ghostComponent, LayoutSpec layoutSpec) {
         super(menuType, containerId);
         this.player = inventory.player;
         this.heldSlot = heldSlot(inventory.player, hand);
@@ -75,9 +83,15 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         this.ghostStorage = new GhostItemStorage(ItemAccess.forStack(this.draftFilterStack), ghostComponent, ghostSlots);
         this.layoutKey = layoutKey;
         this.styleKey = styleKey != null ? styleKey : this.resolveStyleKey(this.draftFilterStack, layoutKey);
+        this.layoutSpec = layoutSpec;
+        this.layoutController = new MenuLayoutController(this);
 
-        this.addPlayerInventorySlots(inventory, this.playerInventoryX(), this.playerInventoryY());
-        this.addFilterSlots();
+        this.layoutController.bind();
+    }
+
+    @Override
+    public LayoutSpec layoutSpec() {
+        return this.layoutSpec;
     }
 
     public List<MenuSlotView> slotViews() {
@@ -181,11 +195,11 @@ public abstract class FilterMenu extends AbstractContainerMenu {
     }
 
     protected Slot addGhostSlot(int slot, int xPosition, int yPosition, SlotRoleKey role) {
-        return this.addLayoutSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition), role);
+        return this.addLayoutSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition), role, BuiltinFilterParts.slotPart(role), "");
     }
 
     protected Slot addGhostSlot(int slot, int xPosition, int yPosition, SlotRoleKey role, GuiPartKey part) {
-        return this.addLayoutSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition), role, part);
+        return this.addLayoutSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition), role, part, "");
     }
 
     protected final int ghostMenuSlotId(int ghostSlot) {
@@ -243,32 +257,60 @@ public abstract class FilterMenu extends AbstractContainerMenu {
         return BuiltinGuiStyles.DEFAULT;
     }
 
+    protected final void bindPlayerInventory(MenuBindingRegistry registry) {
+        Inventory inventory = this.player.getInventory();
+        registry.bind("main.slot_0", ctx -> {
+            for (int row = 0; row < 3; row++) {
+                for (int col = 0; col < 9; col++) {
+                    int slot = col + row * 9 + 9;
+                    String nodeId = "slot_" + (row * 9 + col);
+                    LayoutNodeView node = row == 0 && col == 0 ? ctx.node() : ctx.node(nodeId);
+                    this.addLayoutSlot(new Slot(inventory, slot, node.x(), node.y()), com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles.PLAYER_MAIN, BuiltinFilterParts.PLAYER_SLOT, "player_inventory.main." + nodeId);
+                }
+            }
+
+            for (int col = 0; col < 9; col++) {
+                String nodeId = "hotbar.slot_" + col;
+                LayoutNodeView node = ctx.node(nodeId);
+                this.addLayoutSlot(new Slot(inventory, col, node.x(), node.y()), com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles.PLAYER_HOTBAR, BuiltinFilterParts.PLAYER_SLOT, "player_inventory." + nodeId);
+            }
+        });
+    }
+
+    protected final Slot bindGhostSlot(MenuBindingContext ctx, int slot, SlotRoleKey role) {
+        return this.bindGhostSlot(ctx, slot, role, BuiltinFilterParts.slotPart(role));
+    }
+
+    protected final Slot bindGhostSlot(MenuBindingContext ctx, int slot, SlotRoleKey role, GuiPartKey part) {
+        LayoutNodeView node = ctx.node();
+        return this.addLayoutSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, node.x(), node.y()), role, part, node.path());
+    }
+
+    @Deprecated
     private void addPlayerInventorySlots(Inventory inventory, int x, int y) {
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
                 int slot = col + row * 9 + 9;
-                this.addLayoutSlot(new Slot(inventory, slot, x + col * 18, y + row * 18), BuiltinSlotRoles.PLAYER_MAIN);
+                this.addLayoutSlot(new Slot(inventory, slot, x + col * 18, y + row * 18), com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles.PLAYER_MAIN, BuiltinFilterParts.PLAYER_SLOT, "");
             }
         }
 
         for (int col = 0; col < 9; col++) {
-            this.addLayoutSlot(new Slot(inventory, col, x + col * 18, y + 58), BuiltinSlotRoles.PLAYER_HOTBAR);
+            this.addLayoutSlot(new Slot(inventory, col, x + col * 18, y + 58), com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles.PLAYER_HOTBAR, BuiltinFilterParts.PLAYER_SLOT, "");
         }
     }
 
     protected Slot addLayoutSlot(Slot slot, SlotRoleKey role) {
-        return this.addLayoutSlot(slot, role, BuiltinFilterParts.slotPart(role));
+        return this.addLayoutSlot(slot, role, BuiltinFilterParts.slotPart(role), "");
     }
 
     protected Slot addLayoutSlot(Slot slot, SlotRoleKey role, GuiPartKey part) {
-        Slot addedSlot = this.addSlot(slot);
-        this.slotViews.add(new MenuSlotView(addedSlot, role, part));
-        return addedSlot;
+        return this.addLayoutSlot(slot, role, part, "");
     }
 
-    protected abstract int playerInventoryX();
-
-    protected abstract int playerInventoryY();
-
-    protected abstract void addFilterSlots();
+    protected Slot addLayoutSlot(Slot slot, SlotRoleKey role, GuiPartKey part, String nodePath) {
+        Slot addedSlot = this.addSlot(slot);
+        this.slotViews.add(new MenuSlotView(addedSlot, role, part, nodePath));
+        return addedSlot;
+    }
 }

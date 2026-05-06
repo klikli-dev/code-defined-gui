@@ -7,6 +7,9 @@ package com.klikli_dev.codedefinedgui.filter.attribute;
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
+import com.klikli_dev.codedefinedgui.gui.filter.layout.AttributeFilterLayout;
+import com.klikli_dev.codedefinedgui.gui.filter.layout.PlayerInventoryLayoutFragment;
+import com.klikli_dev.codedefinedgui.gui.layout.MenuBindingRegistry;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
 import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
 import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
@@ -62,7 +65,7 @@ public class AttributeFilterMenu extends FilterMenu {
     }
 
     protected AttributeFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, GuiStyleKey styleKey) {
-        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.ATTRIBUTE_FILTER, styleKey, GHOST_SLOT_COUNT, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get());
+        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.ATTRIBUTE_FILTER, styleKey, GHOST_SLOT_COUNT, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get(), AttributeFilterLayout.create(PlayerInventoryLayoutFragment.create()));
 
         AttributeFilterState state = AttributeFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());
@@ -218,19 +221,10 @@ public class AttributeFilterMenu extends FilterMenu {
     }
 
     @Override
-    protected int playerInventoryX() {
-        return 40;
-    }
-
-    @Override
-    protected int playerInventoryY() {
-        return 109;
-    }
-
-    @Override
-    protected void addFilterSlots() {
-        this.addGhostSlot(REFERENCE_SLOT, 19, 24, BuiltinSlotRoles.FILTER_REFERENCE);
-        this.addGhostSlot(SUMMARY_SLOT, 22, 59, BuiltinSlotRoles.FILTER_SUMMARY);
+    public void registerBindings(MenuBindingRegistry registry) {
+        this.bindPlayerInventory(registry.scope("player_inventory"));
+        registry.bind("main.filter_area.reference", ctx -> this.bindGhostSlot(ctx, REFERENCE_SLOT, BuiltinSlotRoles.FILTER_REFERENCE));
+        registry.bind("main.filter_area.summary_slot", ctx -> this.bindGhostSlot(ctx, SUMMARY_SLOT, BuiltinSlotRoles.FILTER_SUMMARY));
     }
 
     private boolean addSelectedRule(boolean inverted) {

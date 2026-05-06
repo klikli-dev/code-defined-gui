@@ -12,6 +12,11 @@ import com.klikli_dev.codedefinedgui.filter.core.layout.MenuSlotView;
 import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
 import com.klikli_dev.codedefinedgui.gui.core.GuiRootWidget;
 import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutNodeView;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutResolverRegistry;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutScreen;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutSpec;
+import com.klikli_dev.codedefinedgui.gui.layout.ScreenLayoutController;
 import com.klikli_dev.codedefinedgui.gui.style.GuiPartKey;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyle;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleProperties;
@@ -28,12 +33,13 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
-public abstract class AbstractFilterScreen<M extends FilterMenu> extends AbstractContainerScreen<M> implements GuiHost {
+public abstract class AbstractFilterScreen<M extends FilterMenu> extends AbstractContainerScreen<M> implements GuiHost, LayoutScreen {
     private static final int PLAYER_INVENTORY_BACKGROUND_PADDING = 7;
     private static final int PLAYER_INVENTORY_LABEL_X_OFFSET = 8;
     private static final int PLAYER_INVENTORY_LABEL_Y_OFFSET = 13;
 
     protected final GuiRootWidget root;
+    private final ScreenLayoutController layoutController;
     protected IconButtonWidget resetButton;
     protected IconButtonWidget confirmButton;
     private boolean closingHandled;
@@ -41,6 +47,7 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     protected AbstractFilterScreen(M menu, Inventory playerInventory, Component title, int imageWidth, int imageHeight) {
         super(menu, playerInventory, title, imageWidth, imageHeight);
         this.root = new GuiRootWidget(this);
+        this.layoutController = new ScreenLayoutController(this, this, this.root);
     }
 
     @Override
@@ -53,10 +60,7 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         }
         this.addRenderableWidget(this.root);
         this.root.clearChildren();
-        this.addBackgroundWidgets();
-        this.addPlayerInventoryBackgroundWidgets();
-        this.addStaticWidgets();
-        this.addScreenWidgets();
+        this.layoutController.init();
         this.root.syncWithHost();
         this.refreshWidgetState();
     }
@@ -144,54 +148,41 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         return bounds.minY() + PLAYER_INVENTORY_LABEL_Y_OFFSET;
     }
 
-    /**
-     * Adds the player inventory background widgets.
-     * <p>
-     * Override to replace or suppress the default background while keeping the inventory slot widgets.
-     */
-    protected void addPlayerInventoryBackgroundWidgets() {
-        SlotBounds bounds = this.playerInventoryBackgroundBounds();
-        if (bounds == null) {
-            return;
-        }
+    @Override
+    public LayoutSpec layoutSpec() {
+        return this.menu.layoutSpec();
+    }
 
-        this.root.addChild(new GuiBackgroundWidget(
+    @Override
+    public void registerResolvers(LayoutResolverRegistry registry) {
+        this.registerPlayerInventoryResolvers(registry.scope("player_inventory"));
+        this.registerSlotResolvers(registry);
+    }
+
+    protected void registerPlayerInventoryResolvers(LayoutResolverRegistry registry) {
+        registry.resolve("background", ctx -> ctx.addWidget(new GuiBackgroundWidget(
                 this,
-                this.guiX(bounds.minX()),
-                this.guiY(bounds.minY()),
-                bounds.width(),
-                bounds.height(),
+                ctx.node().x(),
+                ctx.node().y(),
+                ctx.node().widthOrThrow(),
+                ctx.node().heightOrThrow(),
                 this.partSprite(BuiltinFilterParts.PLAYER_INVENTORY_BACKGROUND, GuiSprites.GUI_BACKGROUND)
-        ));
+        )));
     }
 
-    protected final void addStaticWidgets() {
-        this.addSlotWidgets();
-    }
-
-    private void addSlotWidgets() {
+    protected void registerSlotResolvers(LayoutResolverRegistry registry) {
         for (MenuSlotView slotView : this.menu.slotViews()) {
-            GuiSprite sprite = this.slotSprite(slotView);
-            int offsetX = this.style().get(slotView.part(), GuiStyleProperties.OFFSET_X, 1);
-            int offsetY = this.style().get(slotView.part(), GuiStyleProperties.OFFSET_Y, 1);
-            this.root.addChild(new GuiSpriteWidget(
-                    this.leftPos() + slotView.x() - offsetX,
-                    this.topPos() + slotView.y() - offsetY,
-                    sprite
-            ));
+            if (slotView.nodePath() == null || slotView.nodePath().isEmpty()) {
+                continue;
+            }
+
+            registry.add(slotView.nodePath(), -50, ctx -> ctx.addWidget(new GuiSpriteWidget(
+                    slotView.x() - 1 + this.leftPos(),
+                    slotView.y() - 1 + this.topPos(),
+                    this.slotSprite(slotView)
+            )));
         }
     }
-
-    /**
-     * Adds optional screen background widgets before inventory and filter slot widgets are added.
-     */
-    protected void addBackgroundWidgets() {
-    }
-
-    /**
-     * Adds interactive screen widgets such as buttons, indicators and custom controls.
-     */
-    protected abstract void addScreenWidgets();
 
     protected abstract void refreshWidgetState();
 
@@ -289,9 +280,7 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
             }
 
             GuiSprite sprite = this.slotSprite(slotView);
-            int offsetX = this.style().get(slotView.part(), GuiStyleProperties.OFFSET_X, 1);
-            int offsetY = this.style().get(slotView.part(), GuiStyleProperties.OFFSET_Y, 1);
-            SlotBounds slotBounds = new SlotBounds(slotView.x() - offsetX, slotView.y() - offsetY, sprite.width(), sprite.height());
+            SlotBounds slotBounds = new SlotBounds(slotView.x() - 1, slotView.y() - 1, sprite.width(), sprite.height());
             bounds = bounds == null ? slotBounds : bounds.union(slotBounds);
         }
 

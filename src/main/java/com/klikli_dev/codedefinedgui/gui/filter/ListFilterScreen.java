@@ -8,6 +8,7 @@ import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.filter.list.ListFilterMenu;
 import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutResolverRegistry;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleProperties;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
@@ -34,32 +35,34 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
     }
 
     @Override
-    protected void addBackgroundWidgets() {
-        this.addRootChild(new GuiBackgroundWidget(this, this.guiX(3), this.guiY(12), this.imageWidth() - 6, 87, this.partSprite(BuiltinFilterParts.LIST_PANEL, GuiSprites.GUI_BACKGROUND)));
-        this.addRootChild(new GuiBackgroundWidget(this, this.guiX(0), this.guiY(0), this.imageWidth(), 15, this.partSprite(BuiltinFilterParts.LIST_TOP_BAR, GuiSprites.GUI_BACKGROUND)));
-    }
-
-    @Override
-    protected void addScreenWidgets() {
-        this.resetButton = this.addResetButton(this.guiX(152), this.guiY(75), ListFilterMenu.BUTTON_RESET);
-        this.confirmButton = this.addConfirmButton(this.guiX(181), this.guiY(75));
-
-        this.denyButton = this.addIconButton(this.guiX(18), this.guiY(75), GuiSprites.FILTER_ICON_DENY_LIST, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.DENY), () -> this.pressButton(ListFilterMenu.BUTTON_DENY))
-                .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.DENY_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.DENY_TOOLTIP_SHIFT));
-        this.allowButton = this.addIconButton(this.guiX(36), this.guiY(75), GuiSprites.FILTER_ICON_ALLOW_LIST, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.ALLOW), () -> this.pressButton(ListFilterMenu.BUTTON_ALLOW))
-                .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.ALLOW_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.ALLOW_TOOLTIP_SHIFT));
-        this.respectDataButton = this.addIconButton(this.guiX(60), this.guiY(75), GuiSprites.FILTER_ICON_RESPECT_DATA_COMPONENTS, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.RESPECT_DATA), () -> this.pressButton(ListFilterMenu.BUTTON_RESPECT_DATA))
-                .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.RESPECT_DATA_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.RESPECT_DATA_TOOLTIP_SHIFT));
-        this.ignoreDataButton = this.addIconButton(this.guiX(78), this.guiY(75), GuiSprites.FILTER_ICON_IGNORE_DATA_COMPONENTS, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.IGNORE_DATA), () -> this.pressButton(ListFilterMenu.BUTTON_IGNORE_DATA))
-                .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.IGNORE_DATA_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.IGNORE_DATA_TOOLTIP_SHIFT));
-
-        this.denyIndicator = this.addFilterIndicator(this.guiX(18), this.guiY(69));
-        this.allowIndicator = this.addFilterIndicator(this.guiX(36), this.guiY(69));
-        this.respectDataIndicator = this.addFilterIndicator(this.guiX(60), this.guiY(69));
-        this.ignoreDataIndicator = this.addFilterIndicator(this.guiX(78), this.guiY(69));
-
-        this.addRootChild(new HorizontalSeparatorWidget(this.guiX(3), this.guiY(64), this.imageWidth() - 6, this.style().get(BuiltinFilterParts.LIST_HORIZONTAL_SEPARATOR, GuiStyleProperties.COLOR, 0xFF000000)));
-        this.addRootChild(new VerticalSeparatorWidget(this.guiX(145), this.guiY(64), 35, this.style().get(BuiltinFilterParts.LIST_VERTICAL_SEPARATOR, GuiStyleProperties.COLOR, 0xFF000000)));
+    public void registerResolvers(LayoutResolverRegistry registry) {
+        super.registerResolvers(registry);
+        registry.resolve("main.top_bar.background", -100, ctx -> ctx.addWidget(new GuiBackgroundWidget(this, ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), ctx.node().heightOrThrow(), this.partSprite(BuiltinFilterParts.LIST_TOP_BAR, GuiSprites.GUI_BACKGROUND))));
+        registry.resolve("main.filter_area.panel_bg", -100, ctx -> ctx.addWidget(new GuiBackgroundWidget(this, ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), ctx.node().heightOrThrow(), this.partSprite(BuiltinFilterParts.LIST_PANEL, GuiSprites.GUI_BACKGROUND))));
+        registry.resolve("main.filter_area.reset", ctx -> this.resetButton = this.addResetButton(ctx.node().x(), ctx.node().y(), ListFilterMenu.BUTTON_RESET));
+        registry.resolve("main.filter_area.confirm", ctx -> this.confirmButton = this.addConfirmButton(ctx.node().x(), ctx.node().y()));
+        registry.resolve("main.filter_area.deny", ctx -> {
+            this.denyButton = this.addIconButton(ctx.node().x(), ctx.node().y(), GuiSprites.FILTER_ICON_DENY_LIST, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.DENY), () -> this.pressButton(ListFilterMenu.BUTTON_DENY))
+                    .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.DENY_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.DENY_TOOLTIP_SHIFT));
+        });
+        registry.resolve("main.filter_area.allow", ctx -> {
+            this.allowButton = this.addIconButton(ctx.node().x(), ctx.node().y(), GuiSprites.FILTER_ICON_ALLOW_LIST, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.ALLOW), () -> this.pressButton(ListFilterMenu.BUTTON_ALLOW))
+                    .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.ALLOW_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.ALLOW_TOOLTIP_SHIFT));
+        });
+        registry.resolve("main.filter_area.respect_data", ctx -> {
+            this.respectDataButton = this.addIconButton(ctx.node().x(), ctx.node().y(), GuiSprites.FILTER_ICON_RESPECT_DATA_COMPONENTS, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.RESPECT_DATA), () -> this.pressButton(ListFilterMenu.BUTTON_RESPECT_DATA))
+                    .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.RESPECT_DATA_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.RESPECT_DATA_TOOLTIP_SHIFT));
+        });
+        registry.resolve("main.filter_area.ignore_data", ctx -> {
+            this.ignoreDataButton = this.addIconButton(ctx.node().x(), ctx.node().y(), GuiSprites.FILTER_ICON_IGNORE_DATA_COMPONENTS, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.IGNORE_DATA), () -> this.pressButton(ListFilterMenu.BUTTON_IGNORE_DATA))
+                    .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.IGNORE_DATA_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.IGNORE_DATA_TOOLTIP_SHIFT));
+        });
+        registry.resolve("main.filter_area.deny_indicator", ctx -> this.denyIndicator = this.addFilterIndicator(ctx.node().x(), ctx.node().y()));
+        registry.resolve("main.filter_area.allow_indicator", ctx -> this.allowIndicator = this.addFilterIndicator(ctx.node().x(), ctx.node().y()));
+        registry.resolve("main.filter_area.respect_data_indicator", ctx -> this.respectDataIndicator = this.addFilterIndicator(ctx.node().x(), ctx.node().y()));
+        registry.resolve("main.filter_area.ignore_data_indicator", ctx -> this.ignoreDataIndicator = this.addFilterIndicator(ctx.node().x(), ctx.node().y()));
+        registry.resolve("main.filter_area.horizontal_separator", ctx -> this.addRootChild(new HorizontalSeparatorWidget(ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), this.style().get(BuiltinFilterParts.LIST_HORIZONTAL_SEPARATOR, GuiStyleProperties.COLOR, 0xFF000000))));
+        registry.resolve("main.filter_area.vertical_separator", ctx -> this.addRootChild(new VerticalSeparatorWidget(ctx.node().x(), ctx.node().y(), ctx.node().heightOrThrow(), this.style().get(BuiltinFilterParts.LIST_VERTICAL_SEPARATOR, GuiStyleProperties.COLOR, 0xFF000000))));
     }
 
     @Override

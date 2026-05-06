@@ -7,6 +7,9 @@ package com.klikli_dev.codedefinedgui.filter.list;
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
+import com.klikli_dev.codedefinedgui.gui.filter.layout.ListFilterLayout;
+import com.klikli_dev.codedefinedgui.gui.filter.layout.PlayerInventoryLayoutFragment;
+import com.klikli_dev.codedefinedgui.gui.layout.MenuBindingRegistry;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
 import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
 import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
@@ -45,7 +48,7 @@ public class ListFilterMenu extends FilterMenu {
     }
 
     protected ListFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, GuiStyleKey styleKey) {
-        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.LIST_FILTER, styleKey, FILTER_SLOTS, DataComponentRegistry.LIST_FILTER_CONTENTS.get());
+        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.LIST_FILTER, styleKey, FILTER_SLOTS, DataComponentRegistry.LIST_FILTER_CONTENTS.get(), ListFilterLayout.create(PlayerInventoryLayoutFragment.create()));
 
         ListFilterState state = ListFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());
@@ -130,22 +133,12 @@ public class ListFilterMenu extends FilterMenu {
     }
 
     @Override
-    protected int playerInventoryX() {
-        return 27;
-    }
-
-    @Override
-    protected int playerInventoryY() {
-        return 123;
-    }
-
-    @Override
-    protected void addFilterSlots() {
-        int x = 25;
-        int y = 24;
+    public void registerBindings(MenuBindingRegistry registry) {
+        this.bindPlayerInventory(registry.scope("player_inventory"));
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 9; col++) {
-                this.addGhostSlot(col + row * 9, x + col * 18, y + row * 18, BuiltinSlotRoles.FILTER_GRID);
+                int slotIndex = col + row * 9;
+                registry.bind("main.filter_area.slots.slot_" + slotIndex, ctx -> this.bindGhostSlot(ctx, slotIndex, BuiltinSlotRoles.FILTER_GRID));
             }
         }
     }
