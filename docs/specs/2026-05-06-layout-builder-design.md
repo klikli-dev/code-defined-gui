@@ -136,24 +136,60 @@ The layout should not encode:
 
 These remain in menu code.
 
+Menu binding should mirror screen resolution closely: register deferred bind lambdas against layout node ids, then execute them after registration is complete. This keeps the API symmetrical and avoids forcing menus into a custom parent base class just to participate in the layout system.
+
+### Menu binding hook
+
+```java
+void registerBindings(MenuBindingRegistry registry)
+```
+
+Semantics should match client resolver registration:
+
+- `bind(id, fn)` replaces the primary binding for that id
+- `appendBind(id, fn)` adds an additional binding for that id
+- execution is deferred until registration is complete
+- the binding context provides `node()` for the current target and `node(String id)` for nearby lookups
+
 ### Menu binding example
 
 ```java
 @Override
-protected void addFilterSlots() {
-    var ctx = this.menuLayoutContext();
+public void registerBindings(MenuBindingRegistry b) {
+    b.bind("reference", ctx -> {
+        var node = ctx.node();
+        ctx.addSlot(this.addGhostSlot(REFERENCE_SLOT, node.x(), node.y(), BuiltinSlotRoles.FILTER_REFERENCE));
+    });
 
-    var reference = ctx.node("main.filter_area.reference");
-    this.addGhostSlot(REFERENCE_SLOT, reference.x(), reference.y(), BuiltinSlotRoles.FILTER_REFERENCE);
+    b.bind("summary", ctx -> {
+        var node = ctx.node();
+        ctx.addSlot(this.addGhostSlot(SUMMARY_SLOT, node.x(), node.y(), BuiltinSlotRoles.FILTER_SUMMARY));
+    });
 
-    var summary = ctx.node("main.filter_area.summary");
-    this.addGhostSlot(SUMMARY_SLOT, summary.x(), summary.y(), BuiltinSlotRoles.FILTER_SUMMARY);
-
-    playerInventory.bindMenu(ctx.scope("player_inventory"));
+    playerInventory.bindMenu(b.scope("player_inventory"));
 }
 ```
 
-This preserves full menu flexibility while removing duplicated geometry constants.
+This preserves full menu flexibility while removing duplicated geometry constants and aligns the menu authoring model with the screen resolver model.
+
+### No required custom parent class
+
+Neither screens nor menus should be required to inherit from a special layout-aware base class.
+
+The layout system should instead be provided through interfaces and composition, for example:
+
+- `HasLayoutSpec` or `LayoutOwner` to expose the layout spec
+- `RegistersLayoutResolvers` for client-side resolver registration
+- `RegistersMenuBindings` for menu-side bind registration
+- small helper components such as `ScreenLayoutSupport` and `MenuLayoutSupport` to manage resolution, scoped contexts, and deferred execution
+
+This keeps adoption flexible:
+
+- existing classes can opt in without reworking their inheritance tree
+- premade base classes may still use the support components internally
+- users are free to wire the system into their own screen or menu hierarchies
+
+In practice, a screen or menu would hold a support object and delegate lifecycle calls to it rather than inheriting behavior from an abstract CDG parent.
 
 ## Client resolution
 
@@ -253,7 +289,7 @@ They should be installed explicitly during layout definition rather than discove
 ```java
 public interface LayoutFragment {
     void define(GroupBuilder root);
-    void bindMenu(MenuLayoutContext ctx);
+    void bindMenu(MenuBindingRegistry registry);
     ClientLayoutFragment client();
 }
 
