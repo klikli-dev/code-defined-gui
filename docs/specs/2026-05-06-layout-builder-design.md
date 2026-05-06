@@ -176,20 +176,74 @@ This preserves full menu flexibility while removing duplicated geometry constant
 
 Neither screens nor menus should be required to inherit from a special layout-aware base class.
 
-The layout system should instead be provided through interfaces and composition, for example:
+The layout system should instead be provided through one interface per side plus private composed controller objects.
 
-- `HasLayoutSpec` or `LayoutOwner` to expose the layout spec
-- `RegistersLayoutResolvers` for client-side resolver registration
-- `RegistersMenuBindings` for menu-side bind registration
-- small helper components such as `ScreenLayoutSupport` and `MenuLayoutSupport` to manage resolution, scoped contexts, and deferred execution
+Recommended side contracts:
+
+```java
+public interface LayoutScreen {
+    LayoutSpec layoutSpec();
+    void registerResolvers(LayoutResolverRegistry registry);
+}
+
+public interface LayoutMenu {
+    LayoutSpec layoutSpec();
+    void registerBindings(MenuBindingRegistry registry);
+}
+```
+
+Recommended composed runtime objects:
+
+- `ScreenLayoutController`
+- `MenuLayoutController`
+
+These controllers should be reusable CDG infrastructure types, instantiated once per screen or menu instance and kept as private implementation details.
+
+Example shape:
+
+```java
+public final class AttributeFilterScreen extends AbstractContainerScreen<AttributeFilterMenu>
+        implements LayoutScreen {
+
+    private final LayoutSpec layoutSpec;
+    private final ScreenLayoutController layoutController;
+
+    public AttributeFilterScreen(...) {
+        super(...);
+        this.layoutSpec = AttributeFilterLayouts.create(PlayerInventoryFragment.create());
+        this.layoutController = new ScreenLayoutController(this);
+    }
+
+    @Override
+    public LayoutSpec layoutSpec() {
+        return this.layoutSpec;
+    }
+}
+```
+
+The same pattern applies to menus with `LayoutMenu` and `MenuLayoutController`.
 
 This keeps adoption flexible:
 
 - existing classes can opt in without reworking their inheritance tree
-- premade base classes may still use the support components internally
+- premade base classes may still use the controllers internally
 - users are free to wire the system into their own screen or menu hierarchies
 
-In practice, a screen or menu would hold a support object and delegate lifecycle calls to it rather than inheriting behavior from an abstract CDG parent.
+The controller should remain private by default. The public contract should expose only the declarative layout API, not the runtime orchestration object.
+
+### LayoutSpec lifetime
+
+`LayoutSpec` should be built once during screen or menu construction and stored in a field.
+
+It should not be rebuilt on every `layoutSpec()` call.
+
+This provides:
+
+- one stable shared structure per owner instance
+- deterministic fragment composition
+- simpler controller caching and resolved-tree reuse
+
+If a screen and its menu must share the same structure, both should construct their specs from the same shared layout factory rather than duplicating layout builder code in two places.
 
 ## Client resolution
 
