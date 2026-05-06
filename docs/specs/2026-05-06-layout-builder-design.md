@@ -147,9 +147,10 @@ void registerBindings(MenuBindingRegistry registry)
 Semantics should match client resolver registration:
 
 - `bind(id, fn)` replaces the primary binding for that id
-- `appendBind(id, fn)` adds an additional binding for that id
+- `add(id, fn)` adds an additional binding for that id
 - execution is deferred until registration is complete
 - the binding context provides `node()` for the current target and `node(String id)` for nearby lookups
+- `scope(id)` returns a subtree-local registry view so fragments can bind against local ids
 
 ### Menu binding example
 
@@ -171,6 +172,30 @@ public void registerBindings(MenuBindingRegistry b) {
 ```
 
 This preserves full menu flexibility while removing duplicated geometry constants and aligns the menu authoring model with the screen resolver model.
+
+### Menu controller lifecycle
+
+`MenuLayoutController` should be invoked from normal menu construction or slot setup, after the menu has the state required to create slots.
+
+Conceptually:
+
+```java
+public AttributeFilterMenu(...) {
+    super(...);
+    this.layoutSpec = AttributeFilterLayouts.create(PlayerInventoryFragment.create());
+    this.layoutController = new MenuLayoutController(this);
+    this.layoutController.bind();
+}
+```
+
+The controller should:
+
+1. resolve the stored `LayoutSpec`
+2. create a `MenuBindingRegistry`
+3. call `registerBindings(registry)`
+4. execute bindings in deterministic order
+
+This keeps the layout integration inside normal Minecraft menu setup rather than inventing a parallel lifecycle.
 
 ### No required custom parent class
 
@@ -262,11 +287,12 @@ This allows a child screen to call `super.registerResolvers(registry)` and then 
 ### Resolver registry semantics
 
 - `resolve(id, fn)` replaces any previous primary resolver for that id.
-- `appendResolve(id, fn)` adds an additional resolver for that id.
+- `add(id, fn)` adds an additional resolver for that id.
 - Resolver execution is deferred until registration is complete.
 - Base ordering is registration order.
 - Each resolver may optionally specify a render priority.
 - Final execution order is sorted by priority and then registration order.
+- `scope(id)` returns a subtree-local registry view so fragments can register against local ids.
 
 This allows readable layout definition order while still making it possible to render some widgets earlier or later than others.
 
@@ -331,6 +357,31 @@ protected void registerResolvers(LayoutResolverRegistry r) {
 ```
 
 This removes the need for separate `addBackgroundWidgets()` and `addScreenWidgets()` buckets and gives subclasses a clean override point.
+
+### Screen controller lifecycle
+
+`ScreenLayoutController` should be invoked from the screen's normal `init()` lifecycle.
+
+Conceptually:
+
+```java
+@Override
+protected void init() {
+    super.init();
+    this.layoutController.init();
+}
+```
+
+The controller should:
+
+1. resolve the stored `LayoutSpec`
+2. create a `LayoutResolverRegistry`
+3. call `registerResolvers(registry)`
+4. execute resolvers in sorted order
+
+This keeps the layout API inside normal Minecraft screen lifecycle hooks.
+
+Because screen `init()` can run multiple times, controller initialization must be safe to rerun without accumulating duplicate runtime state.
 
 ## Fragments
 
