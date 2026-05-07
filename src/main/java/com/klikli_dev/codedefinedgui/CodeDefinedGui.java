@@ -4,13 +4,14 @@
 
 package com.klikli_dev.codedefinedgui;
 
-import com.klikli_dev.codedefinedgui.command.CdgCommand;
 import com.klikli_dev.codedefinedgui.datagen.DataGenerators;
-import com.klikli_dev.codedefinedgui.filter.attribute.ItemAttributes;
-import com.klikli_dev.codedefinedgui.network.Networking;
-import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
-import com.klikli_dev.codedefinedgui.registry.ItemRegistry;
-import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
+import com.klikli_dev.codedefinedgui.internal.command.CdgCommand;
+import com.klikli_dev.codedefinedgui.internal.network.Networking;
+import com.klikli_dev.codedefinedgui.premade.filter.attribute.ItemAttributes;
+import com.klikli_dev.codedefinedgui.internal.registry.DataComponentsRegistry;
+import com.klikli_dev.codedefinedgui.internal.registry.MenuTypesRegistry;
+import com.klikli_dev.codedefinedgui.internal.Config;
+import com.klikli_dev.codedefinedgui.internal.registry.ItemRegistry;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -26,12 +27,13 @@ public class CodeDefinedGui {
     public static final String MODID = "codedefinedgui";
     public static final Logger LOGGER = LogUtils.getLogger();
 
+
     public CodeDefinedGui(IEventBus modEventBus, ModContainer modContainer) {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
         ItemRegistry.ITEMS.register(modEventBus);
-        MenuTypeRegistry.MENU_TYPES.register(modEventBus);
-        DataComponentRegistry.DATA_COMPONENTS.register(modEventBus);
+        MenuTypesRegistry.MENU_TYPES.register(modEventBus);
+        DataComponentsRegistry.DATA_COMPONENTS.register(modEventBus);
         ItemAttributes.bootstrap();
 
         modEventBus.addListener(this::onCommonSetupEvent);
@@ -49,3 +51,6 @@ public class CodeDefinedGui {
         CdgCommand.register(event.getDispatcher());
     }
 }
+
+
+

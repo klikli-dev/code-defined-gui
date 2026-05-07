@@ -1,0 +1,95 @@
+// SPDX-FileCopyrightText: 2026 klikli-dev
+//
+// SPDX-License-Identifier: MIT
+
+package com.klikli_dev.codedefinedgui.premade.filter.list;
+
+import com.klikli_dev.codedefinedgui.CodeDefinedGui;
+import com.klikli_dev.codedefinedgui.premade.filter.core.FilterDefinition;
+import com.klikli_dev.codedefinedgui.premade.filter.core.FilterMatchContext;
+import com.klikli_dev.codedefinedgui.premade.filter.core.FilterStateAccessor;
+import com.klikli_dev.codedefinedgui.premade.filter.core.FilterTranslationKeys;
+import java.util.ArrayList;
+import java.util.List;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
+
+public final class ListFilterDefinition implements FilterDefinition<ListFilterState> {
+    public static final ListFilterDefinition INSTANCE = new ListFilterDefinition();
+    private static final Identifier ID = Identifier.fromNamespaceAndPath(CodeDefinedGui.MODID, "list_filter");
+
+    private ListFilterDefinition() {
+    }
+
+    @Override
+    public Identifier id() {
+        return ID;
+    }
+
+    @Override
+    public FilterStateAccessor<ListFilterState> accessor() {
+        return ListFilterStateAccessor.INSTANCE;
+    }
+
+    @Override
+    public ListFilterState defaultState() {
+        return ListFilterState.EMPTY;
+    }
+
+    @Override
+    public boolean matches(ItemStack candidate, ListFilterState state, FilterMatchContext context) {
+        boolean matched = false;
+        NonNullList<ItemStack> entries = NonNullList.withSize(state.entries().getSlots(), ItemStack.EMPTY);
+        state.entries().copyInto(entries);
+        for (ItemStack entry : entries) {
+            if (state.respectDataComponents() ? ItemStack.isSameItemSameComponents(entry, candidate) : ItemStack.isSameItem(entry, candidate)) {
+                matched = true;
+                break;
+            }
+        }
+
+        return (state.mode() == ListFilterMode.ALLOW) == matched;
+    }
+
+    @Override
+    public List<Component> summary(ListFilterState state, HolderLookup.Provider registries) {
+        List<Component> lines = new ArrayList<>();
+        List<ItemStack> entries = new ArrayList<>();
+        NonNullList<ItemStack> contents = NonNullList.withSize(state.entries().getSlots(), ItemStack.EMPTY);
+        state.entries().copyInto(contents);
+        for (ItemStack entry : contents) {
+            if (!entry.isEmpty()) {
+                entries.add(entry);
+            }
+        }
+
+        if (entries.isEmpty()) {
+            return lines;
+        }
+
+        lines.add(Component.translatable(FilterTranslationKeys.List.SUMMARY_MODE, Component.translatable(FilterTranslationKeys.List.Mode.key(state.mode().getSerializedName())))
+                .withStyle(ChatFormatting.GOLD));
+        lines.add(Component.translatable(
+                state.respectDataComponents() ? FilterTranslationKeys.List.SUMMARY_RESPECT_DATA : FilterTranslationKeys.List.SUMMARY_IGNORE_DATA
+        ).withStyle(ChatFormatting.GRAY));
+
+        int previewCount = Math.min(entries.size(), 4);
+        for (int i = 0; i < previewCount; i++) {
+            lines.add(Component.literal("- ").append(entries.get(i).getHoverName()).withStyle(ChatFormatting.GRAY));
+        }
+
+        if (entries.size() > previewCount) {
+            lines.add(Component.translatable(FilterTranslationKeys.SUMMARY_MORE, entries.size() - previewCount)
+                    .withStyle(ChatFormatting.DARK_GRAY));
+        }
+
+        return lines;
+    }
+}
+
+
+

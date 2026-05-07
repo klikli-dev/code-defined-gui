@@ -7,6 +7,7 @@
 - When delegating to another agent for work inside the current change, instruct it to reuse the current branch and not open an additional PR unless explicitly requested. 
 - If prompted to work in a worktree, create the worktree based off the main branch for that minecraft version.
 - Read `gradle.properties` to find the current minecraft version (variable name `minecraft_version`) and NeoForge version (variable name `neo_version`) used.
+- BEFORE MAKING CHANGES read `docs/api-surface-and-stability-policy.md`.
 
 ## Java 
 Do NOT use fully qualified class names in code. Always import classes and use their names without full package paths. 
@@ -31,17 +32,4 @@ Do NOT use fully qualified class names in code. Always import classes and use th
 ## Repo conventions
 - Follow the REUSE standard for SPDX license file headers. Use `pipx run reuse` to work with the REUSE standard if something is unclear. 
 - Generated resources live in `src/generated/resources`; main assets/data live in `src/main/resources`.
-
-## Repository Map
-
-A full codemap is available at `codemap.md` in the project root.
-
-- Never create or keep a `codemap.md` anywhere under `src/main/templates/`.
-- Treat codemap artifacts (`codemap.md` files and `.slim/cartography.json`) as local documentation/state only: respect `.gitignore` and do not add them to git.
-
-Before working on any task, read `codemap.md` to understand:
-- Project architecture and entry points
-- Directory responsibilities and design patterns
-- Data flow and integration points between modules
-
-For deep work on a specific folder, also read that folder's `codemap.md`.
+- When making changes, update `docs/` accordingly.
