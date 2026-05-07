@@ -4,7 +4,6 @@
 
 package com.klikli_dev.codedefinedgui.internal.network;
 
-import com.klikli_dev.codedefinedgui.example.network.OpenTestScreenMessage;
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PacketDistributor;

@@ -6,6 +6,7 @@ package com.klikli_dev.codedefinedgui;
 
 import com.klikli_dev.codedefinedgui.datagen.DataGenerators;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.ItemAttributes;
+import com.klikli_dev.codedefinedgui.internal.Config;
 import com.klikli_dev.codedefinedgui.internal.registry.DataComponentRegistry;
 import com.klikli_dev.codedefinedgui.internal.registry.ItemRegistry;
 import com.klikli_dev.codedefinedgui.internal.registry.MenuTypeRegistry;

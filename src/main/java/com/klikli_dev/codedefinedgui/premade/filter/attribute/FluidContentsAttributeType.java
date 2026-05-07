@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.premade.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
-import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
+import com.klikli_dev.codedefinedgui.internal.CodeDefinedGuiConstants;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;

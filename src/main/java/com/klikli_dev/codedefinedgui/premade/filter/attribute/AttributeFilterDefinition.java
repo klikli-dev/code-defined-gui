@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.premade.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
-import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
+import com.klikli_dev.codedefinedgui.internal.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.premade.filter.core.FilterDefinition;
 import com.klikli_dev.codedefinedgui.premade.filter.core.FilterMatchContext;
 import com.klikli_dev.codedefinedgui.premade.filter.core.FilterStateAccessor;

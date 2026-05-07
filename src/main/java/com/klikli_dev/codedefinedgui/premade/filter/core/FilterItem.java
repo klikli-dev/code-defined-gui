@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.premade.filter.core;
 
 import com.klikli_dev.codedefinedgui.api.style.BuiltinGuiStyles;
-import com.klikli_dev.codedefinedgui.api.style.GuiLayoutKey;
+import com.klikli_dev.codedefinedgui.api.layout.GuiLayoutKey;
 import com.klikli_dev.codedefinedgui.api.style.GuiStyleKey;
 import java.util.List;
 import java.util.function.Consumer;

@@ -4,7 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.premade.filter;
 
-import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
+import com.klikli_dev.codedefinedgui.internal.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.premade.filter.list.ListFilterMenu;
 import com.klikli_dev.codedefinedgui.premade.filter.widget.FilterIndicatorWidget;

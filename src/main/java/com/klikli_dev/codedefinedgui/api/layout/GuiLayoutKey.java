@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.api.style;
+package com.klikli_dev.codedefinedgui.api.layout;
 
 import java.util.Objects;
 import net.minecraft.resources.Identifier;

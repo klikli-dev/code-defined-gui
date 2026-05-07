@@ -18,7 +18,7 @@ import com.klikli_dev.codedefinedgui.api.layout.MenuLayoutController;
 import com.klikli_dev.codedefinedgui.api.layout.SlotRoleKey;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeView;
 import com.klikli_dev.codedefinedgui.internal.layout.LayoutMenuBinderHost;
-import com.klikli_dev.codedefinedgui.api.style.GuiLayoutKey;
+import com.klikli_dev.codedefinedgui.api.layout.GuiLayoutKey;
 import com.klikli_dev.codedefinedgui.api.style.GuiPartKey;
 import com.klikli_dev.codedefinedgui.api.style.GuiStyleKey;
 import java.util.ArrayList;

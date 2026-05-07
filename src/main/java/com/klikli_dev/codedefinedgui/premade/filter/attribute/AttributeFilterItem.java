@@ -6,7 +6,7 @@ package com.klikli_dev.codedefinedgui.premade.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.premade.filter.core.FilterItem;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.BuiltinFilterLayouts;
-import com.klikli_dev.codedefinedgui.api.style.GuiLayoutKey;
+import com.klikli_dev.codedefinedgui.api.layout.GuiLayoutKey;
 import com.klikli_dev.codedefinedgui.api.style.GuiStyleKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;

@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.premade.filter.core.layout;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
-import com.klikli_dev.codedefinedgui.api.style.GuiLayoutKey;
+import com.klikli_dev.codedefinedgui.api.layout.GuiLayoutKey;
 import net.minecraft.resources.Identifier;
 
 public final class BuiltinFilterLayouts {

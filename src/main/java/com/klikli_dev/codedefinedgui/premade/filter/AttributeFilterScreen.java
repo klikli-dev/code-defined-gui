@@ -4,7 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.premade.filter;
 
-import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
+import com.klikli_dev.codedefinedgui.internal.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeCandidate;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeFilterDefinition;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeFilterMenu;

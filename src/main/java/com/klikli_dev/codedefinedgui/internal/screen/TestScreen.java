@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.example.screen;
+package com.klikli_dev.codedefinedgui.internal.screen;
 
 import com.klikli_dev.codedefinedgui.internal.screen.GuiHost;
 import com.klikli_dev.codedefinedgui.internal.screen.GuiRootWidget;

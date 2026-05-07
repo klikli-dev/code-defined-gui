@@ -2,7 +2,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui;
+package com.klikli_dev.codedefinedgui.internal;
+
+import com.klikli_dev.codedefinedgui.CodeDefinedGui;
 
 public class CodeDefinedGuiConstants {
     private CodeDefinedGuiConstants() {
