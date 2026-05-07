@@ -6,89 +6,196 @@ SPDX-License-Identifier: MIT
 
 # Using the library
 
-Code Defined GUI is meant to feel close to vanilla Minecraft screen code.
+Code Defined GUI is now documented as a layout-driven GUI framework.
 
 ## Main idea
 
-- create a screen
-- instantiate widgets directly
-- position them with fixed GUI-relative coordinates
-- compose the background from reusable widgets and sprites
+- define a `LayoutSpec`
+- bind menu slots against named layout nodes
+- resolve screen widgets against named layout nodes
+- pull visuals from `GuiStyleRegistry` through `StyleContext`
+- use reusable widgets inside that layout flow
 
 ## Core types
 
-### Generic GUI infrastructure
+### Layout definition and lookup
 
-- `gui.core.GuiHost` - host contract for a screen
-- `gui.core.GuiRootWidget` - root that manages child widgets
-- `gui.texture.GuiSprite` / `gui.texture.GuiSprites` - reusable sprite references
+- `api.layout.LayoutSpec` - layout definition entrypoint
+- `api.layout.LayoutGroupBuilder` / `LayoutNodeBuilder` - builder types for groups and nodes
+- `api.layout.LayoutNodeView` - resolved node coordinates and optional size
+- `api.layout.GuiLayoutKey` - layout identifier value object
+
+### Menu-side composition
+
+- `api.layout.LayoutMenuView` - menu contract for a layout-backed menu
+- `api.layout.MenuLayoutController` - executes menu bindings
+- `api.layout.MenuBindingRegistry` / `MenuBindingContext` - bind slots to nodes
+
+### Screen-side composition
+
+- `api.layout.LayoutScreenView` - screen contract for layout-backed widget resolution
+- `api.layout.ScreenLayoutController` - executes screen resolvers
+- `api.layout.LayoutResolverRegistry` / `LayoutResolveContext` - resolve widgets against nodes
+
+### Styling and visuals
+
+- `api.style.GuiStyle`, `GuiStyleKey`, `GuiPartKey`
+- `api.style.GuiStyleRegistry`
+- `api.style.StyleContext`
+- `api.style.GuiStyleProperties`
+- `api.texture.GuiSprite` / `GuiSprites`
 
 ### Generic widgets
 
-- `gui.widget.GuiBackgroundWidget` - renders a full or partial GUI background
-- `gui.widget.GuiSpriteWidget` - renders a sprite at a fixed position
-- `gui.widget.FrameWidget` - simple framed or beveled regions
-- `gui.widget.IconButtonWidget` - clickable icon buttons
-- `gui.widget.HorizontalSeparatorWidget` / `VerticalSeparatorWidget` - dividers
+- `api.widget.GuiBackgroundWidget`
+- `api.widget.GuiSpriteWidget`
+- `api.widget.GuiTextWidget`
+- `api.widget.IconButtonWidget`
+- `api.widget.HorizontalSeparatorWidget` / `VerticalSeparatorWidget`
 
-### Filter-specific widgets
+## Defining a layout
 
-These are intentionally separated from the generic widget package:
-
-- `gui.filter.widget.FilterIndicatorWidget`
-- `gui.filter.widget.AttributeSelectionWidget`
-- `gui.filter.widget.AttributeRuleSummaryWidget`
-
-## Positioning widgets
-
-Screens still use fixed positions.
-
-`GuiHost` provides small helpers for GUI-relative coordinates:
+Layouts are built as named groups and nodes.
 
 ```java
-this.guiX(8);
-this.guiY(18);
+LayoutSpec layout = LayoutSpec.create(root -> {
+    root.group("main", main -> {
+        main.node("panel").at(0, 0).size(176, 90);
+        main.node("input").at(8, 18).size(18, 18);
+        main.node("output").at(150, 18).size(18, 18);
+        main.node("title").at(8, 6).size(160, 8);
+    });
+
+    root.group("player_inventory", inv -> {
+        inv.at(8, 108);
+        // define player inventory nodes here
+    });
+});
 ```
 
-That means you can write:
+Each node has:
+
+- a stable id
+- resolved `x()` / `y()` coordinates
+- optional `width()` / `height()`
+
+Lookups use dot paths such as `main.output` or `player_inventory.hotbar.slot_0`.
+
+When a resolver needs size, prefer `widthOrThrow()` / `heightOrThrow()`.
+
+## Menu-side binding
+
+Menus bind slots to layout nodes through `LayoutMenuView` and `MenuLayoutController`.
 
 ```java
-this.root.addChild(new GuiSpriteWidget(this.guiX(8), this.guiY(18), GuiSprites.INVENTORY_SLOT));
-this.root.addChild(new FrameWidget(this.guiX(120), this.guiY(18), 40, 24));
+public final class ExampleMenu extends AbstractContainerMenu implements LayoutMenuView {
+    private final LayoutSpec layout;
+    private final MenuLayoutController layoutController;
+
+    public ExampleMenu(int containerId, Inventory inventory) {
+        super(MY_MENU_TYPE.get(), containerId);
+        this.layout = ExampleLayouts.MAIN;
+        this.layoutController = new MenuLayoutController(this);
+        this.layoutController.bind();
+    }
+
+    @Override
+    public LayoutSpec layoutSpec() {
+        return this.layout;
+    }
+
+    @Override
+    public void registerBindings(MenuBindingRegistry registry) {
+        registry.bind("main.input", ctx -> ctx.addSlot(new Slot(inputContainer, 0, ctx.node().x(), ctx.node().y())));
+        registry.bind("main.output", ctx -> ctx.addSlot(new Slot(resultContainer, 0, ctx.node().x(), ctx.node().y())));
+    }
+}
 ```
 
-instead of repeating `leftPos + ...` and `topPos + ...` everywhere.
+Use `bind(...)` for the primary binding at a node and `add(...)` for extra layered slot work.
 
-## Typical screen flow
+## Screen-side resolving
 
-1. implement `GuiHost` on your screen
-2. create a `GuiRootWidget`
-3. add the root as a renderable widget
-4. clear and rebuild child widgets in `init()`
-5. place widgets with `guiX(...)` and `guiY(...)`
-
-Example:
+Screens resolve widgets against layout nodes through `LayoutScreenView`.
 
 ```java
-this.root.clearChildren();
-this.root.addChild(new GuiBackgroundWidget(this));
-this.root.addChild(new GuiSpriteWidget(this.guiX(8), this.guiY(18), GuiSprites.INVENTORY_SLOT));
-this.root.addChild(new IconButtonWidget(this.guiX(152), this.guiY(75), icon, message, onPress));
-this.root.syncBoundsToHost();
+@Override
+public void registerResolvers(LayoutResolverRegistry registry) {
+    registry.resolve("main.panel", ctx -> ctx.addWidget(new GuiBackgroundWidget(
+            this,
+            ctx.node().x(),
+            ctx.node().y(),
+            ctx.node().widthOrThrow(),
+            ctx.node().heightOrThrow(),
+            ctx.style().sprite(MY_PARTS.PANEL, GuiSprites.GUI_BACKGROUND)
+    )));
+
+    registry.resolve("main.title", ctx -> ctx.addWidget(new GuiTextWidget(
+            ctx.node().x(),
+            ctx.node().y(),
+            () -> this.title,
+            () -> ctx.style().textColor(MY_PARTS.TITLE, 0xFF000000),
+            false
+    )));
+
+    registry.add("main.output", 10, ctx -> ctx.addWidget(new GuiSpriteWidget(
+            ctx.node().x() - 1,
+            ctx.node().y() - 1,
+            ctx.style().sprite(MY_PARTS.OUTPUT_SLOT, GuiSprites.INVENTORY_SLOT)
+    )));
+}
 ```
+
+`resolve(...)` replaces the primary resolver for a node.
+
+`add(...)` appends additional resolvers. Screen resolvers support priorities, so lower priorities can render backgrounds before higher-priority overlays.
+
+`scope("main")` is useful when several bindings or resolvers share the same prefix.
+
+## Styling inside layouts
+
+`LayoutResolveContext.style()` exposes the active `StyleContext`.
+
+Common helpers include:
+
+- `sprite(...)`
+- `hoverSprite(...)`
+- `pressedSprite(...)`
+- `onSprite(...)` / `offSprite(...)`
+- `textColor(...)`
+- `color(...)`
+
+That keeps visuals data-driven instead of hardcoded into the screen class.
+
+## Generic widgets
+
+The reusable widget package remains useful inside the layout-driven model.
+
+Typical building blocks are:
+
+- `GuiBackgroundWidget` for panels and backgrounds
+- `GuiSpriteWidget` for icons and slot frames
+- `GuiTextWidget` for titles and labels
+- `IconButtonWidget` for clickable icon buttons
+- separator widgets for dividers
 
 ## Package guidance
 
-- Use `gui.widget` for reusable building blocks.
-- Use `gui.filter.widget` only when you are building filter UIs.
-- Treat `GuiRootWidget` as composition infrastructure, not as a layout system.
+- Import generic building blocks from `api.*`.
+- Use `premade.filter.*` only when you are intentionally building on the shipped filter feature set.
+- Do not import `internal.*`.
 
-## Examples in this repo
+## Reference implementations in this repo
 
-- `example/screen/TestScreen.java` shows a small composed screen
-- `gui/filter/ListFilterScreen.java` shows a menu-backed screen with fixed-position widgets
-- `gui/filter/AttributeFilterScreen.java` shows a more complex feature screen using both generic and filter-specific widgets
+The stock filter screens are currently the most complete end-to-end examples of CDG's layout-driven runtime model:
+
+- `premade.filter.ListFilterScreen`
+- `premade.filter.AttributeFilterScreen`
+- `premade.filter.core.FilterMenu`
 
 ## Related docs
 
+- [Architecture overview](./architecture-overview.md)
+- [Premade filters](./premade-filters.md)
 - [Styling premade GUIs](./styling-premade-guis.md)
+- [Migration notes](./migration-notes.md)

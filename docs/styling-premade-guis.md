@@ -15,22 +15,22 @@ CDG premade GUIs use a single generic styling system.
 - screens and widgets choose which part keys they consume
 - mods choose which `GuiStyleKey` a screen layout should use
 
-There is only one style registry: `gui.style.GuiStyleRegistry`.
+There is only one style registry: `api.style.GuiStyleRegistry`.
 Slots are not special - they use the same part/property lookup model as every other styled part.
 
 ## Key classes to check out
 
-- `gui.style.GuiStyle` - the style sheet itself
-- `gui.style.GuiStyleRegistry` - style registration/lookup
-- `gui.style.GuiStyleKey` - style ids
-- `gui.style.GuiPartKey` - styleable part ids
-- `gui.style.GuiStyleProperty` and `GuiStyleProperties` - typed properties
-- `filter.core.FilterItem` - where a style key is chosen for a layout
-- `filter.core.FilterMenu` - where the chosen style key is carried to the client screen
-- `filter.core.layout.BuiltinFilterLayouts` - built-in filter layout ids
-- `filter.core.layout.BuiltinFilterParts` - built-in styleable parts for filter screens
-- `gui.filter.AbstractFilterScreen` - how style values are consumed by the stock screens
-- `gui.filter.ListFilterScreen` and `gui.filter.AttributeFilterScreen` - examples of built-in screens using parts directly
+- `api.style.GuiStyle` - the style sheet itself
+- `api.style.GuiStyleRegistry` - style registration and lookup
+- `api.style.GuiStyleKey` - style ids
+- `api.style.GuiPartKey` - styleable part ids
+- `api.style.GuiStyleProperty` and `GuiStyleProperties` - typed properties
+- `api.style.BuiltinGuiParts` and `BuiltinGuiStyles` - shared generic parts and built-in default style id
+- `premade.filter.core.FilterItem` - where a style key is chosen for a layout
+- `premade.filter.core.FilterMenu` - where the chosen style key is carried to the client screen
+- `premade.filter.core.layout.BuiltinFilterLayouts` - built-in filter layout ids
+- `premade.filter.core.layout.BuiltinFilterParts` - built-in styleable parts for filter screens
+- `premade.filter.ListFilterScreen` and `premade.filter.AttributeFilterScreen` - stock screens consuming those parts
 
 ## Built-in filter parts
 
@@ -71,16 +71,18 @@ public final class ExampleModClient {
     }
 
     private void onClientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> GuiStyleRegistry.register(MY_STYLE, GuiStyle.builder()
-                .set(BuiltinGuiParts.PLAYER_INVENTORY_BACKGROUND, GuiStyleProperties.SPRITE, GuiSprites.GUI_BACKGROUND.tinted(0xFFC2AA88))
-                .set(BuiltinGuiParts.PLAYER_SLOT, GuiStyleProperties.SPRITE, GuiSprites.INVENTORY_SLOT.tinted(0xFFB8946A))
-                .set(BuiltinGuiParts.PLAYER_INVENTORY_LABEL, GuiStyleProperties.TEXT_COLOR, 0xFF3E2A1A)
-                .set(BuiltinFilterParts.LIST_TOP_BAR, GuiStyleProperties.SPRITE, GuiSprites.GUI_BACKGROUND.tinted(0xFF7A5A3A))
-                .set(BuiltinFilterParts.LIST_TITLE, GuiStyleProperties.TEXT_COLOR, 0xFFF8E7C5)
-                .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.SPRITE, GuiSprites.FILTER_BUTTON.tinted(0xFFB78F63))
-                .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.HOVER_SPRITE, GuiSprites.FILTER_BUTTON_HOVER.tinted(0xFFC89E70))
-                .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.PRESSED_SPRITE, GuiSprites.FILTER_BUTTON_DOWN.tinted(0xFFB78F63))
-                .build()));
+        event.enqueueWork(() -> GuiStyleRegistry.register(
+                GuiStyleKey.of(Identifier.fromNamespaceAndPath(ExampleMod.MODID, "warm_brass")),
+                GuiStyle.builder()
+                        .set(BuiltinGuiParts.PLAYER_INVENTORY_BACKGROUND, GuiStyleProperties.SPRITE, GuiSprites.GUI_BACKGROUND.tinted(0xFFC2AA88))
+                        .set(BuiltinGuiParts.PLAYER_SLOT, GuiStyleProperties.SPRITE, GuiSprites.INVENTORY_SLOT.tinted(0xFFB8946A))
+                        .set(BuiltinGuiParts.PLAYER_INVENTORY_LABEL, GuiStyleProperties.TEXT_COLOR, 0xFF3E2A1A)
+                        .set(BuiltinFilterParts.LIST_TOP_BAR, GuiStyleProperties.SPRITE, GuiSprites.GUI_BACKGROUND.tinted(0xFF7A5A3A))
+                        .set(BuiltinFilterParts.LIST_TITLE, GuiStyleProperties.TEXT_COLOR, 0xFFF8E7C5)
+                        .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.SPRITE, GuiSprites.FILTER_BUTTON.tinted(0xFFB78F63))
+                        .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.HOVER_SPRITE, GuiSprites.FILTER_BUTTON_HOVER.tinted(0xFFC89E70))
+                        .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.PRESSED_SPRITE, GuiSprites.FILTER_BUTTON_DOWN.tinted(0xFFB78F63))
+                        .build()));
     }
 }
 ```
@@ -127,6 +129,15 @@ public GuiStyleKey guiStyleKey(ItemStack stack, GuiLayoutKey layout) {
 That is enough to restyle the stock list filter screen without subclassing it.
 The built-in filter screens resolve backgrounds, buttons, indicators, titles, player inventory labels,
 and attribute filter text through the same `GuiStyleRegistry` lookup.
+
+## Slot visuals
+
+Built-in filter menus use `BuiltinFilterParts.slotPart(role)` as the default slot part mapping.
+
+- player inventory slot roles map to `BuiltinGuiParts.PLAYER_SLOT`
+- filter-owned ghost slots map to `BuiltinFilterParts.FILTER_SLOT`
+
+That means slot visuals participate in the same style system as every other premade screen element.
 
 ## Future screen subclassing
 
