@@ -94,7 +94,6 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
 
     @Override
     protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
-        graphics.text(this.font, this.title, this.titleLabelX, this.titleLabelY, this.titleColor(), false);
         if (this.playerInventoryBackgroundBounds() != null) {
             graphics.text(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 0x404040, false);
         }
