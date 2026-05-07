@@ -28,7 +28,6 @@ public class CodeDefinedGui {
         ItemRegistry.ITEMS.register(modEventBus);
         FilterMenuTypes.MENU_TYPES.register(modEventBus);
         FilterDataComponents.DATA_COMPONENTS.register(modEventBus);
-        ItemAttributes.bootstrap();
         modEventBus.addListener(DataGenerators::onGatherData);
     }
 }

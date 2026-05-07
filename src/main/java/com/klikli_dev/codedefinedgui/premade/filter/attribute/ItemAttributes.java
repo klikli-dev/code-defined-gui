@@ -11,7 +11,6 @@ import net.minecraft.resources.Identifier;
 
 public final class ItemAttributes {
     private static final Map<Identifier, ItemAttributeType> TYPES = new LinkedHashMap<>();
-    private static boolean frozen;
 
     static {
         register(new StandardAttributeType());
@@ -25,14 +24,7 @@ public final class ItemAttributes {
     private ItemAttributes() {
     }
 
-    public static void bootstrap() {
-        frozen = true;
-    }
-
     public static <T extends ItemAttributeType> T register(T type) {
-        if (frozen) {
-            throw new IllegalStateException("Item attributes are frozen");
-        }
         if (TYPES.putIfAbsent(type.id(), type) != null) {
             throw new IllegalArgumentException("Duplicate item attribute id: " + type.id());
         }
