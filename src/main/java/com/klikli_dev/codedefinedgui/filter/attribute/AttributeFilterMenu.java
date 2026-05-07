@@ -92,8 +92,9 @@ public class AttributeFilterMenu extends FilterMenu {
         }
 
         AttributeRule candidate = selected.get().rule();
-        AttributeRule rule = new AttributeRule(candidate.typeId(), candidate.payload(), inverted);
-        return !this.draftRules.contains(rule);
+        AttributeRule normalRule = new AttributeRule(candidate.typeId(), candidate.payload(), false);
+        AttributeRule invertedRule = new AttributeRule(candidate.typeId(), candidate.payload(), true);
+        return !this.draftRules.contains(normalRule) && !this.draftRules.contains(invertedRule);
     }
 
     public ItemStack referenceStack() {
