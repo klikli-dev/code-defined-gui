@@ -104,10 +104,8 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         this.matchAnyIndicator.setOn(mode == AttributeFilterMode.MATCH_ANY);
         this.matchAllIndicator.setOn(mode == AttributeFilterMode.MATCH_ALL);
         this.denyIndicator.setOn(mode == AttributeFilterMode.DENY);
-        boolean hasCandidate = this.menu.selectedCandidate().isPresent();
-        boolean canAdd = hasCandidate && !this.menu.addLocked();
-        this.addButton.active = canAdd;
-        this.addInvertedButton.active = canAdd;
+        this.addButton.active = this.menu.canAddSelected(false);
+        this.addInvertedButton.active = this.menu.canAddSelected(true);
         this.selectionWidget.updateTooltip();
     }
 

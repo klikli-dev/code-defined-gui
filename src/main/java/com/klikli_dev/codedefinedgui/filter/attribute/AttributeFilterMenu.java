@@ -51,7 +51,6 @@ public class AttributeFilterMenu extends FilterMenu {
     private final DataSlot mode = DataSlot.standalone();
     private final DataSlot selectedCandidateIndex = DataSlot.standalone();
     private List<AttributeRule> draftRules;
-    private boolean addLocked;
 
     public AttributeFilterMenu(int containerId, Inventory inventory, RegistryFriendlyByteBuf buffer) {
         this(MenuTypeRegistry.ATTRIBUTE_FILTER.get(), containerId, inventory, buffer.readEnum(InteractionHand.class), readStyleKey(buffer));
@@ -72,7 +71,6 @@ public class AttributeFilterMenu extends FilterMenu {
         this.mode.set(state.mode().ordinal());
         this.selectedCandidateIndex.set(0);
         this.draftRules = new ArrayList<>(state.rules());
-        this.addLocked = !this.draftRules.isEmpty();
         this.addDataSlot(this.mode);
         this.addDataSlot(this.selectedCandidateIndex);
 
@@ -87,8 +85,15 @@ public class AttributeFilterMenu extends FilterMenu {
         return this.selectedCandidateIndex.get();
     }
 
-    public boolean addLocked() {
-        return this.addLocked;
+    public boolean canAddSelected(boolean inverted) {
+        Optional<AttributeCandidate> selected = this.selectedCandidate();
+        if (selected.isEmpty()) {
+            return false;
+        }
+
+        AttributeRule candidate = selected.get().rule();
+        AttributeRule rule = new AttributeRule(candidate.typeId(), candidate.payload(), inverted);
+        return !this.draftRules.contains(rule);
     }
 
     public ItemStack referenceStack() {
@@ -140,7 +145,6 @@ public class AttributeFilterMenu extends FilterMenu {
     public boolean clickMenuButton(Player player, int buttonId) {
         switch (buttonId) {
             case BUTTON_RESET -> {
-                this.addLocked = false;
                 this.draftRules = new ArrayList<>();
                 this.syncSummarySlot();
                 this.broadcastChanges();
@@ -229,10 +233,6 @@ public class AttributeFilterMenu extends FilterMenu {
     }
 
     private boolean addSelectedRule(boolean inverted) {
-        if (this.addLocked()) {
-            return false;
-        }
-
         AttributeFilterState state = this.state();
         Optional<AttributeCandidate> selected = this.selectedCandidate();
         if (selected.isEmpty()) {
@@ -241,14 +241,13 @@ public class AttributeFilterMenu extends FilterMenu {
 
         AttributeRule candidate = selected.get().rule();
         AttributeRule rule = new AttributeRule(candidate.typeId(), candidate.payload(), inverted);
-        if (state.rules().contains(rule)) {
+        if (!this.canAddSelected(inverted) || state.rules().contains(rule)) {
             return false;
         }
 
         List<AttributeRule> rules = new ArrayList<>(state.rules());
         rules.add(rule);
         this.draftRules = rules;
-        this.addLocked = true;
         this.syncSummarySlot();
         this.broadcastChanges();
         return true;
