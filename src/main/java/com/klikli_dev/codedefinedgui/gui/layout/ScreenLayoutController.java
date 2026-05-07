@@ -6,6 +6,8 @@ package com.klikli_dev.codedefinedgui.gui.layout;
 
 import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
 import com.klikli_dev.codedefinedgui.gui.core.GuiRootWidget;
+import com.klikli_dev.codedefinedgui.gui.style.GuiStyleContext;
+import com.klikli_dev.codedefinedgui.gui.style.StyleContext;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -19,18 +21,20 @@ public final class ScreenLayoutController {
     private final LayoutScreen owner;
     private final GuiHost host;
     private final GuiRootWidget root;
+    private final StyleContext style;
 
-    public ScreenLayoutController(LayoutScreen owner, GuiHost host, GuiRootWidget root) {
+    public ScreenLayoutController(LayoutScreen owner, GuiHost host, GuiRootWidget root, StyleContext style) {
         this.owner = owner;
         this.host = host;
         this.root = root;
+        this.style = style;
     }
 
     public void init() {
         ResolvedLayout layout = this.owner.layoutSpec().resolve();
         ResolverRegistryImpl registry = new ResolverRegistryImpl(layout, "");
         this.owner.registerResolvers(registry);
-        registry.execute(this.host, this.root);
+        registry.execute(this.host, this.root, this.style);
     }
 
     private static final class ResolverRegistryImpl implements LayoutResolverRegistry {
@@ -72,12 +76,12 @@ public final class ScreenLayoutController {
             return new ScopedResolverRegistry(this, scopedPath(this.scope, id));
         }
 
-        private void execute(GuiHost host, GuiRootWidget root) {
+        private void execute(GuiHost host, GuiRootWidget root, StyleContext style) {
             List<Registration> registrations = new ArrayList<>(this.primary.values());
             registrations.addAll(this.additional);
             registrations.sort(Comparator.comparingInt(Registration::priority).thenComparingLong(Registration::order));
             for (Registration registration : registrations) {
-                registration.resolver().accept(new ScreenResolveContext(this.layout, registration.path(), host, root));
+                registration.resolver().accept(new ScreenResolveContext(this.layout, registration.path(), host, root, style));
             }
         }
     }
@@ -113,7 +117,7 @@ public final class ScreenLayoutController {
     }
 
     private record ScreenResolveContext(ResolvedLayout layout, String path, GuiHost host,
-                                        GuiRootWidget root) implements LayoutResolveContext {
+                                        GuiRootWidget root, StyleContext style) implements LayoutResolveContext {
         @Override
         public LayoutNodeView node() {
             return new ScreenNodeView(this.layout.node(this.path), this.host);
@@ -122,6 +126,11 @@ public final class ScreenLayoutController {
         @Override
         public LayoutNodeView node(String id) {
             return new ScreenNodeView(LayoutResolvers.findRelative(this.layout, parentScope(this.path), id), this.host);
+        }
+
+        @Override
+        public StyleContext style() {
+            return this.style;
         }
 
         @Override

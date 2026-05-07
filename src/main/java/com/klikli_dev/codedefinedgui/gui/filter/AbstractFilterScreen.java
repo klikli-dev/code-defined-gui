@@ -18,6 +18,7 @@ import com.klikli_dev.codedefinedgui.gui.layout.LayoutResolverRegistry;
 import com.klikli_dev.codedefinedgui.gui.layout.LayoutScreen;
 import com.klikli_dev.codedefinedgui.gui.layout.LayoutSpec;
 import com.klikli_dev.codedefinedgui.gui.layout.ScreenLayoutController;
+import com.klikli_dev.codedefinedgui.gui.style.GuiStyleContext;
 import com.klikli_dev.codedefinedgui.gui.style.GuiPartKey;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyle;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleProperties;
@@ -50,7 +51,7 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         super(menu, playerInventory, title, imageWidth, imageHeight);
         this.playerInventorySection = PlayerInventorySection.standard();
         this.root = new GuiRootWidget(this);
-        this.layoutController = new ScreenLayoutController(this, this, this.root);
+        this.layoutController = new ScreenLayoutController(this, this, this.root, new GuiStyleContext(this.style()));
     }
 
     @Override
@@ -255,10 +256,6 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         return this.style().get(part, GuiStyleProperties.SPRITE, fallback);
     }
 
-    public final GuiSprite resolvedPartSprite(GuiPartKey part, GuiSprite fallback) {
-        return this.partSprite(part, fallback);
-    }
-
     private SlotBounds playerInventoryBounds() {
         return this.slotBounds(slotView -> slotView.role().equals(BuiltinLayoutSlotRoles.PLAYER_MAIN) || slotView.role().equals(BuiltinLayoutSlotRoles.PLAYER_HOTBAR));
     }
@@ -294,10 +291,6 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
 
     protected GuiSprite slotSprite(LayoutSlotView slotView) {
         return this.partSprite(slotView.part(), GuiSprites.INVENTORY_SLOT);
-    }
-
-    public final GuiSprite resolvedSlotSprite(LayoutSlotView slotView) {
-        return this.slotSprite(slotView);
     }
 
     protected final GuiStyle style() {
