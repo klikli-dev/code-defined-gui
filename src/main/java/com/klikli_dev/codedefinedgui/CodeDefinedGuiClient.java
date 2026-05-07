@@ -4,11 +4,11 @@
 
 package com.klikli_dev.codedefinedgui;
 
-import com.klikli_dev.codedefinedgui.filter.attribute.AttributeFilterMenu;
-import com.klikli_dev.codedefinedgui.filter.list.ListFilterMenu;
-import com.klikli_dev.codedefinedgui.gui.filter.AttributeFilterScreen;
-import com.klikli_dev.codedefinedgui.gui.filter.ListFilterScreen;
-import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
+import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeFilterMenu;
+import com.klikli_dev.codedefinedgui.premade.filter.list.ListFilterMenu;
+import com.klikli_dev.codedefinedgui.premade.filter.AttributeFilterScreen;
+import com.klikli_dev.codedefinedgui.premade.filter.ListFilterScreen;
+import com.klikli_dev.codedefinedgui.internal.registry.MenuTypeRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.api.distmarker.Dist;
@@ -37,3 +37,5 @@ public class CodeDefinedGuiClient {
         event.register(MenuTypeRegistry.ATTRIBUTE_FILTER.get(), (AttributeFilterMenu menu, Inventory playerInventory, Component title) -> new AttributeFilterScreen<>(menu, playerInventory, title));
     }
 }
+
+

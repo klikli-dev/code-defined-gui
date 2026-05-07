@@ -9,3 +9,5 @@ import com.klikli_dev.codedefinedgui.api.layout.LayoutResolverRegistry;
 public interface LayoutScreenRenderer {
     void registerResolvers(LayoutResolverRegistry registry, LayoutScreenRendererHost host);
 }
+
+

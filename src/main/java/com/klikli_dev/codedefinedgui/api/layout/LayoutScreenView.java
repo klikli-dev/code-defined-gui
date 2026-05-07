@@ -8,3 +8,5 @@ public interface LayoutScreenView {
     LayoutSpec layoutSpec();
     void registerResolvers(LayoutResolverRegistry registry);
 }
+
+

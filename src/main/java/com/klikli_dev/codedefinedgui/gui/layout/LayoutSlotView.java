@@ -18,3 +18,5 @@ public record LayoutSlotView(Slot slot, SlotRoleKey role, GuiPartKey part, Strin
     }
 }
 
+
+

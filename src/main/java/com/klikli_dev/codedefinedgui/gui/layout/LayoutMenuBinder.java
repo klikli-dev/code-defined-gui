@@ -9,3 +9,5 @@ import com.klikli_dev.codedefinedgui.api.layout.MenuBindingRegistry;
 public interface LayoutMenuBinder {
     void bind(MenuBindingRegistry registry, LayoutMenuBinderHost host);
 }
+
+

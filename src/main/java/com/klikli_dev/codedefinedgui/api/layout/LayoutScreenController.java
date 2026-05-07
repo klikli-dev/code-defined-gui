@@ -7,3 +7,5 @@ package com.klikli_dev.codedefinedgui.api.layout;
 public interface LayoutScreenController {
     void init();
 }
+
+

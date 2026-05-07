@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.filter.core.layout;
+package com.klikli_dev.codedefinedgui.premade.filter.core.layout;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
 import net.minecraft.resources.Identifier;
@@ -19,3 +19,5 @@ public final class BuiltinFilterSlotRoles {
         return com.klikli_dev.codedefinedgui.api.layout.SlotRoleKey.of(Identifier.fromNamespaceAndPath(CodeDefinedGui.MODID, path));
     }
 }
+
+

@@ -4,7 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.datagen.model;
 
-import com.klikli_dev.codedefinedgui.registry.ItemRegistry;
+import com.klikli_dev.codedefinedgui.internal.registry.ItemRegistry;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplates;
 
@@ -14,3 +14,5 @@ public class ItemModelSubProvider {
         itemModels.generateFlatItem(ItemRegistry.ATTRIBUTE_FILTER.get(), ModelTemplates.FLAT_ITEM);
     }
 }
+
+

@@ -27,3 +27,5 @@ public class ModelProvider extends net.minecraft.client.data.models.ModelProvide
         this.itemModels.registerModels(itemModels);
     }
 }
+
+

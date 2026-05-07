@@ -14,3 +14,5 @@ public record SlotRoleKey(Identifier id) {
 
     public static SlotRoleKey of(Identifier id) { return new SlotRoleKey(id); }
 }
+
+

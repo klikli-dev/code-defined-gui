@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.filter.core.layout;
+package com.klikli_dev.codedefinedgui.premade.filter.core.layout;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
 import com.klikli_dev.codedefinedgui.api.style.GuiLayoutKey;
@@ -19,4 +19,6 @@ public final class BuiltinFilterLayouts {
         return GuiLayoutKey.of(Identifier.fromNamespaceAndPath(CodeDefinedGui.MODID, path));
     }
 }
+
+
 

@@ -20,3 +20,5 @@ public final class BuiltinLayoutSlotRoles {
         return SlotRoleKey.of(Identifier.fromNamespaceAndPath(CodeDefinedGui.MODID, path));
     }
 }
+
+

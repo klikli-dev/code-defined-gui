@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.filter.core.storage;
+package com.klikli_dev.codedefinedgui.premade.filter.core.storage;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -28,3 +28,5 @@ public class GhostResourceHandlerSlot extends ResourceHandlerSlot {
         return 1;
     }
 }
+
+

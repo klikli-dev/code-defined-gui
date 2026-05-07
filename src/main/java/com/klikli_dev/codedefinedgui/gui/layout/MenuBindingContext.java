@@ -11,3 +11,5 @@ public interface MenuBindingContext extends LayoutLookup {
 
     <T extends Slot> T addSlot(T slot);
 }
+
+

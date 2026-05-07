@@ -9,3 +9,5 @@ import com.klikli_dev.codedefinedgui.api.layout.LayoutGroupBuilder;
 public interface LayoutFragment {
     void define(LayoutGroupBuilder root);
 }
+
+

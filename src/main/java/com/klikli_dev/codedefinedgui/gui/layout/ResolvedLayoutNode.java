@@ -9,3 +9,5 @@ import org.jspecify.annotations.Nullable;
 public record ResolvedLayoutNode(String id, String path, int x, int y, @Nullable Integer width,
                                  @Nullable Integer height) implements LayoutNodeView {
 }
+
+

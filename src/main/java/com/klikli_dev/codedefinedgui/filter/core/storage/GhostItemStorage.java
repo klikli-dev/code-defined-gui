@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.filter.core.storage;
+package com.klikli_dev.codedefinedgui.premade.filter.core.storage;
 
 import java.util.Objects;
 import net.minecraft.core.NonNullList;
@@ -113,3 +113,5 @@ public class GhostItemStorage extends ItemAccessItemHandler {
         return stack.isEmpty() ? ItemStack.EMPTY : stack.copyWithCount(1);
     }
 }
+
+

@@ -13,3 +13,5 @@ public interface MenuBindingRegistry {
 
     MenuBindingRegistry scope(String id);
 }
+
+
