@@ -11,6 +11,7 @@ This refactor is intentionally breaking. There is no compatibility bridge for th
 ## Main package moves
 
 - generic layout types moved to `com.klikli_dev.codedefinedgui.api.layout`
+- generic screen host/root types moved to `com.klikli_dev.codedefinedgui.api.screen`
 - generic style types moved to `com.klikli_dev.codedefinedgui.api.style`
 - generic texture types moved to `com.klikli_dev.codedefinedgui.api.texture`
 - reusable widgets moved to `com.klikli_dev.codedefinedgui.api.widget`

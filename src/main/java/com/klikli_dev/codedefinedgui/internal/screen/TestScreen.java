@@ -4,8 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.internal.screen;
 
-import com.klikli_dev.codedefinedgui.internal.screen.GuiHost;
-import com.klikli_dev.codedefinedgui.internal.screen.GuiRootWidget;
+import com.klikli_dev.codedefinedgui.api.screen.GuiHost;
+import com.klikli_dev.codedefinedgui.api.screen.GuiRootWidget;
 import com.klikli_dev.codedefinedgui.api.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.api.widget.FrameWidget;
 import com.klikli_dev.codedefinedgui.api.widget.GuiBackgroundWidget;

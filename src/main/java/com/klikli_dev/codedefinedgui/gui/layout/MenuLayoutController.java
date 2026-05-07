@@ -9,7 +9,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import net.minecraft.world.inventory.Slot;
 
 public final class MenuLayoutController {
     private final LayoutMenuView owner;
@@ -90,11 +89,6 @@ public final class MenuLayoutController {
         @Override
         public LayoutNodeView node(String id) {
             return LayoutResolvers.findRelative(this.layout, parentScope(this.path), id);
-        }
-
-        @Override
-        public <T extends Slot> T addSlot(T slot) {
-            return slot;
         }
     }
 

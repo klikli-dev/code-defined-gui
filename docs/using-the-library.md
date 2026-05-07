@@ -37,6 +37,12 @@ Code Defined GUI is now documented as a layout-driven GUI framework.
 - `api.layout.ScreenLayoutController` - executes screen resolvers
 - `api.layout.LayoutResolverRegistry` / `LayoutResolveContext` - resolve widgets against nodes
 
+### Screen host plumbing
+
+- `api.screen.GuiHost` - GUI-relative host contract for screens
+- `api.screen.GuiRootWidget` - root widget that owns and resyncs child widgets
+- `api.screen.GuiSyncable` - optional sync hook for widgets that follow host bounds
+
 ### Styling and visuals
 
 - `api.style.GuiStyle`, `GuiStyleKey`, `GuiPartKey`
@@ -106,13 +112,39 @@ public final class ExampleMenu extends AbstractContainerMenu implements LayoutMe
 
     @Override
     public void registerBindings(MenuBindingRegistry registry) {
-        registry.bind("main.input", ctx -> ctx.addSlot(new Slot(inputContainer, 0, ctx.node().x(), ctx.node().y())));
-        registry.bind("main.output", ctx -> ctx.addSlot(new Slot(resultContainer, 0, ctx.node().x(), ctx.node().y())));
+        registry.bind("main.input", ctx -> this.addSlot(new Slot(inputContainer, 0, ctx.node().x(), ctx.node().y())));
+        registry.bind("main.output", ctx -> this.addSlot(new Slot(resultContainer, 0, ctx.node().x(), ctx.node().y())));
     }
 }
 ```
 
 Use `bind(...)` for the primary binding at a node and `add(...)` for extra layered slot work.
+
+## Screen controller setup
+
+Screen-side layout composition uses `GuiHost` and `GuiRootWidget` together with `ScreenLayoutController`.
+
+```java
+public abstract class ExampleScreen extends AbstractContainerScreen<ExampleMenu> implements GuiHost, LayoutScreenView {
+    protected final GuiRootWidget root;
+    private final ScreenLayoutController layoutController;
+
+    protected ExampleScreen(ExampleMenu menu, Inventory inventory, Component title) {
+        super(menu, inventory, title);
+        this.root = new GuiRootWidget(this);
+        this.layoutController = new ScreenLayoutController(this, this, this.root, new GuiStyleContext(GuiStyleRegistry.get(menu.styleKey())));
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        this.addRenderableWidget(this.root);
+        this.root.clearChildren();
+        this.layoutController.init();
+        this.root.syncWithHost();
+    }
+}
+```
 
 ## Screen-side resolving
 

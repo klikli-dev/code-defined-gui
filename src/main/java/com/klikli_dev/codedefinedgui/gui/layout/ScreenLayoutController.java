@@ -4,8 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.api.layout;
 
-import com.klikli_dev.codedefinedgui.internal.screen.GuiHost;
-import com.klikli_dev.codedefinedgui.internal.screen.GuiRootWidget;
+import com.klikli_dev.codedefinedgui.api.screen.GuiHost;
+import com.klikli_dev.codedefinedgui.api.screen.GuiRootWidget;
 import com.klikli_dev.codedefinedgui.api.style.GuiStyleContext;
 import com.klikli_dev.codedefinedgui.api.style.StyleContext;
 import java.util.ArrayList;

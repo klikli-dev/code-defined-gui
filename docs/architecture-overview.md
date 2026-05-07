@@ -20,6 +20,8 @@ Supported generic API for downstream mods.
   - `LayoutScreenView` + `ScreenLayoutController`
   - `MenuBindingRegistry`, `LayoutResolverRegistry`
   - `GuiLayoutKey`, `SlotRoleKey`, built-in slot-role constants
+- `api.screen`
+  - `GuiHost`, `GuiRootWidget`, `GuiSyncable`
 - `api.style`
   - `GuiStyle`, `GuiStyleKey`, `GuiPartKey`
   - `GuiStyleRegistry`, `StyleContext`, `GuiStyleProperties`
@@ -48,7 +50,7 @@ Supported premade feature layer built on the generic API.
 
 Not supported as public API.
 
-This includes framework host/root plumbing, internal renderers, bootstrap wiring, registries, networking, commands, and internal inventory layout helpers.
+This includes internal renderers, bootstrap wiring, registries, networking, commands, and internal inventory layout helpers.
 
 Downstream mods should not import `internal.*`.
 
@@ -85,6 +87,8 @@ This keeps layout structure, behavior, and visuals separate.
 ### Screen side
 
 - implement `LayoutScreenView`
+- implement `GuiHost`
+- own a `GuiRootWidget`
 - register widget resolvers in `registerResolvers(LayoutResolverRegistry)`
 - delegate execution to `ScreenLayoutController.init()`
 - use `resolve(...)` for the primary widget at a node and `add(...)` for extra layered widgets

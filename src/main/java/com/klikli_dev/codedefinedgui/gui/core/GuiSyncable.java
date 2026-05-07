@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.internal.screen;
+package com.klikli_dev.codedefinedgui.api.screen;
 
 public interface GuiSyncable {
     void syncToHost();

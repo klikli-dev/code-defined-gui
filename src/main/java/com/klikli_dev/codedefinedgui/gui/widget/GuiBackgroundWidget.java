@@ -4,8 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.api.widget;
 
-import com.klikli_dev.codedefinedgui.internal.screen.GuiHost;
-import com.klikli_dev.codedefinedgui.internal.screen.GuiSyncable;
+import com.klikli_dev.codedefinedgui.api.screen.GuiHost;
+import com.klikli_dev.codedefinedgui.api.screen.GuiSyncable;
 import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.api.texture.GuiSprites;
 import net.minecraft.client.gui.GuiGraphicsExtractor;

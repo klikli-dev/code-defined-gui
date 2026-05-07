@@ -4,12 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.api.layout;
 
-import net.minecraft.world.inventory.Slot;
-
 public interface MenuBindingContext extends LayoutLookup {
     LayoutNodeView node();
-
-    <T extends Slot> T addSlot(T slot);
 }
 
 
