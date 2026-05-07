@@ -52,7 +52,7 @@ public final class ListFilterDefinition implements FilterDefinition<ListFilterSt
             }
         }
 
-        return state.mode() == ListFilterMode.ALLOW ? matched : !matched;
+        return (state.mode() == ListFilterMode.ALLOW) == matched;
     }
 
     @Override

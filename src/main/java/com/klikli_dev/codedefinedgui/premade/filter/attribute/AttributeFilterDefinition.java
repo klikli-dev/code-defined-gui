@@ -82,7 +82,7 @@ public final class AttributeFilterDefinition implements FilterDefinition<Attribu
     private boolean ruleMatches(AttributeRule rule, ItemStack candidate, FilterMatchContext context) {
         ItemAttributeType type = ItemAttributes.get(rule.typeId());
         boolean matches = type != null && type.matches(candidate, context.level(), rule.payload());
-        return rule.inverted() ? !matches : matches;
+        return rule.inverted() != matches;
     }
 }
 

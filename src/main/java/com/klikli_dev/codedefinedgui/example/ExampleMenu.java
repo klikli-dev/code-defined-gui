@@ -21,7 +21,7 @@ public class ExampleMenu extends AbstractContainerMenu implements LayoutMenuView
     private final MenuLayoutController layoutController = new MenuLayoutController(this);
 
     public ExampleMenu(int containerId, Inventory inventory) {
-        super((MenuType<?>) null, containerId);
+        super(null, containerId);
         this.layoutController.bind();
     }
 
