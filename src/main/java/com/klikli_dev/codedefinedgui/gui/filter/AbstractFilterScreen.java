@@ -160,7 +160,7 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     }
 
     protected void registerPlayerInventoryResolvers(LayoutResolverRegistry registry) {
-        registry.resolve("background", ctx -> ctx.addWidget(new GuiBackgroundWidget(
+        registry.resolve("background", -100, ctx -> ctx.addWidget(new GuiBackgroundWidget(
                 this,
                 ctx.node().x(),
                 ctx.node().y(),
@@ -176,7 +176,7 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
                 continue;
             }
 
-            registry.add(slotView.nodePath(), -50, ctx -> ctx.addWidget(new GuiSpriteWidget(
+            registry.add(slotView.nodePath(), -25, ctx -> ctx.addWidget(new GuiSpriteWidget(
                     slotView.x() - 1 + this.leftPos(),
                     slotView.y() - 1 + this.topPos(),
                     this.slotSprite(slotView)

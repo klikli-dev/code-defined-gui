@@ -37,8 +37,8 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
     @Override
     public void registerResolvers(LayoutResolverRegistry registry) {
         super.registerResolvers(registry);
-        registry.resolve("main.top_bar.background", -100, ctx -> ctx.addWidget(new GuiBackgroundWidget(this, ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), ctx.node().heightOrThrow(), this.partSprite(BuiltinFilterParts.LIST_TOP_BAR, GuiSprites.GUI_BACKGROUND))));
         registry.resolve("main.filter_area.panel_bg", -100, ctx -> ctx.addWidget(new GuiBackgroundWidget(this, ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), ctx.node().heightOrThrow(), this.partSprite(BuiltinFilterParts.LIST_PANEL, GuiSprites.GUI_BACKGROUND))));
+        registry.resolve("main.top_bar.background", 100, ctx -> ctx.addWidget(new GuiBackgroundWidget(this, ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), ctx.node().heightOrThrow(), this.partSprite(BuiltinFilterParts.LIST_TOP_BAR, GuiSprites.GUI_BACKGROUND))));
         registry.resolve("main.filter_area.reset", ctx -> this.resetButton = this.addResetButton(ctx.node().x(), ctx.node().y(), ListFilterMenu.BUTTON_RESET));
         registry.resolve("main.filter_area.confirm", ctx -> this.confirmButton = this.addConfirmButton(ctx.node().x(), ctx.node().y()));
         registry.resolve("main.filter_area.deny", ctx -> {
