@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.style;
+package com.klikli_dev.codedefinedgui.api.style;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,3 +31,4 @@ public final class GuiStyleRegistry {
         return STYLES.getOrDefault(key, EMPTY_STYLE);
     }
 }
+

@@ -2,12 +2,12 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.widget;
+package com.klikli_dev.codedefinedgui.api.widget;
 
-import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
-import com.klikli_dev.codedefinedgui.gui.core.GuiSyncable;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
+import com.klikli_dev.codedefinedgui.internal.screen.GuiHost;
+import com.klikli_dev.codedefinedgui.internal.screen.GuiSyncable;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprites;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -73,3 +73,4 @@ public class GuiBackgroundWidget extends AbstractWidget implements GuiSyncable {
         this.setHeight(this.heightOverride != null ? this.heightOverride : this.host.imageHeight());
     }
 }
+

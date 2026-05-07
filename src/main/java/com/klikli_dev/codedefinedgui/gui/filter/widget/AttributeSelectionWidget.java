@@ -6,9 +6,9 @@ package com.klikli_dev.codedefinedgui.gui.filter.widget;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.filter.attribute.AttributeCandidate;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
-import com.klikli_dev.codedefinedgui.gui.widget.AbstractScrollSelectionWidget;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprites;
+import com.klikli_dev.codedefinedgui.api.widget.AbstractScrollSelectionWidget;
 import java.util.List;
 import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
@@ -50,3 +50,4 @@ public class AttributeSelectionWidget extends AbstractScrollSelectionWidget<Attr
         return Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.SCROLL_TO_SELECT);
     }
 }
+

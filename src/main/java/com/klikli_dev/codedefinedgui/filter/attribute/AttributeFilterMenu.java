@@ -11,7 +11,7 @@ import com.klikli_dev.codedefinedgui.gui.filter.layout.AttributeFilterLayout;
 import com.klikli_dev.codedefinedgui.api.layout.MenuBindingRegistry;
 import com.klikli_dev.codedefinedgui.gui.layout.inventory.PlayerInventorySection;
 import com.klikli_dev.codedefinedgui.internal.layout.LayoutMenuBinderHost;
-import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
+import com.klikli_dev.codedefinedgui.api.style.GuiStyleKey;
 import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
 import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
 import java.util.ArrayList;
@@ -263,3 +263,4 @@ public class AttributeFilterMenu extends FilterMenu {
         AttributeFilterStateAccessor.INSTANCE.write(this.filterStack(), new AttributeFilterState(this.referenceStack(), this.mode(), List.copyOf(this.draftRules)));
     }
 }
+

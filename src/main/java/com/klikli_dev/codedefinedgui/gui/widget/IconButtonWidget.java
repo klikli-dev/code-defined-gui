@@ -2,10 +2,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.widget;
+package com.klikli_dev.codedefinedgui.api.widget;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
 import java.util.Objects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -96,3 +96,4 @@ public class IconButtonWidget extends AbstractWidget {
         this.setTooltip(Tooltip.create(message));
     }
 }
+

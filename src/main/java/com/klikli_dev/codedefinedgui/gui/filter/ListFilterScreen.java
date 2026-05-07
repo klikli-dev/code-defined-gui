@@ -9,13 +9,13 @@ import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.filter.list.ListFilterMenu;
 import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutResolverRegistry;
-import com.klikli_dev.codedefinedgui.gui.style.GuiStyleProperties;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiTextWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.HorizontalSeparatorWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.VerticalSeparatorWidget;
+import com.klikli_dev.codedefinedgui.api.style.GuiStyleProperties;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprites;
+import com.klikli_dev.codedefinedgui.api.widget.GuiBackgroundWidget;
+import com.klikli_dev.codedefinedgui.api.widget.GuiTextWidget;
+import com.klikli_dev.codedefinedgui.api.widget.HorizontalSeparatorWidget;
+import com.klikli_dev.codedefinedgui.api.widget.IconButtonWidget;
+import com.klikli_dev.codedefinedgui.api.widget.VerticalSeparatorWidget;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -92,3 +92,4 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
         return ListFilterMenu.BUTTON_CANCEL;
     }
 }
+

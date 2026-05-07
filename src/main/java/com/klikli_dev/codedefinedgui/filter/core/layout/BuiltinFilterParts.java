@@ -7,8 +7,8 @@ package com.klikli_dev.codedefinedgui.filter.core.layout;
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
 import com.klikli_dev.codedefinedgui.api.layout.BuiltinLayoutSlotRoles;
 import com.klikli_dev.codedefinedgui.api.layout.SlotRoleKey;
-import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiParts;
-import com.klikli_dev.codedefinedgui.gui.style.GuiPartKey;
+import com.klikli_dev.codedefinedgui.api.style.BuiltinGuiParts;
+import com.klikli_dev.codedefinedgui.api.style.GuiPartKey;
 import net.minecraft.resources.Identifier;
 
 public final class BuiltinFilterParts {
@@ -52,3 +52,4 @@ public final class BuiltinFilterParts {
         return GuiPartKey.of(Identifier.fromNamespaceAndPath(CodeDefinedGui.MODID, "filter/" + path));
     }
 }
+

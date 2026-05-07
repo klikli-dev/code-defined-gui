@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.texture;
+package com.klikli_dev.codedefinedgui.api.texture;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
 import net.minecraft.resources.Identifier;
@@ -38,3 +38,4 @@ public final class GuiSprites {
         return Identifier.fromNamespaceAndPath(CodeDefinedGui.MODID, path);
     }
 }
+

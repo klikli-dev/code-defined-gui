@@ -9,11 +9,11 @@ import com.klikli_dev.codedefinedgui.api.layout.LayoutResolverRegistry;
 import com.klikli_dev.codedefinedgui.internal.layout.LayoutScreenRenderer;
 import com.klikli_dev.codedefinedgui.internal.layout.LayoutScreenRendererHost;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutSlotView;
-import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiParts;
-import com.klikli_dev.codedefinedgui.gui.style.GuiStyleProperties;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
+import com.klikli_dev.codedefinedgui.api.style.BuiltinGuiParts;
+import com.klikli_dev.codedefinedgui.api.style.GuiStyleProperties;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprites;
+import com.klikli_dev.codedefinedgui.api.widget.GuiBackgroundWidget;
+import com.klikli_dev.codedefinedgui.api.widget.GuiSpriteWidget;
 
 public final class PlayerInventoryScreenRenderer implements LayoutScreenRenderer {
     @Override
@@ -44,3 +44,4 @@ public final class PlayerInventoryScreenRenderer implements LayoutScreenRenderer
         }
     }
 }
+

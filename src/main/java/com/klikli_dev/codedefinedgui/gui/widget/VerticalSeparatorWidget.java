@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.widget;
+package com.klikli_dev.codedefinedgui.api.widget;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -42,3 +42,4 @@ public class VerticalSeparatorWidget extends AbstractWidget {
     protected void updateWidgetNarration(NarrationElementOutput output) {
     }
 }
+

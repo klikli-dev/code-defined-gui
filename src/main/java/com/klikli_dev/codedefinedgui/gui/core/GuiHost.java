@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.core;
+package com.klikli_dev.codedefinedgui.internal.screen;
 
 import net.minecraft.client.gui.components.AbstractWidget;
 
@@ -31,3 +31,4 @@ public interface GuiHost {
 
     void removeGuiWidget(AbstractWidget widget);
 }
+

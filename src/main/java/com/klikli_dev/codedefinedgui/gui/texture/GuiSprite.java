@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.texture;
+package com.klikli_dev.codedefinedgui.api.texture;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -32,3 +32,4 @@ public record GuiSprite(@NonNull Identifier sprite, int width, int height, int t
         guiGraphicsExtractor.blitSprite(RenderPipelines.GUI_TEXTURED, this.sprite, x, y, width, height, this.tint);
     }
 }
+

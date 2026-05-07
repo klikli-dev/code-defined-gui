@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.style;
+package com.klikli_dev.codedefinedgui.api.style;
 
 import java.util.Objects;
 
@@ -15,3 +15,4 @@ public record GuiStyleProperty<T>(String name) {
         return new GuiStyleProperty<>(name);
     }
 }
+

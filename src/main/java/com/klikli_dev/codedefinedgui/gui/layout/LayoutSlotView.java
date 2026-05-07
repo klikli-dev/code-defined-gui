@@ -4,7 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.api.layout;
 
-import com.klikli_dev.codedefinedgui.gui.style.GuiPartKey;
+import com.klikli_dev.codedefinedgui.api.style.GuiPartKey;
 import com.klikli_dev.codedefinedgui.api.layout.SlotRoleKey;
 import net.minecraft.world.inventory.Slot;
 
@@ -17,3 +17,4 @@ public record LayoutSlotView(Slot slot, SlotRoleKey role, GuiPartKey part, Strin
         return this.slot.y;
     }
 }
+

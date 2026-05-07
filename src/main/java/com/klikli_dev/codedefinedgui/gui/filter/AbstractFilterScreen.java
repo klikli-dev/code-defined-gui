@@ -7,8 +7,8 @@ package com.klikli_dev.codedefinedgui.gui.filter;
 import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterParts;
-import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
-import com.klikli_dev.codedefinedgui.gui.core.GuiRootWidget;
+import com.klikli_dev.codedefinedgui.internal.screen.GuiHost;
+import com.klikli_dev.codedefinedgui.internal.screen.GuiRootWidget;
 import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
 import com.klikli_dev.codedefinedgui.api.layout.BuiltinLayoutSlotRoles;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutResolveContext;
@@ -19,13 +19,13 @@ import com.klikli_dev.codedefinedgui.api.layout.LayoutSpec;
 import com.klikli_dev.codedefinedgui.api.layout.ScreenLayoutController;
 import com.klikli_dev.codedefinedgui.internal.layout.LayoutScreenRendererHost;
 import com.klikli_dev.codedefinedgui.gui.layout.inventory.PlayerInventorySection;
-import com.klikli_dev.codedefinedgui.gui.style.GuiStyleContext;
-import com.klikli_dev.codedefinedgui.gui.style.GuiStyleRegistry;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.IconButtonBackgroundSprites;
-import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
+import com.klikli_dev.codedefinedgui.api.style.GuiStyleContext;
+import com.klikli_dev.codedefinedgui.api.style.GuiStyleRegistry;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprites;
+import com.klikli_dev.codedefinedgui.api.widget.GuiSpriteWidget;
+import com.klikli_dev.codedefinedgui.api.widget.IconButtonBackgroundSprites;
+import com.klikli_dev.codedefinedgui.api.widget.IconButtonWidget;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -230,3 +230,4 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
 
     protected abstract int cancelButtonId();
 }
+

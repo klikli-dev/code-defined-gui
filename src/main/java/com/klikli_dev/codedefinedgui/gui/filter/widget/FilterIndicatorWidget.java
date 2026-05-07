@@ -4,8 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.gui.filter.widget;
 
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprites;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -41,3 +41,4 @@ public class FilterIndicatorWidget extends AbstractWidget {
     protected void updateWidgetNarration(NarrationElementOutput output) {
     }
 }
+

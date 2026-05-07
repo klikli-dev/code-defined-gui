@@ -9,7 +9,7 @@ import com.klikli_dev.codedefinedgui.filter.core.storage.GhostResourceHandlerSlo
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutMenuView;
-import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiStyles;
+import com.klikli_dev.codedefinedgui.api.style.BuiltinGuiStyles;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutSlotView;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutSpec;
 import com.klikli_dev.codedefinedgui.api.layout.MenuBindingContext;
@@ -18,9 +18,9 @@ import com.klikli_dev.codedefinedgui.api.layout.MenuLayoutController;
 import com.klikli_dev.codedefinedgui.api.layout.SlotRoleKey;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeView;
 import com.klikli_dev.codedefinedgui.internal.layout.LayoutMenuBinderHost;
-import com.klikli_dev.codedefinedgui.gui.style.GuiLayoutKey;
-import com.klikli_dev.codedefinedgui.gui.style.GuiPartKey;
-import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
+import com.klikli_dev.codedefinedgui.api.style.GuiLayoutKey;
+import com.klikli_dev.codedefinedgui.api.style.GuiPartKey;
+import com.klikli_dev.codedefinedgui.api.style.GuiStyleKey;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.component.DataComponentType;
@@ -290,3 +290,4 @@ public abstract class FilterMenu extends AbstractContainerMenu implements Layout
         return addedSlot;
     }
 }
+

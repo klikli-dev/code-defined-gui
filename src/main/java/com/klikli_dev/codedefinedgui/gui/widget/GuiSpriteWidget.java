@@ -2,10 +2,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.widget;
+package com.klikli_dev.codedefinedgui.api.widget;
 
-import com.klikli_dev.codedefinedgui.gui.core.GuiSyncable;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
+import com.klikli_dev.codedefinedgui.internal.screen.GuiSyncable;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -38,3 +38,4 @@ public class GuiSpriteWidget extends AbstractWidget implements GuiSyncable {
     public void syncToHost() {
     }
 }
+

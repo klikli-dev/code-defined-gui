@@ -6,9 +6,10 @@ package com.klikli_dev.codedefinedgui.internal.layout;
 
 import com.klikli_dev.codedefinedgui.api.layout.LayoutScreenView;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutSlotView;
-import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
+import com.klikli_dev.codedefinedgui.internal.screen.GuiHost;
 import java.util.List;
 
 public interface LayoutScreenRendererHost extends GuiHost, LayoutScreenView {
     List<LayoutSlotView> layoutSlots();
 }
+

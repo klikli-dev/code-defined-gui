@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.widget;
+package com.klikli_dev.codedefinedgui.api.widget;
 
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
@@ -44,3 +44,4 @@ public class GuiTextWidget extends AbstractWidget {
     protected void updateWidgetNarration(NarrationElementOutput output) {
     }
 }
+

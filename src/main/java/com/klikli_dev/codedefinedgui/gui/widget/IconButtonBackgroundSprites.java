@@ -2,10 +2,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.widget;
+package com.klikli_dev.codedefinedgui.api.widget;
 
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprites;
 import java.util.Objects;
 
 public record IconButtonBackgroundSprites(GuiSprite normal, GuiSprite pressed, GuiSprite hovered) {
@@ -25,3 +25,4 @@ public record IconButtonBackgroundSprites(GuiSprite normal, GuiSprite pressed, G
         }
     }
 }
+

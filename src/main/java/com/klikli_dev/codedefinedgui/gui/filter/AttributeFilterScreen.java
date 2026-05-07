@@ -14,14 +14,14 @@ import com.klikli_dev.codedefinedgui.gui.filter.widget.AttributeRuleSummaryWidge
 import com.klikli_dev.codedefinedgui.gui.filter.widget.AttributeSelectionWidget;
 import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutResolverRegistry;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
-import com.klikli_dev.codedefinedgui.gui.style.GuiStyleProperties;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiTextWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.HorizontalSeparatorWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.VerticalSeparatorWidget;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprites;
+import com.klikli_dev.codedefinedgui.api.style.GuiStyleProperties;
+import com.klikli_dev.codedefinedgui.api.widget.GuiBackgroundWidget;
+import com.klikli_dev.codedefinedgui.api.widget.GuiTextWidget;
+import com.klikli_dev.codedefinedgui.api.widget.HorizontalSeparatorWidget;
+import com.klikli_dev.codedefinedgui.api.widget.IconButtonWidget;
+import com.klikli_dev.codedefinedgui.api.widget.VerticalSeparatorWidget;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -156,3 +156,4 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         this.selectionWidget.updateTooltip();
     }
 }
+

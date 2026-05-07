@@ -2,9 +2,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.widget;
+package com.klikli_dev.codedefinedgui.api.widget;
 
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.IntConsumer;
@@ -191,3 +191,4 @@ public abstract class AbstractScrollSelectionWidget<T> extends AbstractWidget {
         return (color & 0xFF000000) == 0 ? color | 0xFF000000 : color;
     }
 }
+

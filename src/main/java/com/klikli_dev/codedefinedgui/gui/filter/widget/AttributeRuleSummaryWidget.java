@@ -4,8 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.gui.filter.widget;
 
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprites;
 import java.util.Objects;
 import java.util.function.IntSupplier;
 import net.minecraft.client.Minecraft;
@@ -61,3 +61,4 @@ public class AttributeRuleSummaryWidget extends AbstractWidget {
     protected void updateWidgetNarration(NarrationElementOutput output) {
     }
 }
+

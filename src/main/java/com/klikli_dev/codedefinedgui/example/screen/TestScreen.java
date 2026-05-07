@@ -4,12 +4,12 @@
 
 package com.klikli_dev.codedefinedgui.example.screen;
 
-import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
-import com.klikli_dev.codedefinedgui.gui.core.GuiRootWidget;
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
-import com.klikli_dev.codedefinedgui.gui.widget.FrameWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
+import com.klikli_dev.codedefinedgui.internal.screen.GuiHost;
+import com.klikli_dev.codedefinedgui.internal.screen.GuiRootWidget;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprites;
+import com.klikli_dev.codedefinedgui.api.widget.FrameWidget;
+import com.klikli_dev.codedefinedgui.api.widget.GuiBackgroundWidget;
+import com.klikli_dev.codedefinedgui.api.widget.GuiSpriteWidget;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -97,3 +97,4 @@ public class TestScreen extends Screen implements GuiHost {
         this.removeWidget(widget);
     }
 }
+

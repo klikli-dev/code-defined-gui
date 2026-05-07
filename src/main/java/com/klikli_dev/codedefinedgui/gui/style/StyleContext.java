@@ -2,10 +2,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.style;
+package com.klikli_dev.codedefinedgui.api.style;
 
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
-import com.klikli_dev.codedefinedgui.gui.widget.IconButtonBackgroundSprites;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
+import com.klikli_dev.codedefinedgui.api.widget.IconButtonBackgroundSprites;
 
 public interface StyleContext {
     <T> T get(GuiPartKey part, GuiStyleProperty<T> property, T fallback);
@@ -48,3 +48,4 @@ public interface StyleContext {
         );
     }
 }
+

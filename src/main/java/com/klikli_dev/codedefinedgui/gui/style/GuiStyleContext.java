@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.style;
+package com.klikli_dev.codedefinedgui.api.style;
 
 public record GuiStyleContext(GuiStyle style) implements StyleContext {
     @Override
@@ -10,3 +10,4 @@ public record GuiStyleContext(GuiStyle style) implements StyleContext {
         return this.style.get(part, property, fallback);
     }
 }
+

@@ -6,8 +6,8 @@ package com.klikli_dev.codedefinedgui.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.filter.core.FilterItem;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
-import com.klikli_dev.codedefinedgui.gui.style.GuiLayoutKey;
-import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
+import com.klikli_dev.codedefinedgui.api.style.GuiLayoutKey;
+import com.klikli_dev.codedefinedgui.api.style.GuiStyleKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -31,3 +31,4 @@ public class AttributeFilterItem extends FilterItem<AttributeFilterState> {
         return BuiltinFilterLayouts.ATTRIBUTE_FILTER;
     }
 }
+

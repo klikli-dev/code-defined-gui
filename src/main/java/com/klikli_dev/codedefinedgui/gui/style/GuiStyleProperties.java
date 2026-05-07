@@ -2,9 +2,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.style;
+package com.klikli_dev.codedefinedgui.api.style;
 
-import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
+import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
 
 public final class GuiStyleProperties {
     public static final GuiStyleProperty<GuiSprite> SPRITE = property("sprite");
@@ -22,3 +22,4 @@ public final class GuiStyleProperties {
         return GuiStyleProperty.of(name);
     }
 }
+

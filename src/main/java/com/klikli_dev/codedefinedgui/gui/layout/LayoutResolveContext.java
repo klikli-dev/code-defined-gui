@@ -4,7 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.api.layout;
 
-import com.klikli_dev.codedefinedgui.gui.style.StyleContext;
+import com.klikli_dev.codedefinedgui.api.style.StyleContext;
 import net.minecraft.client.gui.components.AbstractWidget;
 
 public interface LayoutResolveContext extends LayoutLookup {
@@ -14,3 +14,4 @@ public interface LayoutResolveContext extends LayoutLookup {
 
     void addWidget(AbstractWidget widget);
 }
+

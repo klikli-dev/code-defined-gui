@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.core;
+package com.klikli_dev.codedefinedgui.internal.screen;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -97,3 +97,4 @@ public class GuiRootWidget extends AbstractWidget {
         }
     }
 }
+

@@ -11,7 +11,7 @@ import com.klikli_dev.codedefinedgui.gui.filter.layout.ListFilterLayout;
 import com.klikli_dev.codedefinedgui.api.layout.MenuBindingRegistry;
 import com.klikli_dev.codedefinedgui.gui.layout.inventory.PlayerInventorySection;
 import com.klikli_dev.codedefinedgui.internal.layout.LayoutMenuBinderHost;
-import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
+import com.klikli_dev.codedefinedgui.api.style.GuiStyleKey;
 import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
 import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -153,3 +153,4 @@ public class ListFilterMenu extends FilterMenu {
         ));
     }
 }
+

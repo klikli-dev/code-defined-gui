@@ -4,9 +4,9 @@
 
 package com.klikli_dev.codedefinedgui.filter.core;
 
-import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiStyles;
-import com.klikli_dev.codedefinedgui.gui.style.GuiLayoutKey;
-import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
+import com.klikli_dev.codedefinedgui.api.style.BuiltinGuiStyles;
+import com.klikli_dev.codedefinedgui.api.style.GuiLayoutKey;
+import com.klikli_dev.codedefinedgui.api.style.GuiStyleKey;
 import java.util.List;
 import java.util.function.Consumer;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -101,3 +101,4 @@ public abstract class FilterItem<S extends FilterState> extends Item {
      */
     protected abstract AbstractContainerMenu createMenu(int containerId, net.minecraft.world.entity.player.Inventory inventory, InteractionHand hand);
 }
+

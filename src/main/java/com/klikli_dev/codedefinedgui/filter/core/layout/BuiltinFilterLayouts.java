@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.filter.core.layout;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
-import com.klikli_dev.codedefinedgui.gui.style.GuiLayoutKey;
+import com.klikli_dev.codedefinedgui.api.style.GuiLayoutKey;
 import net.minecraft.resources.Identifier;
 
 public final class BuiltinFilterLayouts {
@@ -19,3 +19,4 @@ public final class BuiltinFilterLayouts {
         return GuiLayoutKey.of(Identifier.fromNamespaceAndPath(CodeDefinedGui.MODID, path));
     }
 }
+

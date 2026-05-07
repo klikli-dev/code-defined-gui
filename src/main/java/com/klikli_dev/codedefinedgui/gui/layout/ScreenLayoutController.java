@@ -4,10 +4,10 @@
 
 package com.klikli_dev.codedefinedgui.api.layout;
 
-import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
-import com.klikli_dev.codedefinedgui.gui.core.GuiRootWidget;
-import com.klikli_dev.codedefinedgui.gui.style.GuiStyleContext;
-import com.klikli_dev.codedefinedgui.gui.style.StyleContext;
+import com.klikli_dev.codedefinedgui.internal.screen.GuiHost;
+import com.klikli_dev.codedefinedgui.internal.screen.GuiRootWidget;
+import com.klikli_dev.codedefinedgui.api.style.GuiStyleContext;
+import com.klikli_dev.codedefinedgui.api.style.StyleContext;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -180,3 +180,4 @@ public final class ScreenLayoutController {
         return separator >= 0 ? path.substring(0, separator) : "";
     }
 }
+

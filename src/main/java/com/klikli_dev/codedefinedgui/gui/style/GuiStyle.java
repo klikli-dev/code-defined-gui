@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.style;
+package com.klikli_dev.codedefinedgui.api.style;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -69,3 +69,4 @@ public interface GuiStyle {
         }
     }
 }
+
