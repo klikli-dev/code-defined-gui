@@ -19,12 +19,10 @@ import com.klikli_dev.codedefinedgui.gui.layout.LayoutSlotView;
 import com.klikli_dev.codedefinedgui.gui.layout.LayoutSpec;
 import com.klikli_dev.codedefinedgui.gui.layout.ScreenLayoutController;
 import com.klikli_dev.codedefinedgui.gui.layout.inventory.PlayerInventorySection;
-import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiParts;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleContext;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleRegistry;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiTextWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonBackgroundSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
@@ -138,13 +136,6 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     @Override
     public void registerResolvers(LayoutResolverRegistry registry) {
         this.playerInventorySection.registerResolvers(registry.scope("player_inventory"), this);
-        registry.resolve("player_inventory.label", 100, ctx -> ctx.addWidget(new GuiTextWidget(
-                ctx.node().x(),
-                ctx.node().y(),
-                () -> this.playerInventoryTitle,
-                () -> ctx.style().textColor(BuiltinGuiParts.PLAYER_INVENTORY_LABEL, 0x404040),
-                false
-        )));
         this.registerSlotResolvers(registry);
     }
 
