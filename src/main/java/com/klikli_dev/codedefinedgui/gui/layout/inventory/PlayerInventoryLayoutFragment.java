@@ -4,9 +4,9 @@
 
 package com.klikli_dev.codedefinedgui.gui.layout.inventory;
 
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutFragment;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutGroupBuilder;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutNodeBuilder;
+import com.klikli_dev.codedefinedgui.internal.layout.LayoutFragment;
+import com.klikli_dev.codedefinedgui.api.layout.LayoutGroupBuilder;
+import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeBuilder;
 
 public final class PlayerInventoryLayoutFragment implements LayoutFragment {
     private static final int SLOT_SIZE = 18;

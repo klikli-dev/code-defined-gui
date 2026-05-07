@@ -12,9 +12,9 @@ import java.util.function.Consumer;
 import net.minecraft.world.inventory.Slot;
 
 public final class MenuLayoutController {
-    private final LayoutMenu owner;
+    private final LayoutMenuView owner;
 
-    public MenuLayoutController(LayoutMenu owner) {
+    public MenuLayoutController(LayoutMenuView owner) {
         this.owner = owner;
     }
 

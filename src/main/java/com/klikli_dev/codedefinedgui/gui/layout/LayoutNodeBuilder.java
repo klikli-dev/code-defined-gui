@@ -4,8 +4,6 @@
 
 package com.klikli_dev.codedefinedgui.api.layout;
 
-import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeSpec;
-
 public class LayoutNodeBuilder implements LayoutNodeView {
     protected final LayoutNodeSpec spec;
 

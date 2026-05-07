@@ -8,7 +8,7 @@ import com.klikli_dev.codedefinedgui.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.filter.list.ListFilterMenu;
 import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutResolverRegistry;
+import com.klikli_dev.codedefinedgui.api.layout.LayoutResolverRegistry;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleProperties;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;

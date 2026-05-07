@@ -8,7 +8,7 @@ import com.klikli_dev.codedefinedgui.filter.core.storage.GhostItemStorage;
 import com.klikli_dev.codedefinedgui.filter.core.storage.GhostResourceHandlerSlot;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
-import com.klikli_dev.codedefinedgui.api.layout.LayoutMenu;
+import com.klikli_dev.codedefinedgui.api.layout.LayoutMenuView;
 import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiStyles;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutSlotView;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutSpec;
@@ -17,7 +17,7 @@ import com.klikli_dev.codedefinedgui.api.layout.MenuBindingRegistry;
 import com.klikli_dev.codedefinedgui.api.layout.MenuLayoutController;
 import com.klikli_dev.codedefinedgui.api.layout.SlotRoleKey;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeView;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutMenuBinderHost;
+import com.klikli_dev.codedefinedgui.internal.layout.LayoutMenuBinderHost;
 import com.klikli_dev.codedefinedgui.gui.style.GuiLayoutKey;
 import com.klikli_dev.codedefinedgui.gui.style.GuiPartKey;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
@@ -40,7 +40,7 @@ import net.minecraft.world.item.component.ItemContainerContents;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class FilterMenu extends AbstractContainerMenu implements LayoutMenu, LayoutMenuBinderHost {
+public abstract class FilterMenu extends AbstractContainerMenu implements LayoutMenuView, LayoutMenuBinderHost {
     private static final int PLAYER_SLOT_COUNT = 36;
     private static final int OFFHAND_SLOT = 40;
 

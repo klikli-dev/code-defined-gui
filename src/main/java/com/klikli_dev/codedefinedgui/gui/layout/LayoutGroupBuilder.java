@@ -4,8 +4,6 @@
 
 package com.klikli_dev.codedefinedgui.api.layout;
 
-import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeSpec;
-
 import java.util.function.Consumer;
 
 public class LayoutGroupBuilder extends LayoutNodeBuilder {

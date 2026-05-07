@@ -13,11 +13,11 @@ import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
 import com.klikli_dev.codedefinedgui.api.layout.BuiltinLayoutSlotRoles;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutResolveContext;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutResolverRegistry;
-import com.klikli_dev.codedefinedgui.api.layout.LayoutScreen;
+import com.klikli_dev.codedefinedgui.api.layout.LayoutScreenView;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutSlotView;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutSpec;
 import com.klikli_dev.codedefinedgui.api.layout.ScreenLayoutController;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutScreenRendererHost;
+import com.klikli_dev.codedefinedgui.internal.layout.LayoutScreenRendererHost;
 import com.klikli_dev.codedefinedgui.gui.layout.inventory.PlayerInventorySection;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleContext;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleRegistry;
@@ -32,7 +32,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
-public abstract class AbstractFilterScreen<M extends FilterMenu> extends AbstractContainerScreen<M> implements GuiHost, LayoutScreen, LayoutScreenRendererHost {
+public abstract class AbstractFilterScreen<M extends FilterMenu> extends AbstractContainerScreen<M> implements GuiHost, LayoutScreenView, LayoutScreenRendererHost {
     protected final PlayerInventorySection playerInventorySection;
     protected final GuiRootWidget root;
     private final ScreenLayoutController layoutController;

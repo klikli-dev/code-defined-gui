@@ -4,11 +4,11 @@
 
 package com.klikli_dev.codedefinedgui.gui.layout.inventory;
 
-import com.klikli_dev.codedefinedgui.gui.layout.BuiltinLayoutSlotRoles;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutMenuBinder;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutMenuBinderHost;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutNodeView;
-import com.klikli_dev.codedefinedgui.gui.layout.MenuBindingRegistry;
+import com.klikli_dev.codedefinedgui.api.layout.BuiltinLayoutSlotRoles;
+import com.klikli_dev.codedefinedgui.internal.layout.LayoutMenuBinder;
+import com.klikli_dev.codedefinedgui.internal.layout.LayoutMenuBinderHost;
+import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeView;
+import com.klikli_dev.codedefinedgui.api.layout.MenuBindingRegistry;
 import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiParts;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;

@@ -18,12 +18,12 @@ import java.util.function.Consumer;
 import net.minecraft.client.gui.components.AbstractWidget;
 
 public final class ScreenLayoutController {
-    private final LayoutScreen owner;
+    private final LayoutScreenView owner;
     private final GuiHost host;
     private final GuiRootWidget root;
     private final StyleContext style;
 
-    public ScreenLayoutController(LayoutScreen owner, GuiHost host, GuiRootWidget root, StyleContext style) {
+    public ScreenLayoutController(LayoutScreenView owner, GuiHost host, GuiRootWidget root, StyleContext style) {
         this.owner = owner;
         this.host = host;
         this.root = root;

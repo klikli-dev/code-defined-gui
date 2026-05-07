@@ -4,11 +4,11 @@
 
 package com.klikli_dev.codedefinedgui.gui.layout.inventory;
 
-import com.klikli_dev.codedefinedgui.gui.layout.BuiltinLayoutSlotRoles;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutResolverRegistry;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutScreenRenderer;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutScreenRendererHost;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutSlotView;
+import com.klikli_dev.codedefinedgui.api.layout.BuiltinLayoutSlotRoles;
+import com.klikli_dev.codedefinedgui.api.layout.LayoutResolverRegistry;
+import com.klikli_dev.codedefinedgui.internal.layout.LayoutScreenRenderer;
+import com.klikli_dev.codedefinedgui.internal.layout.LayoutScreenRendererHost;
+import com.klikli_dev.codedefinedgui.api.layout.LayoutSlotView;
 import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiParts;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleProperties;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;

@@ -5,8 +5,8 @@
 package com.klikli_dev.codedefinedgui.filter.core.layout;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
-import com.klikli_dev.codedefinedgui.gui.layout.BuiltinLayoutSlotRoles;
-import com.klikli_dev.codedefinedgui.gui.layout.SlotRoleKey;
+import com.klikli_dev.codedefinedgui.api.layout.BuiltinLayoutSlotRoles;
+import com.klikli_dev.codedefinedgui.api.layout.SlotRoleKey;
 import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiParts;
 import com.klikli_dev.codedefinedgui.gui.style.GuiPartKey;
 import net.minecraft.resources.Identifier;

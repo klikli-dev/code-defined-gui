@@ -4,14 +4,14 @@
 
 package com.klikli_dev.codedefinedgui.gui.layout.inventory;
 
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutFragment;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutGroupBuilder;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutMenuBinder;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutMenuBinderHost;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutResolverRegistry;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutScreenRenderer;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutScreenRendererHost;
-import com.klikli_dev.codedefinedgui.gui.layout.MenuBindingRegistry;
+import com.klikli_dev.codedefinedgui.internal.layout.LayoutFragment;
+import com.klikli_dev.codedefinedgui.api.layout.LayoutGroupBuilder;
+import com.klikli_dev.codedefinedgui.internal.layout.LayoutMenuBinder;
+import com.klikli_dev.codedefinedgui.internal.layout.LayoutMenuBinderHost;
+import com.klikli_dev.codedefinedgui.api.layout.LayoutResolverRegistry;
+import com.klikli_dev.codedefinedgui.internal.layout.LayoutScreenRenderer;
+import com.klikli_dev.codedefinedgui.internal.layout.LayoutScreenRendererHost;
+import com.klikli_dev.codedefinedgui.api.layout.MenuBindingRegistry;
 
 public final class PlayerInventorySection {
     private final PlayerInventoryLayoutFragment fragment;

@@ -4,8 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.gui.filter.layout;
 
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutNodeBuilder;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutSpec;
+import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeBuilder;
+import com.klikli_dev.codedefinedgui.api.layout.LayoutSpec;
 import com.klikli_dev.codedefinedgui.gui.layout.inventory.PlayerInventorySection;
 
 public final class AttributeFilterLayout {
