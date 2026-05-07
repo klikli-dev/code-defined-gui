@@ -24,6 +24,17 @@ public class LayoutGroupBuilder extends LayoutNodeBuilder {
         this.spec.children.add(child);
         return new LayoutNodeBuilder(child);
     }
+
+    /**
+     * Looks up an already-defined node or group relative to this builder scope.
+     * <p>
+     * Resolution starts in the current group, then walks up parent scopes until a match is found.
+     * Like runtime relative node lookup, this supports sibling references such as
+     * {@code area.ref("top_bar.background")}. Only nodes that have already been defined can be found.
+     */
+    public LayoutNodeView ref(String id) {
+        return new LayoutNodeBuilder(LayoutNodeSpecs.findRelative(this.spec, id));
+    }
 }
 
 

@@ -5,6 +5,7 @@
 package com.klikli_dev.codedefinedgui.premade.filter.layout;
 
 import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeBuilder;
+import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeView;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutSpec;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.inventory.PlayerInventorySection;
 
@@ -20,7 +21,9 @@ public final class AttributeFilterLayout {
                     topBar.node("title").at(background.x(), background.y() + 4).size(background.widthOrThrow(), 8);
                 });
                 main.group("filter_area", area -> {
-                    area.at(0, 12);
+                    var topBarBackground = area.ref("top_bar.background");
+                    //make filter area "underlap" top bar so we don't see the widget border on the top.
+                    area.at(0, topBarBackground.heightOrThrow() - 4);
                     LayoutNodeBuilder panel = area.node("panel_bg").at(3, 0).size(235, 75);
                     LayoutNodeBuilder reference = area.node("reference").at(panel.x() + 16, panel.y() + 12).size(18, 18);
                     LayoutNodeBuilder addInvertedButton = area.node("add_inverted_button").at(panel.maxX() - 30, panel.y() + 11).size(18, 18);

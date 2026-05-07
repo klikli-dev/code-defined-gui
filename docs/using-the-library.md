@@ -89,6 +89,23 @@ Lookups use dot paths such as `main.output` or `player_inventory.hotbar.slot_0`.
 
 When a resolver needs size, prefer `widthOrThrow()` / `heightOrThrow()`.
 
+During layout building, a `LayoutGroupBuilder` can also reference an already-defined node relative to its current scope with `ref(...)`.
+
+```java
+root.group("main", main -> {
+    main.group("top_bar", topBar -> {
+        topBar.node("background").at(0, 0).size(214, 15);
+    });
+
+    main.group("filter_area", area -> {
+        LayoutNodeView topBarBackground = area.ref("top_bar.background");
+        area.at(0, topBarBackground.heightOrThrow() - 4);
+    });
+});
+```
+
+Build-time refs only see nodes that have already been defined earlier in the spec.
+
 ## Menu-side binding
 
 Menus bind slots to layout nodes through `LayoutMenuView` and `MenuLayoutController`.

@@ -5,6 +5,7 @@
 package com.klikli_dev.codedefinedgui.premade.filter.layout;
 
 import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeBuilder;
+import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeView;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutSpec;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.inventory.PlayerInventorySection;
 
@@ -20,7 +21,9 @@ public final class ListFilterLayout {
                     topBar.node("title").at(background.x(), background.y() + 4).size(background.widthOrThrow(), 8);
                 });
                 main.group("filter_area", area -> {
-                    area.at(0, 12);
+                    var topBarBackground = area.ref("top_bar.background");
+                    //make filter area "underlap" top bar so we don't see the widget border on the top.
+                    area.at(0, topBarBackground.heightOrThrow() - 4);
                     LayoutNodeBuilder panel = area.node("panel_bg").at(3, 0).size(208, 87);
                     area.group("slots", slots -> {
                         slots.at(panel.x() + 22, panel.y() + 12);
@@ -52,7 +55,6 @@ public final class ListFilterLayout {
         });
     }
 }
-
 
 
 
