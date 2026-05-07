@@ -122,14 +122,14 @@ No abstract base screen or menu classes will be introduced as the main public pa
 
 The primary runtime composition model is:
 
-- `LayoutScreenView` + `LayoutScreenController`
-- `LayoutMenuView` + `LayoutMenuController` where menu-side support is needed
+- `LayoutScreenView` + `ScreenLayoutController`
+- `LayoutMenuView` + `MenuLayoutController` where menu-side support is needed
 
 ### `LayoutScreenView`
 
 Small screen-side contract implemented by the consuming screen. It exposes only the information the controller actually needs, such as layout spec access, screen dimensions or hooks, and widget binding callbacks.
 
-### `LayoutScreenController`
+### `ScreenLayoutController`
 
 Composition object owned by the consuming screen. It handles:
 
@@ -144,7 +144,7 @@ Composition object owned by the consuming screen. It handles:
 
 Small menu-side contract for layout-backed menu binding where menu slot wiring or menu context is needed.
 
-### `LayoutMenuController`
+### `MenuLayoutController`
 
 Composition object that handles menu-side layout plumbing and binding coordination.
 

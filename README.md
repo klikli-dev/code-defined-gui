@@ -8,15 +8,14 @@ SPDX-License-Identifier: MIT
 
 Code Defined GUI (CDG) is a NeoForge library mod for building Minecraft GUIs from layout specs, style sheets, and reusable widgets.
 
-The current public surface is organized around three product areas:
+The current public surface is organized around four product areas:
 
 - `com.klikli_dev.codedefinedgui.api.*` — generic layout, style, texture, and widget APIs
 - `com.klikli_dev.codedefinedgui.premade.filter.*` — shipped list and attribute filter implementations built on that API
 - `com.klikli_dev.codedefinedgui.internal.*` — framework internals, bootstrap, registries, and debug/reference plumbing
+- `com.klikli_dev.codedefinedgui.example.*` — reference code for the layout-first integration flow
 
 Only `api.*` and `premade.*` are supported import targets. Do not depend on `internal.*` from downstream mods.
-
-The repo also ships `com.klikli_dev.codedefinedgui.example.*` as reference code for the layout-first integration flow.
 
 ## Curseforge
 
