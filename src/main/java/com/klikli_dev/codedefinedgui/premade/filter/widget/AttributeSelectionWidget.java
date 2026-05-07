@@ -4,8 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.premade.filter.widget;
 
-import com.klikli_dev.codedefinedgui.internal.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeCandidate;
+import com.klikli_dev.codedefinedgui.premade.filter.core.FilterTranslationKeys;
 import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.api.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.api.widget.AbstractScrollSelectionWidget;
@@ -42,12 +42,12 @@ public class AttributeSelectionWidget extends AbstractScrollSelectionWidget<Attr
 
     @Override
     protected Component emptyEntriesText() {
-        return Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.NO_REFERENCE);
+        return Component.translatable(FilterTranslationKeys.Attribute.NO_REFERENCE);
     }
 
     @Override
     protected Component scrollHintText() {
-        return Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.SCROLL_TO_SELECT);
+        return Component.translatable(FilterTranslationKeys.Attribute.SCROLL_TO_SELECT);
     }
 }
 

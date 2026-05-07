@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.premade.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
-import com.klikli_dev.codedefinedgui.internal.CodeDefinedGuiConstants;
+import com.klikli_dev.codedefinedgui.premade.filter.core.FilterTranslationKeys;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.Holder;
@@ -68,8 +68,8 @@ public class EnchantmentAttributeType implements ItemAttributeType {
                 .get(ResourceKey.create(Registries.ENCHANTMENT, id))
                 .map(holder -> holder.value().description())
                 .orElse(Component.literal(id.toString()));
-        Component base = Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.HAS_ENCHANTMENT, enchantmentName);
-        return inverted ? Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.INVERTED, base) : base;
+        Component base = Component.translatable(FilterTranslationKeys.Attribute.HAS_ENCHANTMENT, enchantmentName);
+        return inverted ? Component.translatable(FilterTranslationKeys.Attribute.INVERTED, base) : base;
     }
 }
 

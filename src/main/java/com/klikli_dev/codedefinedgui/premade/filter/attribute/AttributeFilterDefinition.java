@@ -5,10 +5,10 @@
 package com.klikli_dev.codedefinedgui.premade.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
-import com.klikli_dev.codedefinedgui.internal.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.premade.filter.core.FilterDefinition;
 import com.klikli_dev.codedefinedgui.premade.filter.core.FilterMatchContext;
 import com.klikli_dev.codedefinedgui.premade.filter.core.FilterStateAccessor;
+import com.klikli_dev.codedefinedgui.premade.filter.core.FilterTranslationKeys;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.ChatFormatting;
@@ -59,7 +59,7 @@ public final class AttributeFilterDefinition implements FilterDefinition<Attribu
             return lines;
         }
 
-        lines.add(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.SUMMARY_MODE, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.key(state.mode().getSerializedName())))
+        lines.add(Component.translatable(FilterTranslationKeys.Attribute.SUMMARY_MODE, Component.translatable(FilterTranslationKeys.Attribute.Mode.key(state.mode().getSerializedName())))
                 .withStyle(ChatFormatting.GOLD));
         int previewCount = Math.min(state.rules().size(), 4);
         for (int i = 0; i < previewCount; i++) {
@@ -72,7 +72,7 @@ public final class AttributeFilterDefinition implements FilterDefinition<Attribu
         }
 
         if (state.rules().size() > previewCount) {
-            lines.add(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.SUMMARY_MORE, state.rules().size() - previewCount)
+            lines.add(Component.translatable(FilterTranslationKeys.SUMMARY_MORE, state.rules().size() - previewCount)
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
 

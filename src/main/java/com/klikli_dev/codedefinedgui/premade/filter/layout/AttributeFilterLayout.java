@@ -6,7 +6,7 @@ package com.klikli_dev.codedefinedgui.premade.filter.layout;
 
 import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeBuilder;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutSpec;
-import com.klikli_dev.codedefinedgui.internal.layout.inventory.PlayerInventorySection;
+import com.klikli_dev.codedefinedgui.premade.filter.core.layout.inventory.PlayerInventorySection;
 
 public final class AttributeFilterLayout {
     private AttributeFilterLayout() {

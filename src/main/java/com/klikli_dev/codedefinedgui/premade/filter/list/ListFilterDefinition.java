@@ -5,10 +5,10 @@
 package com.klikli_dev.codedefinedgui.premade.filter.list;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
-import com.klikli_dev.codedefinedgui.internal.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.premade.filter.core.FilterDefinition;
 import com.klikli_dev.codedefinedgui.premade.filter.core.FilterMatchContext;
 import com.klikli_dev.codedefinedgui.premade.filter.core.FilterStateAccessor;
+import com.klikli_dev.codedefinedgui.premade.filter.core.FilterTranslationKeys;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.ChatFormatting;
@@ -71,10 +71,10 @@ public final class ListFilterDefinition implements FilterDefinition<ListFilterSt
             return lines;
         }
 
-        lines.add(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.SUMMARY_MODE, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.key(state.mode().getSerializedName())))
+        lines.add(Component.translatable(FilterTranslationKeys.List.SUMMARY_MODE, Component.translatable(FilterTranslationKeys.List.Mode.key(state.mode().getSerializedName())))
                 .withStyle(ChatFormatting.GOLD));
         lines.add(Component.translatable(
-                state.respectDataComponents() ? CodeDefinedGuiConstants.I18n.Filter.List.SUMMARY_RESPECT_DATA : CodeDefinedGuiConstants.I18n.Filter.List.SUMMARY_IGNORE_DATA
+                state.respectDataComponents() ? FilterTranslationKeys.List.SUMMARY_RESPECT_DATA : FilterTranslationKeys.List.SUMMARY_IGNORE_DATA
         ).withStyle(ChatFormatting.GRAY));
 
         int previewCount = Math.min(entries.size(), 4);
@@ -83,7 +83,7 @@ public final class ListFilterDefinition implements FilterDefinition<ListFilterSt
         }
 
         if (entries.size() > previewCount) {
-            lines.add(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.SUMMARY_MORE, entries.size() - previewCount)
+            lines.add(Component.translatable(FilterTranslationKeys.SUMMARY_MORE, entries.size() - previewCount)
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
 

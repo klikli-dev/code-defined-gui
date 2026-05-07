@@ -4,7 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.premade.filter;
 
-import com.klikli_dev.codedefinedgui.internal.CodeDefinedGuiConstants;
+import com.klikli_dev.codedefinedgui.premade.filter.core.FilterTranslationKeys;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.premade.filter.list.ListFilterMenu;
 import com.klikli_dev.codedefinedgui.premade.filter.widget.FilterIndicatorWidget;
@@ -45,20 +45,20 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
         registry.resolve("main.filter_area.reset", ctx -> this.resetButton = this.addResetButton(ctx, ListFilterMenu.BUTTON_RESET));
         registry.resolve("main.filter_area.confirm", ctx -> this.confirmButton = this.addConfirmButton(ctx));
         registry.resolve("main.filter_area.deny", ctx -> {
-            this.denyButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_DENY_LIST, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.DENY), () -> this.pressButton(ListFilterMenu.BUTTON_DENY))
-                    .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.DENY_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.DENY_TOOLTIP_SHIFT));
+            this.denyButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_DENY_LIST, Component.translatable(FilterTranslationKeys.List.Mode.DENY), () -> this.pressButton(ListFilterMenu.BUTTON_DENY))
+                    .withTooltip(Component.translatable(FilterTranslationKeys.List.Mode.DENY_TOOLTIP), Component.translatable(FilterTranslationKeys.List.Mode.DENY_TOOLTIP_SHIFT));
         });
         registry.resolve("main.filter_area.allow", ctx -> {
-            this.allowButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_ALLOW_LIST, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.ALLOW), () -> this.pressButton(ListFilterMenu.BUTTON_ALLOW))
-                    .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.ALLOW_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.Mode.ALLOW_TOOLTIP_SHIFT));
+            this.allowButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_ALLOW_LIST, Component.translatable(FilterTranslationKeys.List.Mode.ALLOW), () -> this.pressButton(ListFilterMenu.BUTTON_ALLOW))
+                    .withTooltip(Component.translatable(FilterTranslationKeys.List.Mode.ALLOW_TOOLTIP), Component.translatable(FilterTranslationKeys.List.Mode.ALLOW_TOOLTIP_SHIFT));
         });
         registry.resolve("main.filter_area.respect_data", ctx -> {
-            this.respectDataButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_RESPECT_DATA_COMPONENTS, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.RESPECT_DATA), () -> this.pressButton(ListFilterMenu.BUTTON_RESPECT_DATA))
-                    .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.RESPECT_DATA_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.RESPECT_DATA_TOOLTIP_SHIFT));
+            this.respectDataButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_RESPECT_DATA_COMPONENTS, Component.translatable(FilterTranslationKeys.List.RESPECT_DATA), () -> this.pressButton(ListFilterMenu.BUTTON_RESPECT_DATA))
+                    .withTooltip(Component.translatable(FilterTranslationKeys.List.RESPECT_DATA_TOOLTIP), Component.translatable(FilterTranslationKeys.List.RESPECT_DATA_TOOLTIP_SHIFT));
         });
         registry.resolve("main.filter_area.ignore_data", ctx -> {
-            this.ignoreDataButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_IGNORE_DATA_COMPONENTS, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.IGNORE_DATA), () -> this.pressButton(ListFilterMenu.BUTTON_IGNORE_DATA))
-                    .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.IGNORE_DATA_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.List.IGNORE_DATA_TOOLTIP_SHIFT));
+            this.ignoreDataButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_IGNORE_DATA_COMPONENTS, Component.translatable(FilterTranslationKeys.List.IGNORE_DATA), () -> this.pressButton(ListFilterMenu.BUTTON_IGNORE_DATA))
+                    .withTooltip(Component.translatable(FilterTranslationKeys.List.IGNORE_DATA_TOOLTIP), Component.translatable(FilterTranslationKeys.List.IGNORE_DATA_TOOLTIP_SHIFT));
         });
         registry.resolve("main.filter_area.deny_indicator", ctx -> this.denyIndicator = this.addFilterIndicator(ctx));
         registry.resolve("main.filter_area.allow_indicator", ctx -> this.allowIndicator = this.addFilterIndicator(ctx));

@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.premade.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
-import com.klikli_dev.codedefinedgui.internal.CodeDefinedGuiConstants;
+import com.klikli_dev.codedefinedgui.premade.filter.core.FilterTranslationKeys;
 import java.util.List;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -50,8 +50,8 @@ public class AddedByAttributeType implements ItemAttributeType {
                 .map(ModContainer::getModInfo)
                 .map(IModInfo::getDisplayName)
                 .orElse(StringUtils.capitalize(modId));
-        Component base = Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADDED_BY, displayName);
-        return inverted ? Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.INVERTED, base) : base;
+        Component base = Component.translatable(FilterTranslationKeys.Attribute.ADDED_BY, displayName);
+        return inverted ? Component.translatable(FilterTranslationKeys.Attribute.INVERTED, base) : base;
     }
 }
 

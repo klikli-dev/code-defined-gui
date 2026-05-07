@@ -4,9 +4,11 @@
 
 package com.klikli_dev.codedefinedgui.premade.filter;
 
-import com.klikli_dev.codedefinedgui.internal.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.premade.filter.core.FilterMenu;
+import com.klikli_dev.codedefinedgui.premade.filter.core.FilterTranslationKeys;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.BuiltinFilterParts;
+import com.klikli_dev.codedefinedgui.premade.filter.core.layout.inventory.PlayerInventoryScreenHost;
+import com.klikli_dev.codedefinedgui.premade.filter.core.layout.inventory.PlayerInventorySection;
 import com.klikli_dev.codedefinedgui.api.screen.GuiHost;
 import com.klikli_dev.codedefinedgui.api.screen.GuiRootWidget;
 import com.klikli_dev.codedefinedgui.premade.filter.widget.FilterIndicatorWidget;
@@ -17,8 +19,6 @@ import com.klikli_dev.codedefinedgui.api.layout.LayoutScreenView;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutSlotView;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutSpec;
 import com.klikli_dev.codedefinedgui.api.layout.ScreenLayoutController;
-import com.klikli_dev.codedefinedgui.internal.layout.LayoutScreenRendererHost;
-import com.klikli_dev.codedefinedgui.internal.layout.inventory.PlayerInventorySection;
 import com.klikli_dev.codedefinedgui.api.style.GuiStyleContext;
 import com.klikli_dev.codedefinedgui.api.style.GuiStyleRegistry;
 import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
@@ -32,7 +32,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
-public abstract class AbstractFilterScreen<M extends FilterMenu> extends AbstractContainerScreen<M> implements GuiHost, LayoutScreenView, LayoutScreenRendererHost {
+public abstract class AbstractFilterScreen<M extends FilterMenu> extends AbstractContainerScreen<M> implements GuiHost, LayoutScreenView, PlayerInventoryScreenHost {
     protected final PlayerInventorySection playerInventorySection;
     protected final GuiRootWidget root;
     private final ScreenLayoutController layoutController;
@@ -181,18 +181,18 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         return this.addIconButton(
                 ctx,
                 GuiSprites.FILTER_ICON_RESET,
-                Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.RESET),
+                Component.translatable(FilterTranslationKeys.Button.RESET),
                 () -> this.pressButton(buttonId)
-        ).withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.RESET_TOOLTIP));
+        ).withTooltip(Component.translatable(FilterTranslationKeys.Button.RESET_TOOLTIP));
     }
 
     protected final IconButtonWidget addConfirmButton(LayoutResolveContext ctx) {
         return this.addIconButton(
                 ctx,
                 GuiSprites.FILTER_ICON_CONFIRM,
-                Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.DONE),
+                Component.translatable(FilterTranslationKeys.Button.DONE),
                 () -> this.closeScreen(true)
-        ).withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.DONE_TOOLTIP));
+        ).withTooltip(Component.translatable(FilterTranslationKeys.Button.DONE_TOOLTIP));
     }
 
     protected final FilterIndicatorWidget addFilterIndicator(LayoutResolveContext ctx) {

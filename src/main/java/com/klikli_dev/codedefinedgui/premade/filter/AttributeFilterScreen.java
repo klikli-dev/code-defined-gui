@@ -4,11 +4,11 @@
 
 package com.klikli_dev.codedefinedgui.premade.filter;
 
-import com.klikli_dev.codedefinedgui.internal.CodeDefinedGuiConstants;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeCandidate;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeFilterDefinition;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeFilterMenu;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeFilterMode;
+import com.klikli_dev.codedefinedgui.premade.filter.core.FilterTranslationKeys;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.premade.filter.widget.AttributeRuleSummaryWidget;
 import com.klikli_dev.codedefinedgui.premade.filter.widget.AttributeSelectionWidget;
@@ -56,16 +56,16 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         registry.resolve("main.filter_area.reset", ctx -> this.resetButton = this.addResetButton(ctx, AttributeFilterMenu.BUTTON_RESET));
         registry.resolve("main.filter_area.confirm", ctx -> this.confirmButton = this.addConfirmButton(ctx));
         registry.resolve("main.filter_area.match_any", ctx -> {
-            this.matchAnyButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_MATCH_ANY, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ANY))
-                    .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY_TOOLTIP_SHIFT));
+            this.matchAnyButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_MATCH_ANY, Component.translatable(FilterTranslationKeys.Attribute.Mode.MATCH_ANY), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ANY))
+                    .withTooltip(Component.translatable(FilterTranslationKeys.Attribute.Mode.MATCH_ANY_TOOLTIP), Component.translatable(FilterTranslationKeys.Attribute.Mode.MATCH_ANY_TOOLTIP_SHIFT));
         });
         registry.resolve("main.filter_area.match_all", ctx -> {
-            this.matchAllButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_MATCH_ALL, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ALL))
-                    .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL_TOOLTIP_SHIFT));
+            this.matchAllButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_MATCH_ALL, Component.translatable(FilterTranslationKeys.Attribute.Mode.MATCH_ALL), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ALL))
+                    .withTooltip(Component.translatable(FilterTranslationKeys.Attribute.Mode.MATCH_ALL_TOOLTIP), Component.translatable(FilterTranslationKeys.Attribute.Mode.MATCH_ALL_TOOLTIP_SHIFT));
         });
         registry.resolve("main.filter_area.deny", ctx -> {
-            this.denyButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_DENY_ALT, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY), () -> this.pressButton(AttributeFilterMenu.BUTTON_DENY))
-                    .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY_TOOLTIP_SHIFT));
+            this.denyButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_DENY_ALT, Component.translatable(FilterTranslationKeys.Attribute.Mode.DENY), () -> this.pressButton(AttributeFilterMenu.BUTTON_DENY))
+                    .withTooltip(Component.translatable(FilterTranslationKeys.Attribute.Mode.DENY_TOOLTIP), Component.translatable(FilterTranslationKeys.Attribute.Mode.DENY_TOOLTIP_SHIFT));
         });
         registry.resolve("main.filter_area.match_any_indicator", ctx -> this.matchAnyIndicator = this.addFilterIndicator(ctx));
         registry.resolve("main.filter_area.match_all_indicator", ctx -> this.matchAllIndicator = this.addFilterIndicator(ctx));
@@ -81,14 +81,14 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
                 this::changeSelection,
                 () -> ctx.style().textColor(BuiltinFilterParts.ATTRIBUTE_SELECTION, 0xFFF3EBDE),
                 () -> ctx.style().textColor(BuiltinFilterParts.ATTRIBUTE_SELECTION_HEADER, 0x5391E1)
-        ).withTitle(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.AVAILABLE))));
+        ).withTitle(Component.translatable(FilterTranslationKeys.Attribute.AVAILABLE))));
         registry.resolve("main.filter_area.add_button", ctx -> {
-            this.addButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_ADD, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED))
-                    .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_TOOLTIP));
+            this.addButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_ADD, Component.translatable(FilterTranslationKeys.Attribute.ADD), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED))
+                    .withTooltip(Component.translatable(FilterTranslationKeys.Attribute.ADD_TOOLTIP));
         });
         registry.resolve("main.filter_area.add_inverted_button", ctx -> {
-            this.addInvertedButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_ADD_INVERTED, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED))
-                    .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED_TOOLTIP));
+            this.addInvertedButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_ADD_INVERTED, Component.translatable(FilterTranslationKeys.Attribute.ADD_INVERTED), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED))
+                    .withTooltip(Component.translatable(FilterTranslationKeys.Attribute.ADD_INVERTED_TOOLTIP));
         });
         registry.resolve("main.filter_area.summary_widget", ctx -> this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(ctx.node().x(), ctx.node().y(), ctx.style().sprite(BuiltinFilterParts.ATTRIBUTE_SUMMARY, GuiSprites.ATTRIBUTE_FILTER_SUMMARY), () -> this.menu.state().rules().size(), this.menu::summaryStack, () -> ctx.style().textColor(BuiltinFilterParts.ATTRIBUTE_SUMMARY, 0xFFFFFFFF))));
         registry.resolve("main.filter_area.horizontal_separator", ctx -> this.addRootChild(new HorizontalSeparatorWidget(ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), ctx.style().color(BuiltinFilterParts.ATTRIBUTE_HORIZONTAL_SEPARATOR, 0xFF000000))));
@@ -124,7 +124,7 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         if (this.summaryWidget != null && this.summaryWidget.isHovered() && this.minecraft != null && this.minecraft.player != null) {
             List<Component> tooltip = new ArrayList<>(this.menu.summary(this.minecraft.player.registryAccess()));
             if (tooltip.isEmpty()) {
-                tooltip.add(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.NO_RULES));
+                tooltip.add(Component.translatable(FilterTranslationKeys.Attribute.NO_RULES));
             }
             graphics.setComponentTooltipForNextFrame(this.font, tooltip, mouseX, mouseY);
             return;

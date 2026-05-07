@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.premade.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
-import com.klikli_dev.codedefinedgui.internal.CodeDefinedGuiConstants;
+import com.klikli_dev.codedefinedgui.premade.filter.core.FilterTranslationKeys;
 import java.util.List;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
@@ -41,8 +41,8 @@ public class ItemNameAttributeType implements ItemAttributeType {
 
     @Override
     public Component describe(CustomData payload, HolderLookup.Provider registries, boolean inverted) {
-        Component base = Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.HAS_NAME, AttributePayloads.getString(payload, "value"));
-        return inverted ? Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.INVERTED, base) : base;
+        Component base = Component.translatable(FilterTranslationKeys.Attribute.HAS_NAME, AttributePayloads.getString(payload, "value"));
+        return inverted ? Component.translatable(FilterTranslationKeys.Attribute.INVERTED, base) : base;
     }
 
     private String extractCustomName(ItemStack stack) {

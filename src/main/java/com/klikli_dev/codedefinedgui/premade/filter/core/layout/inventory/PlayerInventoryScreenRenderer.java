@@ -2,12 +2,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.internal.layout.inventory;
+package com.klikli_dev.codedefinedgui.premade.filter.core.layout.inventory;
 
 import com.klikli_dev.codedefinedgui.api.layout.BuiltinLayoutSlotRoles;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutResolverRegistry;
-import com.klikli_dev.codedefinedgui.internal.layout.LayoutScreenRenderer;
-import com.klikli_dev.codedefinedgui.internal.layout.LayoutScreenRendererHost;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutSlotView;
 import com.klikli_dev.codedefinedgui.api.style.BuiltinGuiParts;
 import com.klikli_dev.codedefinedgui.api.style.GuiStyleProperties;
@@ -15,9 +13,8 @@ import com.klikli_dev.codedefinedgui.api.texture.GuiSprites;
 import com.klikli_dev.codedefinedgui.api.widget.GuiBackgroundWidget;
 import com.klikli_dev.codedefinedgui.api.widget.GuiSpriteWidget;
 
-public final class PlayerInventoryScreenRenderer implements LayoutScreenRenderer {
-    @Override
-    public void registerResolvers(LayoutResolverRegistry registry, LayoutScreenRendererHost host) {
+public final class PlayerInventoryScreenRenderer {
+    public void registerResolvers(LayoutResolverRegistry registry, PlayerInventoryScreenHost host) {
         registry.resolve("background", -100, ctx -> ctx.addWidget(new GuiBackgroundWidget(
                 host,
                 ctx.node().x(),
@@ -44,7 +41,3 @@ public final class PlayerInventoryScreenRenderer implements LayoutScreenRenderer
         }
     }
 }
-
-
-
-

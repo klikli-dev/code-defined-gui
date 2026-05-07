@@ -2,15 +2,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.internal.layout.inventory;
+package com.klikli_dev.codedefinedgui.premade.filter.core.layout.inventory;
 
-import com.klikli_dev.codedefinedgui.internal.layout.LayoutFragment;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutGroupBuilder;
-import com.klikli_dev.codedefinedgui.internal.layout.LayoutMenuBinder;
-import com.klikli_dev.codedefinedgui.internal.layout.LayoutMenuBinderHost;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutResolverRegistry;
-import com.klikli_dev.codedefinedgui.internal.layout.LayoutScreenRenderer;
-import com.klikli_dev.codedefinedgui.internal.layout.LayoutScreenRendererHost;
 import com.klikli_dev.codedefinedgui.api.layout.MenuBindingRegistry;
 
 public final class PlayerInventorySection {
@@ -32,26 +27,11 @@ public final class PlayerInventorySection {
         this.fragment.define(root);
     }
 
-    public void bindMenu(MenuBindingRegistry registry, LayoutMenuBinderHost host) {
+    public void bindMenu(MenuBindingRegistry registry, PlayerInventoryMenuHost host) {
         this.binder.bind(registry, host);
     }
 
-    public void registerResolvers(LayoutResolverRegistry registry, LayoutScreenRendererHost host) {
+    public void registerResolvers(LayoutResolverRegistry registry, PlayerInventoryScreenHost host) {
         this.renderer.registerResolvers(registry, host);
     }
-
-    public LayoutFragment fragment() {
-        return this.fragment;
-    }
-
-    public LayoutMenuBinder menuBinder() {
-        return this.binder;
-    }
-
-    public LayoutScreenRenderer screenRenderer() {
-        return this.renderer;
-    }
 }
-
-
-

@@ -5,7 +5,7 @@
 package com.klikli_dev.codedefinedgui.premade.filter.list;
 
 import com.klikli_dev.codedefinedgui.premade.filter.core.FilterStateAccessor;
-import com.klikli_dev.codedefinedgui.internal.registry.DataComponentRegistry;
+import com.klikli_dev.codedefinedgui.premade.filter.core.registry.FilterDataComponents;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
@@ -18,8 +18,8 @@ public final class ListFilterStateAccessor implements FilterStateAccessor<ListFi
 
     @Override
     public ListFilterState read(ItemStack stack) {
-        ItemContainerContents contents = stack.get(DataComponentRegistry.LIST_FILTER_CONTENTS.get());
-        ListFilterConfig config = stack.get(DataComponentRegistry.LIST_FILTER_CONFIG.get());
+        ItemContainerContents contents = stack.get(FilterDataComponents.LIST_FILTER_CONTENTS.get());
+        ListFilterConfig config = stack.get(FilterDataComponents.LIST_FILTER_CONFIG.get());
         return new ListFilterState(contents != null ? contents : ItemContainerContents.EMPTY, config != null ? config.mode() : ListFilterConfig.EMPTY.mode(), config != null && config.respectDataComponents());
     }
 
@@ -27,15 +27,15 @@ public final class ListFilterStateAccessor implements FilterStateAccessor<ListFi
     public void write(ItemStack stack, ListFilterState state) {
         ListFilterConfig config = new ListFilterConfig(state.mode(), state.respectDataComponents());
         if (isEmptyContents(state.entries())) {
-            stack.remove(DataComponentRegistry.LIST_FILTER_CONTENTS.get());
+            stack.remove(FilterDataComponents.LIST_FILTER_CONTENTS.get());
         } else {
-            stack.set(DataComponentRegistry.LIST_FILTER_CONTENTS.get(), state.entries());
+            stack.set(FilterDataComponents.LIST_FILTER_CONTENTS.get(), state.entries());
         }
 
         if (ListFilterConfig.EMPTY.equals(config)) {
-            stack.remove(DataComponentRegistry.LIST_FILTER_CONFIG.get());
+            stack.remove(FilterDataComponents.LIST_FILTER_CONFIG.get());
         } else {
-            stack.set(DataComponentRegistry.LIST_FILTER_CONFIG.get(), config);
+            stack.set(FilterDataComponents.LIST_FILTER_CONFIG.get(), config);
         }
     }
 

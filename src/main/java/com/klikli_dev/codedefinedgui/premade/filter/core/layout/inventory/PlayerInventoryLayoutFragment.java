@@ -2,13 +2,12 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.internal.layout.inventory;
+package com.klikli_dev.codedefinedgui.premade.filter.core.layout.inventory;
 
-import com.klikli_dev.codedefinedgui.internal.layout.LayoutFragment;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutGroupBuilder;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeBuilder;
 
-public final class PlayerInventoryLayoutFragment implements LayoutFragment {
+public final class PlayerInventoryLayoutFragment {
     private static final int SLOT_SIZE = 18;
     private static final int PLAYER_MAIN_ROWS = 3;
     private static final int PLAYER_MAIN_COLUMNS = 9;
@@ -23,7 +22,6 @@ public final class PlayerInventoryLayoutFragment implements LayoutFragment {
         return new PlayerInventoryLayoutFragment();
     }
 
-    @Override
     public void define(LayoutGroupBuilder root) {
         LayoutNodeBuilder background = root.node("background").at(-BACKGROUND_PADDING, -BACKGROUND_PADDING).size(176, 90);
         root.node("label").at(background.x() + BACKGROUND_PADDING, background.y() + LABEL_Y_OFFSET);
@@ -41,6 +39,3 @@ public final class PlayerInventoryLayoutFragment implements LayoutFragment {
         });
     }
 }
-
-
-

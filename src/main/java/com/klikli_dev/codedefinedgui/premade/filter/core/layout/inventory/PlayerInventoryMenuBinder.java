@@ -2,20 +2,17 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.internal.layout.inventory;
+package com.klikli_dev.codedefinedgui.premade.filter.core.layout.inventory;
 
 import com.klikli_dev.codedefinedgui.api.layout.BuiltinLayoutSlotRoles;
-import com.klikli_dev.codedefinedgui.internal.layout.LayoutMenuBinder;
-import com.klikli_dev.codedefinedgui.internal.layout.LayoutMenuBinderHost;
 import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeView;
 import com.klikli_dev.codedefinedgui.api.layout.MenuBindingRegistry;
 import com.klikli_dev.codedefinedgui.api.style.BuiltinGuiParts;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 
-public final class PlayerInventoryMenuBinder implements LayoutMenuBinder {
-    @Override
-    public void bind(MenuBindingRegistry registry, LayoutMenuBinderHost host) {
+public final class PlayerInventoryMenuBinder {
+    public void bind(MenuBindingRegistry registry, PlayerInventoryMenuHost host) {
         Inventory inventory = host.playerInventory();
         registry.bind("main.slot_0", ctx -> {
             for (int row = 0; row < 3; row++) {
@@ -35,7 +32,3 @@ public final class PlayerInventoryMenuBinder implements LayoutMenuBinder {
         });
     }
 }
-
-
-
-
