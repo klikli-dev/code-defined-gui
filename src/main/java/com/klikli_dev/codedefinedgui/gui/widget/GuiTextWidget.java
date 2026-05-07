@@ -32,7 +32,12 @@ public class GuiTextWidget extends AbstractWidget {
             return;
         }
 
-        graphics.text(minecraft.font, this.textSupplier.get(), this.getX(), this.getY(), this.colorSupplier.getAsInt(), this.shadow);
+        int color = this.colorSupplier.getAsInt();
+        if ((color & 0xFF000000) == 0) {
+            color |= 0xFF000000;
+        }
+
+        graphics.text(minecraft.font, this.textSupplier.get(), this.getX(), this.getY(), color, this.shadow);
     }
 
     @Override

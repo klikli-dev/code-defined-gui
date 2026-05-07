@@ -32,7 +32,7 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
     public ListFilterScreen(M menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title, 214, 211);
         this.titleLabelX = 103 - this.font.width(title) / 2;
-        this.titleLabelY = 6;
+        this.titleLabelY = 4;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
 
     @Override
     protected int titleColor() {
-        return this.style().get(BuiltinFilterParts.LIST_TITLE, GuiStyleProperties.TEXT_COLOR, 0x303030);
+        return 0xFF000000;
     }
 
     @Override

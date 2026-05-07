@@ -43,7 +43,7 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
     public AttributeFilterScreen(M menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title, 241, 197);
         this.titleLabelX = 116 - this.font.width(title) / 2;
-        this.titleLabelY = 6;
+        this.titleLabelY = 4;
     }
 
     @Override
@@ -110,7 +110,7 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
 
     @Override
     protected int titleColor() {
-        return this.style().get(BuiltinFilterParts.ATTRIBUTE_TITLE, GuiStyleProperties.TEXT_COLOR, 0x592424);
+        return 0xFF000000;
     }
 
     @Override
