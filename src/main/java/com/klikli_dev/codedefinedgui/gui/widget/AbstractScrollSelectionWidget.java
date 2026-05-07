@@ -29,16 +29,27 @@ public abstract class AbstractScrollSelectionWidget<T> extends AbstractWidget {
     private final Supplier<List<T>> entries;
     private final IntSupplier selectedIndex;
     private final IntConsumer onChange;
+    private final IntSupplier entryTextColorSupplier;
+    private final IntSupplier headerColorSupplier;
     private Component title = Component.empty();
 
     protected AbstractScrollSelectionWidget(int x, int y, int width, int height, GuiSprite sprite,
                                             Supplier<List<T>> entries, IntSupplier selectedIndex,
                                             IntConsumer onChange) {
+        this(x, y, width, height, sprite, entries, selectedIndex, onChange, () -> DEFAULT_TEXT_COLOR, () -> DEFAULT_HEADER_RGB);
+    }
+
+    protected AbstractScrollSelectionWidget(int x, int y, int width, int height, GuiSprite sprite,
+                                            Supplier<List<T>> entries, IntSupplier selectedIndex,
+                                            IntConsumer onChange, IntSupplier entryTextColorSupplier,
+                                            IntSupplier headerColorSupplier) {
         super(x, y, width, height, Component.empty());
         this.sprite = Objects.requireNonNull(sprite);
         this.entries = Objects.requireNonNull(entries);
         this.selectedIndex = Objects.requireNonNull(selectedIndex);
         this.onChange = Objects.requireNonNull(onChange);
+        this.entryTextColorSupplier = Objects.requireNonNull(entryTextColorSupplier);
+        this.headerColorSupplier = Objects.requireNonNull(headerColorSupplier);
     }
 
     public AbstractScrollSelectionWidget<T> withTitle(Component title) {
@@ -58,11 +69,11 @@ public abstract class AbstractScrollSelectionWidget<T> extends AbstractWidget {
     protected abstract Component scrollHintText();
 
     protected int entryTextColor() {
-        return DEFAULT_TEXT_COLOR;
+        return this.entryTextColorSupplier.getAsInt();
     }
 
     protected int headerColor() {
-        return DEFAULT_HEADER_RGB;
+        return this.headerColorSupplier.getAsInt();
     }
 
     protected int visibleTooltipEntries() {

@@ -25,6 +25,11 @@ public class AttributeSelectionWidget extends AbstractScrollSelectionWidget<Attr
         super(x, y, width, height, sprite, candidates, selectedIndex, onChange);
     }
 
+    public AttributeSelectionWidget(int x, int y, int width, int height, GuiSprite sprite, Supplier<List<AttributeCandidate>> candidates, IntSupplier selectedIndex,
+                                    IntConsumer onChange, IntSupplier entryTextColor, IntSupplier headerColor) {
+        super(x, y, width, height, sprite, candidates, selectedIndex, onChange, entryTextColor, headerColor);
+    }
+
     public AttributeSelectionWidget withTitle(Component title) {
         super.withTitle(title);
         return this;

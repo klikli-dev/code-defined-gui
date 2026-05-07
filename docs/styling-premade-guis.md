@@ -38,12 +38,16 @@ Some useful built-in parts are:
 
 - `BuiltinGuiParts.PLAYER_SLOT`
 - `BuiltinGuiParts.PLAYER_INVENTORY_BACKGROUND`
+- `BuiltinGuiParts.PLAYER_INVENTORY_LABEL`
 - `BuiltinFilterParts.FILTER_SLOT`
 - `BuiltinFilterParts.BUTTON`
 - `BuiltinFilterParts.INDICATOR`
 - `BuiltinFilterParts.LIST_PANEL`, `LIST_TOP_BAR`, `LIST_TITLE`
 - `BuiltinFilterParts.ATTRIBUTE_PANEL`, `ATTRIBUTE_TOP_BAR`, `ATTRIBUTE_TITLE`
-- `BuiltinFilterParts.ATTRIBUTE_SELECTION`, `ATTRIBUTE_SUMMARY`
+- `BuiltinFilterParts.ATTRIBUTE_SELECTION`, `ATTRIBUTE_SELECTION_HEADER`, `ATTRIBUTE_SUMMARY`
+
+`ATTRIBUTE_SELECTION` styles the visible selected-entry text, while `ATTRIBUTE_SELECTION_HEADER`
+styles the selection tooltip title/header text.
 
 Common properties live in `GuiStyleProperties`, for example:
 
@@ -57,14 +61,28 @@ Common properties live in `GuiStyleProperties`, for example:
 
 ## Example style registration
 
+Register styles on the client before a built-in CDG screen is opened:
+
 ```java
-GuiStyleRegistry.register(MY_STYLE, GuiStyle.builder()
-    .set(BuiltinGuiParts.PLAYER_INVENTORY_BACKGROUND, GuiStyleProperties.SPRITE, GuiSprites.GUI_BACKGROUND.tinted(0xFFC2AA88))
-    .set(BuiltinGuiParts.PLAYER_SLOT, GuiStyleProperties.SPRITE, GuiSprites.INVENTORY_SLOT.tinted(0xFFB8946A))
-    .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.SPRITE, GuiSprites.FILTER_BUTTON.tinted(0xFFB78F63))
-    .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.HOVER_SPRITE, GuiSprites.FILTER_BUTTON_HOVER.tinted(0xFFC89E70))
-    .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.PRESSED_SPRITE, GuiSprites.FILTER_BUTTON_DOWN.tinted(0xFFB78F63))
-    .build());
+@Mod(value = ExampleMod.MODID, dist = Dist.CLIENT)
+public final class ExampleModClient {
+    public ExampleModClient(IEventBus modEventBus) {
+        modEventBus.addListener(this::onClientSetup);
+    }
+
+    private void onClientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> GuiStyleRegistry.register(MY_STYLE, GuiStyle.builder()
+                .set(BuiltinGuiParts.PLAYER_INVENTORY_BACKGROUND, GuiStyleProperties.SPRITE, GuiSprites.GUI_BACKGROUND.tinted(0xFFC2AA88))
+                .set(BuiltinGuiParts.PLAYER_SLOT, GuiStyleProperties.SPRITE, GuiSprites.INVENTORY_SLOT.tinted(0xFFB8946A))
+                .set(BuiltinGuiParts.PLAYER_INVENTORY_LABEL, GuiStyleProperties.TEXT_COLOR, 0xFF3E2A1A)
+                .set(BuiltinFilterParts.LIST_TOP_BAR, GuiStyleProperties.SPRITE, GuiSprites.GUI_BACKGROUND.tinted(0xFF7A5A3A))
+                .set(BuiltinFilterParts.LIST_TITLE, GuiStyleProperties.TEXT_COLOR, 0xFFF8E7C5)
+                .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.SPRITE, GuiSprites.FILTER_BUTTON.tinted(0xFFB78F63))
+                .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.HOVER_SPRITE, GuiSprites.FILTER_BUTTON_HOVER.tinted(0xFFC89E70))
+                .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.PRESSED_SPRITE, GuiSprites.FILTER_BUTTON_DOWN.tinted(0xFFB78F63))
+                .build()));
+    }
+}
 ```
 
 If you want to tint the player inventory background and player inventory slots in a downstream mod,
@@ -95,6 +113,10 @@ public GuiStyleKey guiStyleKey(ItemStack stack, GuiLayoutKey layout) {
     return MY_LIST_STYLE;
 }
 ```
+
+That is enough to restyle the stock list filter screen without subclassing it.
+The built-in filter screens resolve backgrounds, buttons, indicators, titles, player inventory labels,
+and attribute filter text through the same `GuiStyleRegistry` lookup.
 
 ## Future screen subclassing
 

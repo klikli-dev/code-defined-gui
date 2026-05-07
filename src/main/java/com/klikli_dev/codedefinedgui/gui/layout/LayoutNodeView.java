@@ -36,4 +36,12 @@ public interface LayoutNodeView {
 
         return height;
     }
+
+    default int maxX() {
+        return this.x() + this.widthOrThrow();
+    }
+
+    default int maxY() {
+        return this.y() + this.heightOrThrow();
+    }
 }

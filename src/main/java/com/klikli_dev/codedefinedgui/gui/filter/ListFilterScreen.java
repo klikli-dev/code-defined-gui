@@ -31,8 +31,6 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
 
     public ListFilterScreen(M menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title, 214, 211);
-        this.titleLabelX = 103 - this.font.width(title) / 2;
-        this.titleLabelY = 4;
     }
 
     @Override
@@ -40,7 +38,7 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
         super.registerResolvers(registry);
         registry.resolve("main.filter_area.panel_bg", -100, ctx -> ctx.addWidget(new GuiBackgroundWidget(this, ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), ctx.node().heightOrThrow(), this.partSprite(BuiltinFilterParts.LIST_PANEL, GuiSprites.GUI_BACKGROUND))));
         registry.resolve("main.top_bar.background", 100, ctx -> ctx.addWidget(new GuiBackgroundWidget(this, ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), ctx.node().heightOrThrow(), this.partSprite(BuiltinFilterParts.LIST_TOP_BAR, GuiSprites.GUI_BACKGROUND))));
-        registry.add("main.top_bar.background", 200, ctx -> ctx.addWidget(new GuiTextWidget(this.guiX(this.titleLabelX), this.guiY(this.titleLabelY), () -> this.title, this::titleColor, false)));
+        this.addCenteredTitle(registry, "main.top_bar.title", BuiltinFilterParts.LIST_TITLE);
         registry.resolve("main.filter_area.reset", ctx -> this.resetButton = this.addResetButton(ctx.node().x(), ctx.node().y(), ListFilterMenu.BUTTON_RESET));
         registry.resolve("main.filter_area.confirm", ctx -> this.confirmButton = this.addConfirmButton(ctx.node().x(), ctx.node().y()));
         registry.resolve("main.filter_area.deny", ctx -> {
@@ -79,11 +77,6 @@ public class ListFilterScreen<M extends ListFilterMenu> extends AbstractFilterSc
         this.denyIndicator.setOn(deny);
         this.respectDataIndicator.setOn(respectData);
         this.ignoreDataIndicator.setOn(!respectData);
-    }
-
-    @Override
-    protected int titleColor() {
-        return 0xFF000000;
     }
 
     @Override

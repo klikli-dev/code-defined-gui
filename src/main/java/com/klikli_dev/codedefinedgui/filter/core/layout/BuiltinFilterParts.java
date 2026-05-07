@@ -26,6 +26,7 @@ public final class BuiltinFilterParts {
     public static final GuiPartKey ATTRIBUTE_VERTICAL_SEPARATOR = key("attribute_vertical_separator");
     public static final GuiPartKey ATTRIBUTE_TITLE = key("attribute_title");
     public static final GuiPartKey ATTRIBUTE_SELECTION = key("attribute_selection");
+    public static final GuiPartKey ATTRIBUTE_SELECTION_HEADER = key("attribute_selection_header");
     public static final GuiPartKey ATTRIBUTE_SUMMARY = key("attribute_summary");
 
     private BuiltinFilterParts() {

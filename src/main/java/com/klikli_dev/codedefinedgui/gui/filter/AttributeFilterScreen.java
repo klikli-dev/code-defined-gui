@@ -42,8 +42,6 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
 
     public AttributeFilterScreen(M menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title, 241, 197);
-        this.titleLabelX = 116 - this.font.width(title) / 2;
-        this.titleLabelY = 4;
     }
 
     @Override
@@ -51,7 +49,7 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         super.registerResolvers(registry);
         registry.resolve("main.filter_area.panel_bg", -100, ctx -> ctx.addWidget(new GuiBackgroundWidget(this, ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), ctx.node().heightOrThrow(), this.partSprite(BuiltinFilterParts.ATTRIBUTE_PANEL, GuiSprites.GUI_BACKGROUND))));
         registry.resolve("main.top_bar.background", 100, ctx -> ctx.addWidget(new GuiBackgroundWidget(this, ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), ctx.node().heightOrThrow(), this.partSprite(BuiltinFilterParts.ATTRIBUTE_TOP_BAR, GuiSprites.GUI_BACKGROUND))));
-        registry.add("main.top_bar.background", 200, ctx -> ctx.addWidget(new GuiTextWidget(this.guiX(this.titleLabelX), this.guiY(this.titleLabelY), () -> this.title, this::titleColor, false)));
+        this.addCenteredTitle(registry, "main.top_bar.title", BuiltinFilterParts.ATTRIBUTE_TITLE);
         registry.resolve("main.filter_area.reset", ctx -> this.resetButton = this.addResetButton(ctx.node().x(), ctx.node().y(), AttributeFilterMenu.BUTTON_RESET));
         registry.resolve("main.filter_area.confirm", ctx -> this.confirmButton = this.addConfirmButton(ctx.node().x(), ctx.node().y()));
         registry.resolve("main.filter_area.match_any", ctx -> {
@@ -77,7 +75,9 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
                 this.partSprite(BuiltinFilterParts.ATTRIBUTE_SELECTION, GuiSprites.ATTRIBUTE_FILTER_SELECTION),
                 this::candidates,
                 this.menu::selectedCandidateIndex,
-                this::changeSelection
+                this::changeSelection,
+                () -> this.partTextColor(BuiltinFilterParts.ATTRIBUTE_SELECTION, 0xFFF3EBDE),
+                () -> this.partTextColor(BuiltinFilterParts.ATTRIBUTE_SELECTION_HEADER, 0x5391E1)
         ).withTitle(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.AVAILABLE))));
         registry.resolve("main.filter_area.add_button", ctx -> {
             this.addButton = this.addIconButton(ctx.node().x(), ctx.node().y(), GuiSprites.FILTER_ICON_ADD, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED))
@@ -87,7 +87,7 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
             this.addInvertedButton = this.addIconButton(ctx.node().x(), ctx.node().y(), GuiSprites.FILTER_ICON_ADD_INVERTED, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED))
                     .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED_TOOLTIP));
         });
-        registry.resolve("main.filter_area.summary_widget", ctx -> this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(ctx.node().x(), ctx.node().y(), this.partSprite(BuiltinFilterParts.ATTRIBUTE_SUMMARY, GuiSprites.ATTRIBUTE_FILTER_SUMMARY), () -> this.menu.state().rules().size(), this.menu::summaryStack)));
+        registry.resolve("main.filter_area.summary_widget", ctx -> this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(ctx.node().x(), ctx.node().y(), this.partSprite(BuiltinFilterParts.ATTRIBUTE_SUMMARY, GuiSprites.ATTRIBUTE_FILTER_SUMMARY), () -> this.menu.state().rules().size(), this.menu::summaryStack, () -> this.partTextColor(BuiltinFilterParts.ATTRIBUTE_SUMMARY, 0xFFFFFFFF))));
         registry.resolve("main.filter_area.horizontal_separator", ctx -> this.addRootChild(new HorizontalSeparatorWidget(ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), this.style().get(BuiltinFilterParts.ATTRIBUTE_HORIZONTAL_SEPARATOR, GuiStyleProperties.COLOR, 0xFF000000))));
         registry.resolve("main.filter_area.vertical_separator", ctx -> this.addRootChild(new VerticalSeparatorWidget(ctx.node().x(), ctx.node().y(), ctx.node().heightOrThrow(), this.style().get(BuiltinFilterParts.ATTRIBUTE_VERTICAL_SEPARATOR, GuiStyleProperties.COLOR, 0xFF000000))));
     }
@@ -106,11 +106,6 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         this.addButton.active = canAdd;
         this.addInvertedButton.active = canAdd;
         this.selectionWidget.updateTooltip();
-    }
-
-    @Override
-    protected int titleColor() {
-        return 0xFF000000;
     }
 
     @Override
