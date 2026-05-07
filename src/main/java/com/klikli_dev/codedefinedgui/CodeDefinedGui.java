@@ -5,9 +5,11 @@
 package com.klikli_dev.codedefinedgui;
 
 import com.klikli_dev.codedefinedgui.datagen.DataGenerators;
+import com.klikli_dev.codedefinedgui.internal.command.CdgCommand;
+import com.klikli_dev.codedefinedgui.internal.network.Networking;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.ItemAttributes;
-import com.klikli_dev.codedefinedgui.premade.filter.core.registry.FilterDataComponents;
-import com.klikli_dev.codedefinedgui.premade.filter.core.registry.FilterMenuTypes;
+import com.klikli_dev.codedefinedgui.internal.registry.DataComponentsRegistry;
+import com.klikli_dev.codedefinedgui.internal.registry.MenuTypesRegistry;
 import com.klikli_dev.codedefinedgui.internal.Config;
 import com.klikli_dev.codedefinedgui.internal.registry.ItemRegistry;
 import com.mojang.logging.LogUtils;
@@ -15,6 +17,9 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import org.slf4j.Logger;
 
 @Mod(CodeDefinedGui.MODID)
@@ -22,13 +27,28 @@ public class CodeDefinedGui {
     public static final String MODID = "codedefinedgui";
     public static final Logger LOGGER = LogUtils.getLogger();
 
+
     public CodeDefinedGui(IEventBus modEventBus, ModContainer modContainer) {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
         ItemRegistry.ITEMS.register(modEventBus);
-        FilterMenuTypes.MENU_TYPES.register(modEventBus);
-        FilterDataComponents.DATA_COMPONENTS.register(modEventBus);
+        MenuTypesRegistry.MENU_TYPES.register(modEventBus);
+        DataComponentsRegistry.DATA_COMPONENTS.register(modEventBus);
+        ItemAttributes.bootstrap();
+
+        modEventBus.addListener(this::onCommonSetupEvent);
         modEventBus.addListener(DataGenerators::onGatherData);
+        modEventBus.addListener(Networking::register);
+
+        NeoForge.EVENT_BUS.addListener(this::onRegisterCommandsEvent);
+    }
+
+    private void onCommonSetupEvent(FMLCommonSetupEvent event) {
+
+    }
+
+    private void onRegisterCommandsEvent(RegisterCommandsEvent event) {
+        CdgCommand.register(event.getDispatcher());
     }
 }
 

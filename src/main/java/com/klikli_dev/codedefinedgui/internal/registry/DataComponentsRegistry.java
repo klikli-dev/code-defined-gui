@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.premade.filter.core.registry;
+package com.klikli_dev.codedefinedgui.internal.registry;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeFilterConfig;
@@ -13,7 +13,7 @@ import net.minecraft.world.item.component.ItemContainerContents;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public final class FilterDataComponents {
+public final class DataComponentsRegistry {
     public static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, CodeDefinedGui.MODID);
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ItemContainerContents>> LIST_FILTER_CONTENTS = DATA_COMPONENTS.registerComponentType(
@@ -35,7 +35,4 @@ public final class FilterDataComponents {
             "attribute_filter_config",
             builder -> builder.persistent(AttributeFilterConfig.CODEC).networkSynchronized(AttributeFilterConfig.STREAM_CODEC)
     );
-
-    private FilterDataComponents() {
-    }
 }

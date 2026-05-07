@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.premade.filter.core.registry;
+package com.klikli_dev.codedefinedgui.internal.registry;
 
 import com.klikli_dev.codedefinedgui.CodeDefinedGui;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeFilterMenu;
@@ -13,12 +13,9 @@ import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public final class FilterMenuTypes {
+public final class MenuTypesRegistry {
     public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, CodeDefinedGui.MODID);
 
     public static final DeferredHolder<MenuType<?>, MenuType<ListFilterMenu>> LIST_FILTER = MENU_TYPES.register("list_filter", () -> IMenuTypeExtension.create(ListFilterMenu::new));
     public static final DeferredHolder<MenuType<?>, MenuType<AttributeFilterMenu>> ATTRIBUTE_FILTER = MENU_TYPES.register("attribute_filter", () -> IMenuTypeExtension.create(AttributeFilterMenu::new));
-
-    private FilterMenuTypes() {
-    }
 }

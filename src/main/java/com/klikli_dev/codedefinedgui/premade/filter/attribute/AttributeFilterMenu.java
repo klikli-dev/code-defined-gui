@@ -8,8 +8,8 @@ import com.klikli_dev.codedefinedgui.premade.filter.core.FilterMenu;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.inventory.PlayerInventorySection;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.BuiltinFilterLayouts;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.BuiltinFilterSlotRoles;
-import com.klikli_dev.codedefinedgui.premade.filter.core.registry.FilterDataComponents;
-import com.klikli_dev.codedefinedgui.premade.filter.core.registry.FilterMenuTypes;
+import com.klikli_dev.codedefinedgui.internal.registry.DataComponentsRegistry;
+import com.klikli_dev.codedefinedgui.internal.registry.MenuTypesRegistry;
 import com.klikli_dev.codedefinedgui.premade.filter.layout.AttributeFilterLayout;
 import com.klikli_dev.codedefinedgui.api.layout.MenuBindingRegistry;
 import com.klikli_dev.codedefinedgui.api.style.GuiStyleKey;
@@ -24,10 +24,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
@@ -53,11 +51,11 @@ public class AttributeFilterMenu extends FilterMenu {
     private List<AttributeRule> draftRules;
 
     public AttributeFilterMenu(int containerId, Inventory inventory, RegistryFriendlyByteBuf buffer) {
-        this(FilterMenuTypes.ATTRIBUTE_FILTER.get(), containerId, inventory, buffer.readEnum(InteractionHand.class), readStyleKey(buffer));
+        this(MenuTypesRegistry.ATTRIBUTE_FILTER.get(), containerId, inventory, buffer.readEnum(InteractionHand.class), readStyleKey(buffer));
     }
 
     public AttributeFilterMenu(int containerId, Inventory inventory, InteractionHand hand) {
-        this(FilterMenuTypes.ATTRIBUTE_FILTER.get(), containerId, inventory, hand);
+        this(MenuTypesRegistry.ATTRIBUTE_FILTER.get(), containerId, inventory, hand);
     }
 
     protected AttributeFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand) {
@@ -65,7 +63,7 @@ public class AttributeFilterMenu extends FilterMenu {
     }
 
     protected AttributeFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, GuiStyleKey styleKey) {
-        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.ATTRIBUTE_FILTER, styleKey, GHOST_SLOT_COUNT, FilterDataComponents.ATTRIBUTE_FILTER_REFERENCE.get(), AttributeFilterLayout.create(PLAYER_INVENTORY));
+        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.ATTRIBUTE_FILTER, styleKey, GHOST_SLOT_COUNT, DataComponentsRegistry.ATTRIBUTE_FILTER_REFERENCE.get(), AttributeFilterLayout.create(PLAYER_INVENTORY));
 
         AttributeFilterState state = AttributeFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());

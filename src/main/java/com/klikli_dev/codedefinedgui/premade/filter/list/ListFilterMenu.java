@@ -8,8 +8,8 @@ import com.klikli_dev.codedefinedgui.premade.filter.core.FilterMenu;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.inventory.PlayerInventorySection;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.BuiltinFilterLayouts;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.BuiltinFilterSlotRoles;
-import com.klikli_dev.codedefinedgui.premade.filter.core.registry.FilterDataComponents;
-import com.klikli_dev.codedefinedgui.premade.filter.core.registry.FilterMenuTypes;
+import com.klikli_dev.codedefinedgui.internal.registry.DataComponentsRegistry;
+import com.klikli_dev.codedefinedgui.internal.registry.MenuTypesRegistry;
 import com.klikli_dev.codedefinedgui.premade.filter.layout.ListFilterLayout;
 import com.klikli_dev.codedefinedgui.api.layout.MenuBindingRegistry;
 import com.klikli_dev.codedefinedgui.api.style.GuiStyleKey;
@@ -37,11 +37,11 @@ public class ListFilterMenu extends FilterMenu {
     private final DataSlot respectDataComponents = DataSlot.standalone();
 
     public ListFilterMenu(int containerId, Inventory inventory, RegistryFriendlyByteBuf buffer) {
-        this(FilterMenuTypes.LIST_FILTER.get(), containerId, inventory, buffer.readEnum(InteractionHand.class), readStyleKey(buffer));
+        this(MenuTypesRegistry.LIST_FILTER.get(), containerId, inventory, buffer.readEnum(InteractionHand.class), readStyleKey(buffer));
     }
 
     public ListFilterMenu(int containerId, Inventory inventory, InteractionHand hand) {
-        this(FilterMenuTypes.LIST_FILTER.get(), containerId, inventory, hand);
+        this(MenuTypesRegistry.LIST_FILTER.get(), containerId, inventory, hand);
     }
 
     protected ListFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand) {
@@ -49,7 +49,7 @@ public class ListFilterMenu extends FilterMenu {
     }
 
     protected ListFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, GuiStyleKey styleKey) {
-        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.LIST_FILTER, styleKey, FILTER_SLOTS, FilterDataComponents.LIST_FILTER_CONTENTS.get(), ListFilterLayout.create(PLAYER_INVENTORY));
+        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.LIST_FILTER, styleKey, FILTER_SLOTS, DataComponentsRegistry.LIST_FILTER_CONTENTS.get(), ListFilterLayout.create(PLAYER_INVENTORY));
 
         ListFilterState state = ListFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());

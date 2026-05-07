@@ -8,7 +8,7 @@ import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeFilterMen
 import com.klikli_dev.codedefinedgui.premade.filter.list.ListFilterMenu;
 import com.klikli_dev.codedefinedgui.premade.filter.AttributeFilterScreen;
 import com.klikli_dev.codedefinedgui.premade.filter.ListFilterScreen;
-import com.klikli_dev.codedefinedgui.premade.filter.core.registry.FilterMenuTypes;
+import com.klikli_dev.codedefinedgui.internal.registry.MenuTypesRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.api.distmarker.Dist;
@@ -33,8 +33,8 @@ public class CodeDefinedGuiClient {
     }
 
     private void onRegisterMenuScreensEvent(RegisterMenuScreensEvent event) {
-        event.register(FilterMenuTypes.LIST_FILTER.get(), (ListFilterMenu menu, Inventory playerInventory, Component title) -> new ListFilterScreen<>(menu, playerInventory, title));
-        event.register(FilterMenuTypes.ATTRIBUTE_FILTER.get(), (AttributeFilterMenu menu, Inventory playerInventory, Component title) -> new AttributeFilterScreen<>(menu, playerInventory, title));
+        event.register(MenuTypesRegistry.LIST_FILTER.get(), (ListFilterMenu menu, Inventory playerInventory, Component title) -> new ListFilterScreen<>(menu, playerInventory, title));
+        event.register(MenuTypesRegistry.ATTRIBUTE_FILTER.get(), (AttributeFilterMenu menu, Inventory playerInventory, Component title) -> new AttributeFilterScreen<>(menu, playerInventory, title));
     }
 }
 

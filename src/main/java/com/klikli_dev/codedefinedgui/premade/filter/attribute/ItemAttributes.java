@@ -24,6 +24,9 @@ public final class ItemAttributes {
     private ItemAttributes() {
     }
 
+    public static void bootstrap() {
+    }
+
     public static <T extends ItemAttributeType> T register(T type) {
         if (TYPES.putIfAbsent(type.id(), type) != null) {
             throw new IllegalArgumentException("Duplicate item attribute id: " + type.id());
