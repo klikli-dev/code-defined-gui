@@ -4,13 +4,14 @@
 
 package com.klikli_dev.codedefinedgui.gui.filter.layout;
 
+import com.klikli_dev.codedefinedgui.gui.layout.inventory.PlayerInventorySection;
 import com.klikli_dev.codedefinedgui.gui.layout.LayoutSpec;
 
 public final class AttributeFilterLayout {
     private AttributeFilterLayout() {
     }
 
-    public static LayoutSpec create(PlayerInventoryLayoutFragment playerInventory) {
+    public static LayoutSpec create(PlayerInventorySection playerInventory) {
         return LayoutSpec.create(root -> {
             root.group("main", main -> {
                 main.group("top_bar", topBar -> topBar.node("background").at(0, 0).size(241, 15));

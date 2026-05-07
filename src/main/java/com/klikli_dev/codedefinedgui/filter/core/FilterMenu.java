@@ -8,11 +8,12 @@ import com.klikli_dev.codedefinedgui.filter.core.storage.GhostItemStorage;
 import com.klikli_dev.codedefinedgui.filter.core.storage.GhostResourceHandlerSlot;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
-import com.klikli_dev.codedefinedgui.filter.core.layout.MenuSlotView;
-import com.klikli_dev.codedefinedgui.filter.core.layout.SlotRoleKey;
-import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiStyles;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutMenu;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutMenuBinderHost;
 import com.klikli_dev.codedefinedgui.gui.layout.LayoutNodeView;
+import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiStyles;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutSlotView;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutMenu;
+import com.klikli_dev.codedefinedgui.gui.layout.SlotRoleKey;
 import com.klikli_dev.codedefinedgui.gui.layout.LayoutSpec;
 import com.klikli_dev.codedefinedgui.gui.layout.MenuBindingContext;
 import com.klikli_dev.codedefinedgui.gui.layout.MenuBindingRegistry;
@@ -39,7 +40,7 @@ import net.minecraft.world.item.component.ItemContainerContents;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class FilterMenu extends AbstractContainerMenu implements LayoutMenu {
+public abstract class FilterMenu extends AbstractContainerMenu implements LayoutMenu, LayoutMenuBinderHost {
     private static final int PLAYER_SLOT_COUNT = 36;
     private static final int OFFHAND_SLOT = 40;
 
@@ -54,7 +55,7 @@ public abstract class FilterMenu extends AbstractContainerMenu implements Layout
     private final GuiStyleKey styleKey;
     private final LayoutSpec layoutSpec;
     private final MenuLayoutController layoutController;
-    private final List<MenuSlotView> slotViews = new ArrayList<>();
+    private final List<LayoutSlotView> slotViews = new ArrayList<>();
 
     protected FilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, int ghostSlots, DataComponentType<ItemContainerContents> ghostComponent) {
         this(menuType, containerId, inventory, hand, BuiltinFilterLayouts.LIST_FILTER, null, ghostSlots, ghostComponent, LayoutSpec.create(root -> {
@@ -94,8 +95,12 @@ public abstract class FilterMenu extends AbstractContainerMenu implements Layout
         return this.layoutSpec;
     }
 
-    public List<MenuSlotView> slotViews() {
+    public List<LayoutSlotView> layoutSlots() {
         return List.copyOf(this.slotViews);
+    }
+
+    public List<LayoutSlotView> slotViews() {
+        return this.layoutSlots();
     }
 
     public ItemStack filterStack() {
@@ -257,24 +262,8 @@ public abstract class FilterMenu extends AbstractContainerMenu implements Layout
         return BuiltinGuiStyles.DEFAULT;
     }
 
-    protected final void bindPlayerInventory(MenuBindingRegistry registry) {
-        Inventory inventory = this.player.getInventory();
-        registry.bind("main.slot_0", ctx -> {
-            for (int row = 0; row < 3; row++) {
-                for (int col = 0; col < 9; col++) {
-                    int slot = col + row * 9 + 9;
-                    String nodeId = "slot_" + (row * 9 + col);
-                    LayoutNodeView node = row == 0 && col == 0 ? ctx.node() : ctx.node(nodeId);
-                    this.addLayoutSlot(new Slot(inventory, slot, node.x(), node.y()), com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles.PLAYER_MAIN, BuiltinFilterParts.PLAYER_SLOT, "player_inventory.main." + nodeId);
-                }
-            }
-
-            for (int col = 0; col < 9; col++) {
-                String nodeId = "hotbar.slot_" + col;
-                LayoutNodeView node = ctx.node(nodeId);
-                this.addLayoutSlot(new Slot(inventory, col, node.x(), node.y()), com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles.PLAYER_HOTBAR, BuiltinFilterParts.PLAYER_SLOT, "player_inventory." + nodeId);
-            }
-        });
+    public Inventory playerInventory() {
+        return this.player.getInventory();
     }
 
     protected final Slot bindGhostSlot(MenuBindingContext ctx, int slot, SlotRoleKey role) {
@@ -286,20 +275,6 @@ public abstract class FilterMenu extends AbstractContainerMenu implements Layout
         return this.addLayoutSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, node.x(), node.y()), role, part, node.path());
     }
 
-    @Deprecated
-    private void addPlayerInventorySlots(Inventory inventory, int x, int y) {
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 9; col++) {
-                int slot = col + row * 9 + 9;
-                this.addLayoutSlot(new Slot(inventory, slot, x + col * 18, y + row * 18), com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles.PLAYER_MAIN, BuiltinFilterParts.PLAYER_SLOT, "");
-            }
-        }
-
-        for (int col = 0; col < 9; col++) {
-            this.addLayoutSlot(new Slot(inventory, col, x + col * 18, y + 58), com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles.PLAYER_HOTBAR, BuiltinFilterParts.PLAYER_SLOT, "");
-        }
-    }
-
     protected Slot addLayoutSlot(Slot slot, SlotRoleKey role) {
         return this.addLayoutSlot(slot, role, BuiltinFilterParts.slotPart(role), "");
     }
@@ -308,9 +283,10 @@ public abstract class FilterMenu extends AbstractContainerMenu implements Layout
         return this.addLayoutSlot(slot, role, part, "");
     }
 
-    protected Slot addLayoutSlot(Slot slot, SlotRoleKey role, GuiPartKey part, String nodePath) {
+    @Override
+    public Slot addLayoutSlot(Slot slot, SlotRoleKey role, GuiPartKey part, String nodePath) {
         Slot addedSlot = this.addSlot(slot);
-        this.slotViews.add(new MenuSlotView(addedSlot, role, part, nodePath));
+        this.slotViews.add(new LayoutSlotView(addedSlot, role, part, nodePath));
         return addedSlot;
     }
 }

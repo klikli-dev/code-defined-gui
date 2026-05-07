@@ -2,12 +2,12 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.filter.core.layout;
+package com.klikli_dev.codedefinedgui.gui.layout;
 
 import com.klikli_dev.codedefinedgui.gui.style.GuiPartKey;
 import net.minecraft.world.inventory.Slot;
 
-public record MenuSlotView(Slot slot, SlotRoleKey role, GuiPartKey part, String nodePath) {
+public record LayoutSlotView(Slot slot, SlotRoleKey role, GuiPartKey part, String nodePath) {
     public int x() {
         return this.slot.x;
     }

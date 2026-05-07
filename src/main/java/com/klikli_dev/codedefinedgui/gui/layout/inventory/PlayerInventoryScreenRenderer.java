@@ -1,0 +1,45 @@
+// SPDX-FileCopyrightText: 2026 klikli-dev
+//
+// SPDX-License-Identifier: MIT
+
+package com.klikli_dev.codedefinedgui.gui.layout.inventory;
+
+import com.klikli_dev.codedefinedgui.gui.layout.BuiltinLayoutSlotRoles;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutResolverRegistry;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutScreenRenderer;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutScreenRendererHost;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutSlotView;
+import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiParts;
+import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
+import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
+
+public final class PlayerInventoryScreenRenderer implements LayoutScreenRenderer {
+    @Override
+    public void registerResolvers(LayoutResolverRegistry registry, LayoutScreenRendererHost host) {
+        registry.resolve("background", -100, ctx -> ctx.addWidget(new GuiBackgroundWidget(
+                host,
+                ctx.node().x(),
+                ctx.node().y(),
+                ctx.node().widthOrThrow(),
+                ctx.node().heightOrThrow(),
+                host.resolvedPartSprite(BuiltinGuiParts.PLAYER_INVENTORY_BACKGROUND, GuiSprites.GUI_BACKGROUND)
+        )));
+
+        for (LayoutSlotView slotView : host.layoutSlots()) {
+            if (!slotView.role().equals(BuiltinLayoutSlotRoles.PLAYER_MAIN) && !slotView.role().equals(BuiltinLayoutSlotRoles.PLAYER_HOTBAR)) {
+                continue;
+            }
+
+            if (slotView.nodePath() == null || slotView.nodePath().isEmpty()) {
+                continue;
+            }
+
+            registry.add(slotView.nodePath(), -25, ctx -> ctx.addWidget(new GuiSpriteWidget(
+                    slotView.x() - 1 + host.leftPos(),
+                    slotView.y() - 1 + host.topPos(),
+                    host.resolvedSlotSprite(slotView)
+            )));
+        }
+    }
+}

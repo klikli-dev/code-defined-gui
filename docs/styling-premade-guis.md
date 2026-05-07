@@ -36,9 +36,9 @@ Slots are not special - they use the same part/property lookup model as every ot
 
 Some useful built-in parts are:
 
-- `BuiltinFilterParts.PLAYER_SLOT`
+- `BuiltinGuiParts.PLAYER_SLOT`
+- `BuiltinGuiParts.PLAYER_INVENTORY_BACKGROUND`
 - `BuiltinFilterParts.FILTER_SLOT`
-- `BuiltinFilterParts.PLAYER_INVENTORY_BACKGROUND`
 - `BuiltinFilterParts.BUTTON`
 - `BuiltinFilterParts.INDICATOR`
 - `BuiltinFilterParts.LIST_PANEL`, `LIST_TOP_BAR`, `LIST_TITLE`
@@ -59,8 +59,8 @@ Common properties live in `GuiStyleProperties`, for example:
 
 ```java
 GuiStyleRegistry.register(MY_STYLE, GuiStyle.builder()
-    .set(BuiltinFilterParts.PLAYER_INVENTORY_BACKGROUND, GuiStyleProperties.SPRITE, GuiSprites.GUI_BACKGROUND.tinted(0xFFC2AA88))
-    .set(BuiltinFilterParts.PLAYER_SLOT, GuiStyleProperties.SPRITE, GuiSprites.INVENTORY_SLOT.tinted(0xFFB8946A))
+    .set(BuiltinGuiParts.PLAYER_INVENTORY_BACKGROUND, GuiStyleProperties.SPRITE, GuiSprites.GUI_BACKGROUND.tinted(0xFFC2AA88))
+    .set(BuiltinGuiParts.PLAYER_SLOT, GuiStyleProperties.SPRITE, GuiSprites.INVENTORY_SLOT.tinted(0xFFB8946A))
     .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.SPRITE, GuiSprites.FILTER_BUTTON.tinted(0xFFB78F63))
     .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.HOVER_SPRITE, GuiSprites.FILTER_BUTTON_HOVER.tinted(0xFFC89E70))
     .set(BuiltinFilterParts.BUTTON, GuiStyleProperties.PRESSED_SPRITE, GuiSprites.FILTER_BUTTON_DOWN.tinted(0xFFB78F63))
@@ -70,8 +70,8 @@ GuiStyleRegistry.register(MY_STYLE, GuiStyle.builder()
 If you want to tint the player inventory background and player inventory slots in a downstream mod,
 those are the two part keys you usually want:
 
-- `BuiltinFilterParts.PLAYER_INVENTORY_BACKGROUND`
-- `BuiltinFilterParts.PLAYER_SLOT`
+- `BuiltinGuiParts.PLAYER_INVENTORY_BACKGROUND`
+- `BuiltinGuiParts.PLAYER_SLOT`
 
 ## Choosing styles per layout
 

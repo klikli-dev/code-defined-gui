@@ -6,10 +6,10 @@ package com.klikli_dev.codedefinedgui.filter.list;
 
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
-import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterSlotRoles;
 import com.klikli_dev.codedefinedgui.gui.filter.layout.ListFilterLayout;
-import com.klikli_dev.codedefinedgui.gui.filter.layout.PlayerInventoryLayoutFragment;
 import com.klikli_dev.codedefinedgui.gui.layout.MenuBindingRegistry;
+import com.klikli_dev.codedefinedgui.gui.layout.inventory.PlayerInventorySection;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
 import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
 import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
@@ -31,6 +31,7 @@ public class ListFilterMenu extends FilterMenu {
     public static final int BUTTON_CONFIRM = 5;
     public static final int BUTTON_CANCEL = 6;
     private static final int FILTER_SLOTS = 18;
+    private static final PlayerInventorySection PLAYER_INVENTORY = PlayerInventorySection.standard();
 
     private final DataSlot mode = DataSlot.standalone();
     private final DataSlot respectDataComponents = DataSlot.standalone();
@@ -48,7 +49,7 @@ public class ListFilterMenu extends FilterMenu {
     }
 
     protected ListFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, GuiStyleKey styleKey) {
-        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.LIST_FILTER, styleKey, FILTER_SLOTS, DataComponentRegistry.LIST_FILTER_CONTENTS.get(), ListFilterLayout.create(PlayerInventoryLayoutFragment.create()));
+        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.LIST_FILTER, styleKey, FILTER_SLOTS, DataComponentRegistry.LIST_FILTER_CONTENTS.get(), ListFilterLayout.create(PLAYER_INVENTORY));
 
         ListFilterState state = ListFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());
@@ -134,11 +135,11 @@ public class ListFilterMenu extends FilterMenu {
 
     @Override
     public void registerBindings(MenuBindingRegistry registry) {
-        this.bindPlayerInventory(registry.scope("player_inventory"));
+        PLAYER_INVENTORY.bindMenu(registry.scope("player_inventory"), this);
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 9; col++) {
                 int slotIndex = col + row * 9;
-                registry.bind("main.filter_area.slots.slot_" + slotIndex, ctx -> this.bindGhostSlot(ctx, slotIndex, BuiltinSlotRoles.FILTER_GRID));
+                registry.bind("main.filter_area.slots.slot_" + slotIndex, ctx -> this.bindGhostSlot(ctx, slotIndex, BuiltinFilterSlotRoles.FILTER_GRID));
             }
         }
     }

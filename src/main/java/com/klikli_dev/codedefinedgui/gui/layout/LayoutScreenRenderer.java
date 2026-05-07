@@ -4,6 +4,6 @@
 
 package com.klikli_dev.codedefinedgui.gui.layout;
 
-public interface LayoutFragment {
-    void define(LayoutGroupBuilder root);
+public interface LayoutScreenRenderer {
+    void registerResolvers(LayoutResolverRegistry registry, LayoutScreenRendererHost host);
 }

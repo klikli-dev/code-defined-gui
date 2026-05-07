@@ -4,6 +4,6 @@
 
 package com.klikli_dev.codedefinedgui.gui.layout;
 
-public interface ClientLayoutFragment {
-    void registerResolvers(LayoutResolverRegistry registry);
+public interface LayoutMenuBinder {
+    void bind(MenuBindingRegistry registry, LayoutMenuBinderHost host);
 }

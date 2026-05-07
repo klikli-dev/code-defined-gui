@@ -2,13 +2,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.filter.layout;
+package com.klikli_dev.codedefinedgui.gui.layout.inventory;
 
-import com.klikli_dev.codedefinedgui.gui.layout.ClientLayoutFragment;
 import com.klikli_dev.codedefinedgui.gui.layout.LayoutFragment;
 import com.klikli_dev.codedefinedgui.gui.layout.LayoutGroupBuilder;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutResolverRegistry;
-import com.klikli_dev.codedefinedgui.gui.layout.MenuBindingRegistry;
 
 public final class PlayerInventoryLayoutFragment implements LayoutFragment {
     private static final int SLOT_SIZE = 18;
@@ -16,9 +13,6 @@ public final class PlayerInventoryLayoutFragment implements LayoutFragment {
     private static final int PLAYER_MAIN_COLUMNS = 9;
     private static final int HOTBAR_Y = 58;
     private static final int BACKGROUND_PADDING = 8;
-
-    private static final ClientLayoutFragment CLIENT = registry -> {
-    };
 
     private PlayerInventoryLayoutFragment() {
     }
@@ -42,14 +36,5 @@ public final class PlayerInventoryLayoutFragment implements LayoutFragment {
                 hotbar.node("slot_" + col).at(col * SLOT_SIZE, 0).size(SLOT_SIZE, SLOT_SIZE);
             }
         });
-    }
-
-    @Override
-    public void bindMenu(MenuBindingRegistry registry) {
-    }
-
-    @Override
-    public ClientLayoutFragment client() {
-        return CLIENT;
     }
 }

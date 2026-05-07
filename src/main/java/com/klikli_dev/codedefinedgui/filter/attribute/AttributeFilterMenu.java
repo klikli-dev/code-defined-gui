@@ -6,10 +6,10 @@ package com.klikli_dev.codedefinedgui.filter.attribute;
 
 import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterLayouts;
-import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinSlotRoles;
+import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterSlotRoles;
 import com.klikli_dev.codedefinedgui.gui.filter.layout.AttributeFilterLayout;
-import com.klikli_dev.codedefinedgui.gui.filter.layout.PlayerInventoryLayoutFragment;
 import com.klikli_dev.codedefinedgui.gui.layout.MenuBindingRegistry;
+import com.klikli_dev.codedefinedgui.gui.layout.inventory.PlayerInventorySection;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleKey;
 import com.klikli_dev.codedefinedgui.registry.DataComponentRegistry;
 import com.klikli_dev.codedefinedgui.registry.MenuTypeRegistry;
@@ -46,6 +46,7 @@ public class AttributeFilterMenu extends FilterMenu {
     private static final int REFERENCE_SLOT = 0;
     private static final int SUMMARY_SLOT = 1;
     private static final int GHOST_SLOT_COUNT = 2;
+    private static final PlayerInventorySection PLAYER_INVENTORY = PlayerInventorySection.standard();
 
     private final DataSlot mode = DataSlot.standalone();
     private final DataSlot selectedCandidateIndex = DataSlot.standalone();
@@ -65,7 +66,7 @@ public class AttributeFilterMenu extends FilterMenu {
     }
 
     protected AttributeFilterMenu(MenuType<?> menuType, int containerId, Inventory inventory, InteractionHand hand, GuiStyleKey styleKey) {
-        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.ATTRIBUTE_FILTER, styleKey, GHOST_SLOT_COUNT, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get(), AttributeFilterLayout.create(PlayerInventoryLayoutFragment.create()));
+        super(menuType, containerId, inventory, hand, BuiltinFilterLayouts.ATTRIBUTE_FILTER, styleKey, GHOST_SLOT_COUNT, DataComponentRegistry.ATTRIBUTE_FILTER_REFERENCE.get(), AttributeFilterLayout.create(PLAYER_INVENTORY));
 
         AttributeFilterState state = AttributeFilterStateAccessor.INSTANCE.read(this.filterStack());
         this.mode.set(state.mode().ordinal());
@@ -222,9 +223,9 @@ public class AttributeFilterMenu extends FilterMenu {
 
     @Override
     public void registerBindings(MenuBindingRegistry registry) {
-        this.bindPlayerInventory(registry.scope("player_inventory"));
-        registry.bind("main.filter_area.reference", ctx -> this.bindGhostSlot(ctx, REFERENCE_SLOT, BuiltinSlotRoles.FILTER_REFERENCE));
-        registry.bind("main.filter_area.summary_slot", ctx -> this.bindGhostSlot(ctx, SUMMARY_SLOT, BuiltinSlotRoles.FILTER_SUMMARY));
+        PLAYER_INVENTORY.bindMenu(registry.scope("player_inventory"), this);
+        registry.bind("main.filter_area.reference", ctx -> this.bindGhostSlot(ctx, REFERENCE_SLOT, BuiltinFilterSlotRoles.FILTER_REFERENCE));
+        registry.bind("main.filter_area.summary_slot", ctx -> this.bindGhostSlot(ctx, SUMMARY_SLOT, BuiltinFilterSlotRoles.FILTER_SUMMARY));
     }
 
     private boolean addSelectedRule(boolean inverted) {
