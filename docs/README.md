@@ -15,7 +15,6 @@ SPDX-License-Identifier: MIT
 - [Premade filters](./premade-filters.md)
 - [Examples guide](./examples-guide.md)
 - [Styling premade GUIs](./styling-premade-guis.md)
-- [Migration notes](./migration-notes.md)
 
 ## Recommended reading order
 
@@ -26,4 +25,3 @@ SPDX-License-Identifier: MIT
 5. [Premade filters](./premade-filters.md) for the shipped filter feature set
 6. [Examples guide](./examples-guide.md) for reference code pointers
 7. [Styling premade GUIs](./styling-premade-guis.md) for the generic `GuiStyle` system
-8. [Migration notes](./migration-notes.md) if you are updating older integrations
