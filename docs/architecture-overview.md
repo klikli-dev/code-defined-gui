@@ -6,7 +6,7 @@ SPDX-License-Identifier: MIT
 
 # Architecture overview
 
-Code Defined GUI is now organized as a layout-driven GUI framework with a small generic API surface and a higher-level shipped filter feature set.
+Code Defined GUI is now organized as a layout-driven GUI framework with a small generic API surface, a higher-level shipped filter feature set, and a reference example namespace.
 
 ## Package map
 
@@ -53,6 +53,12 @@ Not supported as public API.
 This includes internal renderers, bootstrap wiring, registries, networking, commands, and internal inventory layout helpers.
 
 Downstream mods should not import `internal.*`.
+
+### `com.klikli_dev.codedefinedgui.example.*`
+
+Reference code for intended integration patterns.
+
+Examples are useful to read and copy from, but they are not part of the stable supported API contract.
 
 ## Primary runtime model
 
@@ -113,10 +119,16 @@ There is no separate slot style registry.
 
 ## Reference code
 
-The repo still contains debug/reference classes, but they are internal-only:
+The repo now includes a dedicated `example.*` reference path for layout-first integration:
+
+- `com.klikli_dev.codedefinedgui.example.ExampleLayouts`
+- `com.klikli_dev.codedefinedgui.example.ExampleMenu`
+- `com.klikli_dev.codedefinedgui.example.ExampleScreen`
+
+There are also internal debug/reference classes:
 
 - `com.klikli_dev.codedefinedgui.internal.screen.TestScreen`
 - `com.klikli_dev.codedefinedgui.internal.command.CdgCommand`
 - `com.klikli_dev.codedefinedgui.internal.network.OpenTestScreenMessage`
 
-Treat them as implementation reference, not supported API.
+Treat `example.*` as reference code and `internal.*` as implementation details, not supported API.

@@ -53,6 +53,8 @@ Do not migrate downstream code to `internal.*` packages.
 
 Some debug/reference classes that used to feel like examples now live under internal namespaces instead, such as `internal.screen.TestScreen`. They are not supported API.
 
+The dedicated reference path for users is now `com.klikli_dev.codedefinedgui.example.*`.
+
 ## Recommended migration checklist
 
 1. update imports to `api.*` and `premade.filter.*`

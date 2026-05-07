@@ -16,6 +16,8 @@ The current public surface is organized around three product areas:
 
 Only `api.*` and `premade.*` are supported import targets. Do not depend on `internal.*` from downstream mods.
 
+The repo also ships `com.klikli_dev.codedefinedgui.example.*` as reference code for the layout-first integration flow.
+
 ## Curseforge
 
 https://www.curseforge.com/minecraft/mc-mods/code-defined-gui
@@ -57,8 +59,11 @@ dependencies {
 
 - [Docs index](./docs/README.md)
 - [Architecture overview](./docs/architecture-overview.md)
+- [API surface and stability policy](./docs/api-surface-and-stability-policy.md)
 - [Using the library](./docs/using-the-library.md)
+- [Layout-driven quick start](./docs/layout-driven-quick-start.md)
 - [Premade filters](./docs/premade-filters.md)
+- [Examples guide](./docs/examples-guide.md)
 - [Styling premade GUIs](./docs/styling-premade-guis.md)
 - [Migration notes](./docs/migration-notes.md)
 

@@ -219,7 +219,13 @@ Typical building blocks are:
 
 ## Reference implementations in this repo
 
-The stock filter screens are currently the most complete end-to-end examples of CDG's layout-driven runtime model:
+Start with the dedicated example namespace for the smallest layout-first reference path:
+
+- `example.ExampleLayouts`
+- `example.ExampleMenu`
+- `example.ExampleScreen`
+
+The stock filter screens remain the most complete production-style end-to-end examples:
 
 - `premade.filter.ListFilterScreen`
 - `premade.filter.AttributeFilterScreen`
@@ -228,6 +234,9 @@ The stock filter screens are currently the most complete end-to-end examples of 
 ## Related docs
 
 - [Architecture overview](./architecture-overview.md)
+- [API surface and stability policy](./api-surface-and-stability-policy.md)
+- [Layout-driven quick start](./layout-driven-quick-start.md)
 - [Premade filters](./premade-filters.md)
+- [Examples guide](./examples-guide.md)
 - [Styling premade GUIs](./styling-premade-guis.md)
 - [Migration notes](./migration-notes.md)
