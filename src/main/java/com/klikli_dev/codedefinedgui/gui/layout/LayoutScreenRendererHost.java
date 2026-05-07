@@ -4,6 +4,8 @@
 
 package com.klikli_dev.codedefinedgui.gui.layout;
 
+import com.klikli_dev.codedefinedgui.api.layout.LayoutSlotView;
+
 import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
 import java.util.List;
 

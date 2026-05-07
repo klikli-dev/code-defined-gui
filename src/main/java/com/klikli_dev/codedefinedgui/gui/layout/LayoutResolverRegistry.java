@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.layout;
+package com.klikli_dev.codedefinedgui.api.layout;
 
 import java.util.function.Consumer;
 

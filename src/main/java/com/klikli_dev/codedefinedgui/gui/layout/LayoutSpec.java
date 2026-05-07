@@ -2,7 +2,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-package com.klikli_dev.codedefinedgui.gui.layout;
+package com.klikli_dev.codedefinedgui.api.layout;
+
+import com.klikli_dev.codedefinedgui.api.layout.LayoutNodeSpec;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

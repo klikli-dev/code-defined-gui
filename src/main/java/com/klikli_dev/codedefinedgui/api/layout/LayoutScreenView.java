@@ -4,8 +4,7 @@
 
 package com.klikli_dev.codedefinedgui.api.layout;
 
-public interface LayoutMenu {
+public interface LayoutScreenView {
     LayoutSpec layoutSpec();
-
-    void registerBindings(MenuBindingRegistry registry);
+    void registerResolvers(LayoutResolverRegistry registry);
 }
