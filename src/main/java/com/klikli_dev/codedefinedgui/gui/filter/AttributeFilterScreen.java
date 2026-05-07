@@ -47,49 +47,52 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
     @Override
     public void registerResolvers(LayoutResolverRegistry registry) {
         super.registerResolvers(registry);
-        registry.resolve("main.filter_area.panel_bg", -100, ctx -> ctx.addWidget(new GuiBackgroundWidget(this, ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), ctx.node().heightOrThrow(), this.partSprite(BuiltinFilterParts.ATTRIBUTE_PANEL, GuiSprites.GUI_BACKGROUND))));
-        registry.resolve("main.top_bar.background", 100, ctx -> ctx.addWidget(new GuiBackgroundWidget(this, ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), ctx.node().heightOrThrow(), this.partSprite(BuiltinFilterParts.ATTRIBUTE_TOP_BAR, GuiSprites.GUI_BACKGROUND))));
-        this.addCenteredTitle(registry, "main.top_bar.title", BuiltinFilterParts.ATTRIBUTE_TITLE);
-        registry.resolve("main.filter_area.reset", ctx -> this.resetButton = this.addResetButton(ctx.node().x(), ctx.node().y(), AttributeFilterMenu.BUTTON_RESET));
-        registry.resolve("main.filter_area.confirm", ctx -> this.confirmButton = this.addConfirmButton(ctx.node().x(), ctx.node().y()));
+        registry.resolve("main.filter_area.panel_bg", -100, ctx -> ctx.addWidget(new GuiBackgroundWidget(this, ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), ctx.node().heightOrThrow(), ctx.style().sprite(BuiltinFilterParts.ATTRIBUTE_PANEL, GuiSprites.GUI_BACKGROUND))));
+        registry.resolve("main.top_bar.background", 100, ctx -> ctx.addWidget(new GuiBackgroundWidget(this, ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), ctx.node().heightOrThrow(), ctx.style().sprite(BuiltinFilterParts.ATTRIBUTE_TOP_BAR, GuiSprites.GUI_BACKGROUND))));
+        registry.resolve("main.top_bar.title", 200, ctx -> {
+            int titleX = ctx.node().x() + (ctx.node().widthOrThrow() - this.font.width(this.title)) / 2;
+            ctx.addWidget(new GuiTextWidget(titleX, ctx.node().y(), () -> this.title, () -> ctx.style().textColor(BuiltinFilterParts.ATTRIBUTE_TITLE, 0xFF000000), false));
+        });
+        registry.resolve("main.filter_area.reset", ctx -> this.resetButton = this.addResetButton(ctx, AttributeFilterMenu.BUTTON_RESET));
+        registry.resolve("main.filter_area.confirm", ctx -> this.confirmButton = this.addConfirmButton(ctx));
         registry.resolve("main.filter_area.match_any", ctx -> {
-            this.matchAnyButton = this.addIconButton(ctx.node().x(), ctx.node().y(), GuiSprites.FILTER_ICON_MATCH_ANY, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ANY))
+            this.matchAnyButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_MATCH_ANY, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ANY))
                     .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ANY_TOOLTIP_SHIFT));
         });
         registry.resolve("main.filter_area.match_all", ctx -> {
-            this.matchAllButton = this.addIconButton(ctx.node().x(), ctx.node().y(), GuiSprites.FILTER_ICON_MATCH_ALL, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ALL))
+            this.matchAllButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_MATCH_ALL, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL), () -> this.pressButton(AttributeFilterMenu.BUTTON_MATCH_ALL))
                     .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.MATCH_ALL_TOOLTIP_SHIFT));
         });
         registry.resolve("main.filter_area.deny", ctx -> {
-            this.denyButton = this.addIconButton(ctx.node().x(), ctx.node().y(), GuiSprites.FILTER_ICON_DENY_ALT, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY), () -> this.pressButton(AttributeFilterMenu.BUTTON_DENY))
+            this.denyButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_DENY_ALT, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY), () -> this.pressButton(AttributeFilterMenu.BUTTON_DENY))
                     .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY_TOOLTIP), Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.Mode.DENY_TOOLTIP_SHIFT));
         });
-        registry.resolve("main.filter_area.match_any_indicator", ctx -> this.matchAnyIndicator = this.addFilterIndicator(ctx.node().x(), ctx.node().y()));
-        registry.resolve("main.filter_area.match_all_indicator", ctx -> this.matchAllIndicator = this.addFilterIndicator(ctx.node().x(), ctx.node().y()));
-        registry.resolve("main.filter_area.deny_indicator", ctx -> this.denyIndicator = this.addFilterIndicator(ctx.node().x(), ctx.node().y()));
+        registry.resolve("main.filter_area.match_any_indicator", ctx -> this.matchAnyIndicator = this.addFilterIndicator(ctx));
+        registry.resolve("main.filter_area.match_all_indicator", ctx -> this.matchAllIndicator = this.addFilterIndicator(ctx));
+        registry.resolve("main.filter_area.deny_indicator", ctx -> this.denyIndicator = this.addFilterIndicator(ctx));
         registry.resolve("main.filter_area.selection", ctx -> this.selectionWidget = this.root.addChild(new AttributeSelectionWidget(
                 ctx.node().x(),
                 ctx.node().y(),
                 ctx.node().widthOrThrow(),
                 ctx.node().heightOrThrow(),
-                this.partSprite(BuiltinFilterParts.ATTRIBUTE_SELECTION, GuiSprites.ATTRIBUTE_FILTER_SELECTION),
+                ctx.style().sprite(BuiltinFilterParts.ATTRIBUTE_SELECTION, GuiSprites.ATTRIBUTE_FILTER_SELECTION),
                 this::candidates,
                 this.menu::selectedCandidateIndex,
                 this::changeSelection,
-                () -> this.partTextColor(BuiltinFilterParts.ATTRIBUTE_SELECTION, 0xFFF3EBDE),
-                () -> this.partTextColor(BuiltinFilterParts.ATTRIBUTE_SELECTION_HEADER, 0x5391E1)
+                () -> ctx.style().textColor(BuiltinFilterParts.ATTRIBUTE_SELECTION, 0xFFF3EBDE),
+                () -> ctx.style().textColor(BuiltinFilterParts.ATTRIBUTE_SELECTION_HEADER, 0x5391E1)
         ).withTitle(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.AVAILABLE))));
         registry.resolve("main.filter_area.add_button", ctx -> {
-            this.addButton = this.addIconButton(ctx.node().x(), ctx.node().y(), GuiSprites.FILTER_ICON_ADD, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED))
+            this.addButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_ADD, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED))
                     .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_TOOLTIP));
         });
         registry.resolve("main.filter_area.add_inverted_button", ctx -> {
-            this.addInvertedButton = this.addIconButton(ctx.node().x(), ctx.node().y(), GuiSprites.FILTER_ICON_ADD_INVERTED, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED))
+            this.addInvertedButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_ADD_INVERTED, Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED))
                     .withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Attribute.ADD_INVERTED_TOOLTIP));
         });
-        registry.resolve("main.filter_area.summary_widget", ctx -> this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(ctx.node().x(), ctx.node().y(), this.partSprite(BuiltinFilterParts.ATTRIBUTE_SUMMARY, GuiSprites.ATTRIBUTE_FILTER_SUMMARY), () -> this.menu.state().rules().size(), this.menu::summaryStack, () -> this.partTextColor(BuiltinFilterParts.ATTRIBUTE_SUMMARY, 0xFFFFFFFF))));
-        registry.resolve("main.filter_area.horizontal_separator", ctx -> this.addRootChild(new HorizontalSeparatorWidget(ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), this.style().get(BuiltinFilterParts.ATTRIBUTE_HORIZONTAL_SEPARATOR, GuiStyleProperties.COLOR, 0xFF000000))));
-        registry.resolve("main.filter_area.vertical_separator", ctx -> this.addRootChild(new VerticalSeparatorWidget(ctx.node().x(), ctx.node().y(), ctx.node().heightOrThrow(), this.style().get(BuiltinFilterParts.ATTRIBUTE_VERTICAL_SEPARATOR, GuiStyleProperties.COLOR, 0xFF000000))));
+        registry.resolve("main.filter_area.summary_widget", ctx -> this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(ctx.node().x(), ctx.node().y(), ctx.style().sprite(BuiltinFilterParts.ATTRIBUTE_SUMMARY, GuiSprites.ATTRIBUTE_FILTER_SUMMARY), () -> this.menu.state().rules().size(), this.menu::summaryStack, () -> ctx.style().textColor(BuiltinFilterParts.ATTRIBUTE_SUMMARY, 0xFFFFFFFF))));
+        registry.resolve("main.filter_area.horizontal_separator", ctx -> this.addRootChild(new HorizontalSeparatorWidget(ctx.node().x(), ctx.node().y(), ctx.node().widthOrThrow(), ctx.style().color(BuiltinFilterParts.ATTRIBUTE_HORIZONTAL_SEPARATOR, 0xFF000000))));
+        registry.resolve("main.filter_area.vertical_separator", ctx -> this.addRootChild(new VerticalSeparatorWidget(ctx.node().x(), ctx.node().y(), ctx.node().heightOrThrow(), ctx.style().color(BuiltinFilterParts.ATTRIBUTE_VERTICAL_SEPARATOR, 0xFF000000))));
     }
 
     @Override

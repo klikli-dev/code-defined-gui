@@ -9,29 +9,25 @@ import com.klikli_dev.codedefinedgui.filter.core.FilterMenu;
 import com.klikli_dev.codedefinedgui.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.gui.core.GuiHost;
 import com.klikli_dev.codedefinedgui.gui.core.GuiRootWidget;
-import com.klikli_dev.codedefinedgui.gui.layout.BuiltinLayoutSlotRoles;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutScreenRendererHost;
-import com.klikli_dev.codedefinedgui.gui.layout.LayoutSlotView;
-import com.klikli_dev.codedefinedgui.gui.layout.inventory.PlayerInventorySection;
 import com.klikli_dev.codedefinedgui.gui.filter.widget.FilterIndicatorWidget;
+import com.klikli_dev.codedefinedgui.gui.layout.BuiltinLayoutSlotRoles;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutResolveContext;
 import com.klikli_dev.codedefinedgui.gui.layout.LayoutResolverRegistry;
 import com.klikli_dev.codedefinedgui.gui.layout.LayoutScreen;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutScreenRendererHost;
+import com.klikli_dev.codedefinedgui.gui.layout.LayoutSlotView;
 import com.klikli_dev.codedefinedgui.gui.layout.LayoutSpec;
-import com.klikli_dev.codedefinedgui.gui.layout.ResolvedLayoutNode;
 import com.klikli_dev.codedefinedgui.gui.layout.ScreenLayoutController;
+import com.klikli_dev.codedefinedgui.gui.layout.inventory.PlayerInventorySection;
 import com.klikli_dev.codedefinedgui.gui.style.BuiltinGuiParts;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleContext;
-import com.klikli_dev.codedefinedgui.gui.style.GuiPartKey;
-import com.klikli_dev.codedefinedgui.gui.style.GuiStyle;
-import com.klikli_dev.codedefinedgui.gui.style.GuiStyleProperties;
 import com.klikli_dev.codedefinedgui.gui.style.GuiStyleRegistry;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.gui.texture.GuiSprites;
+import com.klikli_dev.codedefinedgui.gui.widget.GuiTextWidget;
+import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonBackgroundSprites;
 import com.klikli_dev.codedefinedgui.gui.widget.IconButtonWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiBackgroundWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiSpriteWidget;
-import com.klikli_dev.codedefinedgui.gui.widget.GuiTextWidget;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -45,19 +41,17 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     protected IconButtonWidget resetButton;
     protected IconButtonWidget confirmButton;
     private boolean closingHandled;
-    private boolean hasInventoryLabel;
 
     protected AbstractFilterScreen(M menu, Inventory playerInventory, Component title, int imageWidth, int imageHeight) {
         super(menu, playerInventory, title, imageWidth, imageHeight);
         this.playerInventorySection = PlayerInventorySection.standard();
         this.root = new GuiRootWidget(this);
-        this.layoutController = new ScreenLayoutController(this, this, this.root, new GuiStyleContext(this.style()));
+        this.layoutController = new ScreenLayoutController(this, this, this.root, new GuiStyleContext(GuiStyleRegistry.get(this.menu.styleKey())));
     }
 
     @Override
     protected void init() {
         super.init();
-        this.initInventoryLabelPosition();
         this.addRenderableWidget(this.root);
         this.root.clearChildren();
         this.layoutController.init();
@@ -90,9 +84,6 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
 
     @Override
     protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
-        if (this.hasInventoryLabel) {
-            graphics.text(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, this.partTextColor(BuiltinGuiParts.PLAYER_INVENTORY_LABEL, 0x404040), false);
-        }
     }
 
     @Override
@@ -147,6 +138,13 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     @Override
     public void registerResolvers(LayoutResolverRegistry registry) {
         this.playerInventorySection.registerResolvers(registry.scope("player_inventory"), this);
+        registry.resolve("player_inventory.label", 100, ctx -> ctx.addWidget(new GuiTextWidget(
+                ctx.node().x(),
+                ctx.node().y(),
+                () -> this.playerInventoryTitle,
+                () -> ctx.style().textColor(BuiltinGuiParts.PLAYER_INVENTORY_LABEL, 0x404040),
+                false
+        )));
         this.registerSlotResolvers(registry);
     }
 
@@ -168,39 +166,53 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
             registry.add(slotView.nodePath(), -25, ctx -> ctx.addWidget(new GuiSpriteWidget(
                     slotView.x() - 1 + this.leftPos(),
                     slotView.y() - 1 + this.topPos(),
-                    this.slotSprite(slotView)
+                    ctx.style().sprite(slotView.part(), GuiSprites.INVENTORY_SLOT)
             )));
         }
     }
 
     protected abstract void refreshWidgetState();
 
-    protected final IconButtonWidget addIconButton(int x, int y, GuiSprite icon, Component message, Runnable onPress) {
-        return this.root.addChild(new IconButtonWidget(x, y, icon, this.buttonBackgroundSprites(BuiltinFilterParts.BUTTON), message, onPress));
+    protected final IconButtonWidget addIconButton(LayoutResolveContext ctx, GuiSprite icon, Component message, Runnable onPress) {
+        IconButtonWidget widget = new IconButtonWidget(
+                ctx.node().x(),
+                ctx.node().y(),
+                icon,
+                ctx.style().iconButtonBackgroundSprites(BuiltinFilterParts.BUTTON, IconButtonBackgroundSprites.DEFAULT),
+                message,
+                onPress
+        );
+        ctx.addWidget(widget);
+        return widget;
     }
 
-    protected final IconButtonWidget addResetButton(int x, int y, int buttonId) {
+    protected final IconButtonWidget addResetButton(LayoutResolveContext ctx, int buttonId) {
         return this.addIconButton(
-                x,
-                y,
+                ctx,
                 GuiSprites.FILTER_ICON_RESET,
                 Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.RESET),
                 () -> this.pressButton(buttonId)
         ).withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.RESET_TOOLTIP));
     }
 
-    protected final IconButtonWidget addConfirmButton(int x, int y) {
+    protected final IconButtonWidget addConfirmButton(LayoutResolveContext ctx) {
         return this.addIconButton(
-                x,
-                y,
+                ctx,
                 GuiSprites.FILTER_ICON_CONFIRM,
                 Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.DONE),
                 () -> this.closeScreen(true)
         ).withTooltip(Component.translatable(CodeDefinedGuiConstants.I18n.Filter.Button.DONE_TOOLTIP));
     }
 
-    protected final FilterIndicatorWidget addFilterIndicator(int x, int y) {
-        return this.root.addChild(new FilterIndicatorWidget(x, y, this.filterIndicatorOnSprite(BuiltinFilterParts.INDICATOR), this.filterIndicatorOffSprite(BuiltinFilterParts.INDICATOR)));
+    protected final FilterIndicatorWidget addFilterIndicator(LayoutResolveContext ctx) {
+        FilterIndicatorWidget widget = new FilterIndicatorWidget(
+                ctx.node().x(),
+                ctx.node().y(),
+                ctx.style().onSprite(BuiltinFilterParts.INDICATOR, GuiSprites.FILTER_INDICATOR_ON),
+                ctx.style().offSprite(BuiltinFilterParts.INDICATOR, GuiSprites.FILTER_INDICATOR_OFF)
+        );
+        ctx.addWidget(widget);
+        return widget;
     }
 
     protected final void pressButton(int buttonId) {
@@ -221,61 +233,6 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
         this.closingHandled = true;
         this.pressButton(confirm ? this.confirmButtonId() : this.cancelButtonId());
         super.onClose();
-    }
-
-    protected IconButtonBackgroundSprites buttonBackgroundSprites(GuiPartKey part) {
-        return new IconButtonBackgroundSprites(
-                this.style().get(part, GuiStyleProperties.SPRITE, GuiSprites.FILTER_BUTTON),
-                this.style().get(part, GuiStyleProperties.PRESSED_SPRITE, GuiSprites.FILTER_BUTTON_DOWN),
-                this.style().get(part, GuiStyleProperties.HOVER_SPRITE, GuiSprites.FILTER_BUTTON_HOVER)
-        );
-    }
-
-    protected GuiSprite filterIndicatorOnSprite(GuiPartKey part) {
-        return this.style().get(part, GuiStyleProperties.ON_SPRITE, GuiSprites.FILTER_INDICATOR_ON);
-    }
-
-    protected GuiSprite filterIndicatorOffSprite(GuiPartKey part) {
-        return this.style().get(part, GuiStyleProperties.OFF_SPRITE, GuiSprites.FILTER_INDICATOR_OFF);
-    }
-
-    protected GuiSprite partSprite(GuiPartKey part, GuiSprite fallback) {
-        return this.style().get(part, GuiStyleProperties.SPRITE, fallback);
-    }
-
-    protected final int partTextColor(GuiPartKey part, int fallback) {
-        int color = this.style().get(part, GuiStyleProperties.TEXT_COLOR, fallback);
-        if ((color & 0xFF000000) == 0) {
-            color |= 0xFF000000;
-        }
-
-        return color;
-    }
-
-    protected final void addCenteredTitle(LayoutResolverRegistry registry, String nodePath, GuiPartKey part) {
-        registry.resolve(nodePath, 200, ctx -> {
-            int titleX = ctx.node().x() + (ctx.node().widthOrThrow() - this.font.width(this.title)) / 2;
-            ctx.addWidget(new GuiTextWidget(titleX, ctx.node().y(), () -> this.title, () -> this.partTextColor(part, 0xFF000000), false));
-        });
-    }
-
-    protected GuiSprite slotSprite(LayoutSlotView slotView) {
-        return this.partSprite(slotView.part(), GuiSprites.INVENTORY_SLOT);
-    }
-
-    protected final GuiStyle style() {
-        return GuiStyleRegistry.get(this.menu.styleKey());
-    }
-
-    private void initInventoryLabelPosition() {
-        try {
-            ResolvedLayoutNode labelNode = this.layoutSpec().resolve().node("player_inventory.label");
-            this.inventoryLabelX = this.guiX(labelNode.x());
-            this.inventoryLabelY = this.guiY(labelNode.y());
-            this.hasInventoryLabel = true;
-        } catch (IllegalArgumentException ignored) {
-            this.hasInventoryLabel = false;
-        }
     }
 
     protected abstract int confirmButtonId();

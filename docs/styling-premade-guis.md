@@ -93,6 +93,16 @@ those are the two part keys you usually want:
 
 ## Choosing styles per layout
 
+Registering a style only makes it available under a `GuiStyleKey`.
+It does not automatically replace styles on every CDG screen.
+
+For the stock filter screens, the selected style is still handed over per opened screen/menu:
+
+1. your mod registers a `GuiStyle` under a `GuiStyleKey`
+2. your `FilterItem` returns the chosen `GuiStyleKey` for the opened layout
+3. `FilterMenu` carries that key to the client screen
+4. the screen resolves the concrete style from `GuiStyleRegistry`
+
 `FilterItem` exposes:
 
 ```java

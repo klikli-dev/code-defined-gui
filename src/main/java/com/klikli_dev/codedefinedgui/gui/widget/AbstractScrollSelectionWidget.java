@@ -69,11 +69,11 @@ public abstract class AbstractScrollSelectionWidget<T> extends AbstractWidget {
     protected abstract Component scrollHintText();
 
     protected int entryTextColor() {
-        return this.entryTextColorSupplier.getAsInt();
+        return opaque(this.entryTextColorSupplier.getAsInt());
     }
 
     protected int headerColor() {
-        return this.headerColorSupplier.getAsInt();
+        return opaque(this.headerColorSupplier.getAsInt());
     }
 
     protected int visibleTooltipEntries() {
@@ -185,5 +185,9 @@ public abstract class AbstractScrollSelectionWidget<T> extends AbstractWidget {
 
     private int clampedSelectedIndex(List<T> entries) {
         return Math.max(0, Math.min(this.selectedIndex.getAsInt(), entries.size() - 1));
+    }
+
+    private static int opaque(int color) {
+        return (color & 0xFF000000) == 0 ? color | 0xFF000000 : color;
     }
 }
