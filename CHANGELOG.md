@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [release/v26.1.2-1.7.0] - 2026-05-08
+### :sparkles: New Features
+- [`fcba0e0`](https://github.com/klikli-dev/code-defined-gui/commit/fcba0e0182bd0d4ede240e985b870bf28c5861c3) - add cropped gui sprite rendering *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+
+
 ## [release/v26.1.2-1.6.0] - 2026-05-07
 ### :sparkles: New Features
 - [`30b537c`](https://github.com/klikli-dev/code-defined-gui/commit/30b537c52ff50ec5c816e674112f61bf3bba4747) - add layouting *(PR [#8](https://github.com/klikli-dev/code-defined-gui/pull/8) by [@klikli-dev](https://github.com/klikli-dev))*
@@ -79,3 +84,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [release/v26.1.2-1.4.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.3.0...release/v26.1.2-1.4.0
 [release/v26.1.2-1.5.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.4.0...release/v26.1.2-1.5.0
 [release/v26.1.2-1.6.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.5.0...release/v26.1.2-1.6.0
+[release/v26.1.2-1.7.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.6.0...release/v26.1.2-1.7.0
