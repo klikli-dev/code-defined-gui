@@ -31,6 +31,12 @@ public record GuiSprite(@NonNull Identifier sprite, int width, int height, int t
     public void extractRenderState(@NonNull GuiGraphicsExtractor guiGraphicsExtractor, int x, int y, int width, int height) {
         guiGraphicsExtractor.blitSprite(RenderPipelines.GUI_TEXTURED, this.sprite, x, y, width, height, this.tint);
     }
+
+    public void extractRenderState(@NonNull GuiGraphicsExtractor guiGraphicsExtractor, int spriteWidth, int spriteHeight,
+                                   int u, int v, int x, int y, int width, int height) {
+        guiGraphicsExtractor.blitSprite(RenderPipelines.GUI_TEXTURED, this.sprite, spriteWidth, spriteHeight,
+                u, v, x, y, width, height, this.tint);
+    }
 }
 
 
