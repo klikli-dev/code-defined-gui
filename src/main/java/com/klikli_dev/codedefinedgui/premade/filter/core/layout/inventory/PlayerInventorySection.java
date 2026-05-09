@@ -5,6 +5,7 @@
 package com.klikli_dev.codedefinedgui.premade.filter.core.layout.inventory;
 
 import com.klikli_dev.codedefinedgui.api.layout.LayoutGroupBuilder;
+import com.klikli_dev.codedefinedgui.api.layout.LayoutResolverRegistry;
 import com.klikli_dev.codedefinedgui.api.layout.MenuBindingRegistry;
 
 public final class PlayerInventorySection {
@@ -26,5 +27,20 @@ public final class PlayerInventorySection {
 
     public void bindMenu(MenuBindingRegistry registry, PlayerInventoryMenuHost host) {
         this.binder.bind(registry, host);
+    }
+
+    public Client client() {
+        return new Client();
+    }
+
+    public static final class Client {
+        private final PlayerInventoryScreenRenderer renderer = new PlayerInventoryScreenRenderer();
+
+        private Client() {
+        }
+
+        public void registerResolvers(LayoutResolverRegistry registry, PlayerInventoryScreenHost host) {
+            this.renderer.registerResolvers(registry, host);
+        }
     }
 }

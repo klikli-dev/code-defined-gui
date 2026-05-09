@@ -8,7 +8,6 @@ import com.klikli_dev.codedefinedgui.premade.filter.core.FilterMenu;
 import com.klikli_dev.codedefinedgui.premade.filter.core.FilterTranslationKeys;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.inventory.PlayerInventoryScreenHost;
-import com.klikli_dev.codedefinedgui.premade.filter.core.layout.inventory.PlayerInventoryScreenRenderer;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.inventory.PlayerInventorySection;
 import com.klikli_dev.codedefinedgui.api.screen.GuiHost;
 import com.klikli_dev.codedefinedgui.api.screen.GuiRootWidget;
@@ -35,7 +34,6 @@ import net.minecraft.world.entity.player.Inventory;
 
 public abstract class AbstractFilterScreen<M extends FilterMenu> extends AbstractContainerScreen<M> implements GuiHost, LayoutScreenView, PlayerInventoryScreenHost {
     protected final PlayerInventorySection playerInventorySection;
-    private final PlayerInventoryScreenRenderer playerInventoryScreenRenderer;
     protected final GuiRootWidget root;
     private final ScreenLayoutController layoutController;
     protected IconButtonWidget resetButton;
@@ -45,7 +43,6 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
     protected AbstractFilterScreen(M menu, Inventory playerInventory, Component title, int imageWidth, int imageHeight) {
         super(menu, playerInventory, title, imageWidth, imageHeight);
         this.playerInventorySection = PlayerInventorySection.standard();
-        this.playerInventoryScreenRenderer = new PlayerInventoryScreenRenderer();
         this.root = new GuiRootWidget(this);
         this.layoutController = new ScreenLayoutController(this, this, this.root, new GuiStyleContext(GuiStyleRegistry.get(this.menu.styleKey())));
     }
@@ -138,7 +135,7 @@ public abstract class AbstractFilterScreen<M extends FilterMenu> extends Abstrac
 
     @Override
     public void registerResolvers(LayoutResolverRegistry registry) {
-        this.playerInventoryScreenRenderer.registerResolvers(registry.scope("player_inventory"), this);
+        this.playerInventorySection.client().registerResolvers(registry.scope("player_inventory"), this);
         this.registerSlotResolvers(registry);
     }
 
