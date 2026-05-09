@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [release/v26.1.2-1.8.0] - 2026-05-09
+### :bug: Bug Fixes
+- [`1a4ad45`](https://github.com/klikli-dev/code-defined-gui/commit/1a4ad456df8b1bf49fd47cf5e417195cc86565ed) - load client class on server *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+- [`22f7bdd`](https://github.com/klikli-dev/code-defined-gui/commit/22f7bddcebda244171a0ad6865613d3a5fbba0db) - avoid loading filter screen renderer on server *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+
+### :recycle: Refactors
+- [`f6cb875`](https://github.com/klikli-dev/code-defined-gui/commit/f6cb875355fd23444fe550e94e54e7e93c79c366) - add nested client api for inventory section *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+
+
 ## [release/v26.1.2-1.7.0] - 2026-05-08
 ### :sparkles: New Features
 - [`fcba0e0`](https://github.com/klikli-dev/code-defined-gui/commit/fcba0e0182bd0d4ede240e985b870bf28c5861c3) - add cropped gui sprite rendering *(commit by [@klikli-dev](https://github.com/klikli-dev))*
@@ -85,3 +94,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [release/v26.1.2-1.5.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.4.0...release/v26.1.2-1.5.0
 [release/v26.1.2-1.6.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.5.0...release/v26.1.2-1.6.0
 [release/v26.1.2-1.7.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.6.0...release/v26.1.2-1.7.0
+[release/v26.1.2-1.8.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.7.0...release/v26.1.2-1.8.0
