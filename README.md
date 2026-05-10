@@ -8,12 +8,12 @@ SPDX-License-Identifier: MIT
 
 Code Defined GUI (CDG) is a NeoForge library mod for building Minecraft GUIs from layout specs, style sheets, and reusable widgets.
 
-The current public surface is organized around four product areas:
+The API surface has three areas:
 
 - `com.klikli_dev.codedefinedgui.api.*` — generic layout, style, texture, and widget APIs
 - `com.klikli_dev.codedefinedgui.premade.filter.*` — shipped list and attribute filter implementations built on that API
 - `com.klikli_dev.codedefinedgui.internal.*` — framework internals, bootstrap, registries, and debug/reference plumbing
-- `com.klikli_dev.codedefinedgui.example.*` — reference code for the layout-first integration flow
+- `com.klikli_dev.codedefinedgui.example.*` — example and test code (not always super clean)
 
 Only `api.*` and `premade.*` are supported import targets. Do not depend on `internal.*` from downstream mods.
 
@@ -54,6 +54,24 @@ dependencies {
 }
 ```
 
+Alternatively if CDG should be bundled in your mod's jar file:
+
+```gradle
+dependencies {
+ 
+    ...
+    
+        jarJar(implementation(group: "com.klikli_dev", name: "codedefinedgui-${minecraft_version}-neoforge")) {
+        version {
+            prefer code_defined_gui_version
+        }
+    }
+    
+    ...
+    
+}
+```
+
 ## Documentation
 
 - [Docs index](./docs/README.md)
@@ -64,7 +82,6 @@ dependencies {
 - [Premade filters](./docs/premade-filters.md)
 - [Examples guide](./docs/examples-guide.md)
 - [Styling premade GUIs](./docs/styling-premade-guis.md)
-- [Migration notes](./docs/migration-notes.md)
 
 ## Thanks
 
