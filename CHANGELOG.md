@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [release/v26.1.2-1.10.0] - 2026-05-10
+### :wrench: Chores
+- [`9164482`](https://github.com/klikli-dev/code-defined-gui/commit/916448231b83e7ae3230d9729a850f0941616363) - exclude texture source files from build *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+
+
 ## [release/v26.1.2-1.9.0] - 2026-05-09
 ### :sparkles: New Features
 - [`514859a`](https://github.com/klikli-dev/code-defined-gui/commit/514859a8bf313b377245698dbad6bc92aeeed842) - update to latest neo *(commit by [@klikli-dev](https://github.com/klikli-dev))*
@@ -101,3 +106,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [release/v26.1.2-1.7.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.6.0...release/v26.1.2-1.7.0
 [release/v26.1.2-1.8.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.7.0...release/v26.1.2-1.8.0
 [release/v26.1.2-1.9.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.8.0...release/v26.1.2-1.9.0
+[release/v26.1.2-1.10.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.9.0...release/v26.1.2-1.10.0
