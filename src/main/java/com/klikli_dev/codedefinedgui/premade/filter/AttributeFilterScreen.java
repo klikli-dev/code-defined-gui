@@ -4,10 +4,12 @@
 
 package com.klikli_dev.codedefinedgui.premade.filter;
 
+import com.klikli_dev.codedefinedgui.internal.network.AddAttributeFilterRuleMessage;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeCandidate;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeFilterDefinition;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeFilterMenu;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeFilterMode;
+import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeRule;
 import com.klikli_dev.codedefinedgui.premade.filter.core.FilterTranslationKeys;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.premade.filter.widget.AttributeRuleSummaryWidget;
@@ -27,6 +29,7 @@ import java.util.List;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class AttributeFilterScreen<M extends AttributeFilterMenu> extends AbstractFilterScreen<M> {
     private IconButtonWidget matchAnyButton;
@@ -83,11 +86,11 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
                 () -> ctx.style().textColor(BuiltinFilterParts.ATTRIBUTE_SELECTION_HEADER, 0x5391E1)
         ).withTitle(Component.translatable(FilterTranslationKeys.Attribute.AVAILABLE))));
         registry.resolve("main.filter_area.add_button", ctx -> {
-            this.addButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_ADD, Component.translatable(FilterTranslationKeys.Attribute.ADD), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED))
+            this.addButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_ADD, Component.translatable(FilterTranslationKeys.Attribute.ADD), () -> this.addSelectedRule(false))
                     .withTooltip(Component.translatable(FilterTranslationKeys.Attribute.ADD_TOOLTIP));
         });
         registry.resolve("main.filter_area.add_inverted_button", ctx -> {
-            this.addInvertedButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_ADD_INVERTED, Component.translatable(FilterTranslationKeys.Attribute.ADD_INVERTED), () -> this.pressButton(AttributeFilterMenu.BUTTON_ADD_SELECTED_INVERTED))
+            this.addInvertedButton = this.addIconButton(ctx, GuiSprites.FILTER_ICON_ADD_INVERTED, Component.translatable(FilterTranslationKeys.Attribute.ADD_INVERTED), () -> this.addSelectedRule(true))
                     .withTooltip(Component.translatable(FilterTranslationKeys.Attribute.ADD_INVERTED_TOOLTIP));
         });
         registry.resolve("main.filter_area.summary_widget", ctx -> this.summaryWidget = this.root.addChild(new AttributeRuleSummaryWidget(ctx.node().x(), ctx.node().y(), ctx.style().sprite(BuiltinFilterParts.ATTRIBUTE_SUMMARY, GuiSprites.ATTRIBUTE_FILTER_SUMMARY), () -> this.menu.state().rules().size(), this.menu::summaryStack, () -> ctx.style().textColor(BuiltinFilterParts.ATTRIBUTE_SUMMARY, 0xFFFFFFFF))));
@@ -154,6 +157,15 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
         }
 
         this.selectionWidget.updateTooltip();
+    }
+
+    private void addSelectedRule(boolean inverted) {
+        this.menu.selectedCandidate().ifPresent(candidate -> {
+            AttributeRule rule = new AttributeRule(candidate.rule().typeId(), candidate.rule().payload(), inverted);
+            if (this.menu.addSelectedRule(rule)) {
+                ClientPacketDistributor.sendToServer(new AddAttributeFilterRuleMessage(this.menu.containerId, rule));
+            }
+        });
     }
 }
 
