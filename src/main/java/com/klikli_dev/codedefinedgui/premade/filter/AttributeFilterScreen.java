@@ -9,6 +9,7 @@ import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeCandidate
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeFilterDefinition;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeFilterMenu;
 import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeFilterMode;
+import com.klikli_dev.codedefinedgui.premade.filter.attribute.AttributeRule;
 import com.klikli_dev.codedefinedgui.premade.filter.core.FilterTranslationKeys;
 import com.klikli_dev.codedefinedgui.premade.filter.core.layout.BuiltinFilterParts;
 import com.klikli_dev.codedefinedgui.premade.filter.widget.AttributeRuleSummaryWidget;
@@ -160,8 +161,9 @@ public class AttributeFilterScreen<M extends AttributeFilterMenu> extends Abstra
 
     private void addSelectedRule(boolean inverted) {
         this.menu.selectedCandidate().ifPresent(candidate -> {
-            if (this.menu.addSelectedRule(candidate.rule(), inverted)) {
-                ClientPacketDistributor.sendToServer(new AddAttributeFilterRuleMessage(this.menu.containerId, candidate.rule(), inverted));
+            AttributeRule rule = new AttributeRule(candidate.rule().typeId(), candidate.rule().payload(), inverted);
+            if (this.menu.addSelectedRule(rule)) {
+                ClientPacketDistributor.sendToServer(new AddAttributeFilterRuleMessage(this.menu.containerId, rule));
             }
         });
     }

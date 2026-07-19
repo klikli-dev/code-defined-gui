@@ -223,12 +223,11 @@ public class AttributeFilterMenu extends FilterMenu {
         registry.bind("main.filter_area.summary_slot", ctx -> this.bindGhostSlot(ctx, SUMMARY_SLOT, BuiltinFilterSlotRoles.FILTER_SUMMARY));
     }
 
-    public boolean addSelectedRule(AttributeRule candidate, boolean inverted) {
-        if (candidate == null || this.candidates().stream().noneMatch(entry -> entry.rule().equals(candidate))) {
+    public boolean addSelectedRule(AttributeRule rule) {
+        if (rule == null || this.candidates().stream().noneMatch(entry -> entry.rule().typeId().equals(rule.typeId()) && entry.rule().payload().equals(rule.payload()))) {
             return false;
         }
 
-        AttributeRule rule = new AttributeRule(candidate.typeId(), candidate.payload(), inverted);
         if (this.draftRules.contains(rule)) {
             return false;
         }
