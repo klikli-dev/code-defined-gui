@@ -37,8 +37,6 @@ public class AttributeFilterMenu extends FilterMenu {
     public static final int BUTTON_DENY = 3;
     public static final int BUTTON_NEXT_CANDIDATE = 4;
     public static final int BUTTON_PREVIOUS_CANDIDATE = 5;
-    public static final int BUTTON_ADD_SELECTED = 6;
-    public static final int BUTTON_ADD_SELECTED_INVERTED = 7;
     public static final int BUTTON_CONFIRM = 8;
     public static final int BUTTON_CANCEL = 9;
     private static final int REFERENCE_SLOT = 0;
@@ -175,12 +173,6 @@ public class AttributeFilterMenu extends FilterMenu {
                 }
                 return true;
             }
-            case BUTTON_ADD_SELECTED -> {
-                return this.addSelectedRule(false);
-            }
-            case BUTTON_ADD_SELECTED_INVERTED -> {
-                return this.addSelectedRule(true);
-            }
             case BUTTON_CONFIRM -> {
                 this.commitDraft();
                 return true;
@@ -231,20 +223,17 @@ public class AttributeFilterMenu extends FilterMenu {
         registry.bind("main.filter_area.summary_slot", ctx -> this.bindGhostSlot(ctx, SUMMARY_SLOT, BuiltinFilterSlotRoles.FILTER_SUMMARY));
     }
 
-    private boolean addSelectedRule(boolean inverted) {
-        AttributeFilterState state = this.state();
-        Optional<AttributeCandidate> selected = this.selectedCandidate();
-        if (selected.isEmpty()) {
+    public boolean addSelectedRule(AttributeRule candidate, boolean inverted) {
+        if (candidate == null || this.candidates().stream().noneMatch(entry -> entry.rule().equals(candidate))) {
             return false;
         }
 
-        AttributeRule candidate = selected.get().rule();
         AttributeRule rule = new AttributeRule(candidate.typeId(), candidate.payload(), inverted);
-        if (!this.canAddSelected(inverted) || state.rules().contains(rule)) {
+        if (this.draftRules.contains(rule)) {
             return false;
         }
 
-        List<AttributeRule> rules = new ArrayList<>(state.rules());
+        List<AttributeRule> rules = new ArrayList<>(this.draftRules);
         rules.add(rule);
         this.draftRules = rules;
         this.syncSummarySlot();
