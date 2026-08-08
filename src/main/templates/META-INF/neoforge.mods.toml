@@ -1,11 +1,12 @@
 license="${mod_license}"
+licenseUrl="https://github.com/klikli-dev/code-defined-gui/#licensing"
 issueTrackerURL="https://github.com/klikli-dev/code-defined-gui/" 
 
 [[mods]] #mandatory
 modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
-logoFile="codedefinedgui.png"
+iconFile="codedefinedgui.png"
 credits = """See https://github.com/klikli-dev/code-defined-gui/#licensing"""
 authors = "${mod_authors}"
 description = '''${mod_description}'''
