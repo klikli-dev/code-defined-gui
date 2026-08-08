@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [release/v26.2-1.13.0] - 2026-08-08
+### :wrench: Chores
+- [`a652098`](https://github.com/klikli-dev/code-defined-gui/commit/a65209849efdb78edb21e3cacd86046c4e931c05) - update to latest neo mod info system *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+
+
 ## [release/v26.2-1.12.0] - 2026-07-30
 ### :sparkles: New Features
 - [`98082ab`](https://github.com/klikli-dev/code-defined-gui/commit/98082ab99212320d7b8e242f347283ae342b8676) - update to 26.2 *(PR [#10](https://github.com/klikli-dev/code-defined-gui/pull/10) by [@klikli-dev](https://github.com/klikli-dev))*
@@ -126,3 +131,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [release/v26.1.2-1.11.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.10.0...release/v26.1.2-1.11.0
 [release/v26.1.2-1.11.1]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.11.0...release/v26.1.2-1.11.1
 [release/v26.2-1.12.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.2-0.0.0...release/v26.2-1.12.0
+[release/v26.2-1.13.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.2-1.12.0...release/v26.2-1.13.0
