@@ -29,7 +29,7 @@ public class CodeDefinedGui {
 
 
     public CodeDefinedGui(IEventBus modEventBus, ModContainer modContainer) {
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        modContainer.registerConfig(ModConfig.Type.LOCAL, Config.SPEC);
 
         ItemRegistry.ITEMS.register(modEventBus);
         MenuTypesRegistry.MENU_TYPES.register(modEventBus);
