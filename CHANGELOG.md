@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [release/v26.3-1.15.0] - 2026-11-16
+### :sparkles: New Features
+- [`8c24d46`](https://github.com/klikli-dev/code-defined-gui/commit/8c24d46a602a64bcc6166604211bdda9908634fa) - support dragging JEI ghost ingredients into filter slots *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+
+### :wrench: Chores
+- [`941869e`](https://github.com/klikli-dev/code-defined-gui/commit/941869e04a3670d1f860ad22ac1878d1ed06d6f1) - ignore datagen cache and mark generated files as auto-generated *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+- [`dd7099a`](https://github.com/klikli-dev/code-defined-gui/commit/dd7099a7d5854c999b91d6681ea04079ce274e18) - **ci**: update GitHub Actions to latest versions *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+
+
 ## [release/v26.3-1.14.0] - 2026-10-06
 ### :sparkles: New Features
 - [`47bfb41`](https://github.com/klikli-dev/code-defined-gui/commit/47bfb41b4179b3a7aec042365eafee04fc2802a0) - update to NeoForge 26.3.0.51-beta and migrate config type to LOCAL *(commit by [@klikli-dev](https://github.com/klikli-dev))*
@@ -147,3 +156,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [release/v26.2-1.13.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.2-1.12.0...release/v26.2-1.13.0
 [release/v26.3-1.13.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.3-0.0.0...release/v26.3-1.13.0
 [release/v26.3-1.14.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.3-1.13.0...release/v26.3-1.14.0
+[release/v26.3-1.15.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.3-1.14.0...release/v26.3-1.15.0
