@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [release/v26.1.2-1.13.0] - 2026-11-16
+### :sparkles: New Features
+- [`e4236e9`](https://github.com/klikli-dev/code-defined-gui/commit/e4236e9e6dd637b31bdcc909d05da107f7fad19f) - support dragging JEI ghost ingredients into filter slots *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+
+
 ## [release/v26.1.2-1.11.1] - 2026-07-19
 ### :bug: Bug Fixes
 - [`cca0156`](https://github.com/klikli-dev/code-defined-gui/commit/cca0156d7ad55dfbed7e39c1d9713dc2d05a4498) - synchronize attribute filter rules by value *(PR [#9](https://github.com/klikli-dev/code-defined-gui/pull/9) by [@klikli-dev](https://github.com/klikli-dev))*
@@ -120,3 +125,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [release/v26.1.2-1.10.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.9.0...release/v26.1.2-1.10.0
 [release/v26.1.2-1.11.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.10.0...release/v26.1.2-1.11.0
 [release/v26.1.2-1.11.1]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.11.0...release/v26.1.2-1.11.1
+[release/v26.1.2-1.13.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.1.2-1.12.0...release/v26.1.2-1.13.0
