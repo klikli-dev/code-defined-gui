@@ -77,6 +77,20 @@ Attribute filters use `ItemAttributes` as a registry of available attribute type
 
 This registry is intentionally stricter than the old overwrite-friendly behavior.
 
+## JEI integration
+
+When [JEI](https://www.curseforge.com/minecraft/mc-mods/jei) is installed, you can drag item ingredients from the JEI ingredient list onto the ghost slots of the stock filter screens.
+
+- The list filter accepts an item on any of its filter grid slots.
+- The attribute filter accepts an item on its reference slot. The summary slot is display-only and does not accept drops.
+- The dropped item is stored as a single-count ghost copy, the same as placing an item by clicking.
+
+The drop is applied locally right away and then sent to the server, which validates that the player's open container is the filter menu and that the target slot is an interactive ghost slot before updating the draft filter.
+
+JEI is an optional dependency and is only referenced by the client-side `internal.integration.jei` package, so CDG loads without it.
+
+EMI is not integrated yet.
+
 ## Menu payload note
 
 If you override `FilterItem.writeMenuData(...)`, call `super.writeMenuData(...)` first.

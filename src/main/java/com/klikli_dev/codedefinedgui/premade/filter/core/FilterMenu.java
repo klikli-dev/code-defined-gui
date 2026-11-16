@@ -199,6 +199,22 @@ public abstract class FilterMenu extends AbstractContainerMenu implements Layout
         return changed;
     }
 
+    public boolean canSetGhostStackFromSlot(int slotId) {
+        return slotId >= 0
+                && slotId < this.slots.size()
+                && this.slots.get(slotId) instanceof GhostResourceHandlerSlot
+                && this.isGhostSlotId(slotId)
+                && this.isGhostSlotInteractive(this.toGhostSlot(slotId));
+    }
+
+    public boolean setGhostStackFromSlot(int slotId, ItemStack stack) {
+        if (!this.canSetGhostStackFromSlot(slotId)) {
+            return false;
+        }
+
+        return this.setGhostStack(this.toGhostSlot(slotId), stack);
+    }
+
     protected Slot addGhostSlot(int slot, int xPosition, int yPosition, SlotRoleKey role) {
         return this.addLayoutSlot(new GhostResourceHandlerSlot(this.ghostStorage, slot, xPosition, yPosition), role, BuiltinFilterParts.slotPart(role), "");
     }

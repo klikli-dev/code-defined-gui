@@ -16,6 +16,7 @@ public final class Networking {
     public static void register(RegisterPayloadHandlersEvent event) {
         event.registrar(CodeDefinedGui.MODID)
                 .playToServer(AddAttributeFilterRuleMessage.TYPE, AddAttributeFilterRuleMessage.STREAM_CODEC, MessageHandler::handle)
+                .playToServer(SetFilterGhostSlotMessage.TYPE, SetFilterGhostSlotMessage.STREAM_CODEC, MessageHandler::handle)
                 .playToClient(OpenTestScreenMessage.TYPE, OpenTestScreenMessage.STREAM_CODEC, MessageHandler::handle);
     }
 
