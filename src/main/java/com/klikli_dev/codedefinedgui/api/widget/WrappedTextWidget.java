@@ -5,7 +5,6 @@
 package com.klikli_dev.codedefinedgui.api.widget;
 
 import com.klikli_dev.codedefinedgui.api.style.BuiltinGuiParts;
-import com.klikli_dev.codedefinedgui.api.style.GuiStyleProperties;
 import com.klikli_dev.codedefinedgui.api.style.StyleContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
