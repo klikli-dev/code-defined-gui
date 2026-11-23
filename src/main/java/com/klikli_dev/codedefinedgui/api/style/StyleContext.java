@@ -10,6 +10,13 @@ import com.klikli_dev.codedefinedgui.api.widget.IconButtonBackgroundSprites;
 public interface StyleContext {
     <T> T get(GuiPartKey part, GuiStyleProperty<T> property, T fallback);
 
+    /**
+     * @return a context that has no style values, so every lookup returns its fallback. Widgets use it unless a screen passes a style.
+     */
+    static StyleContext defaults() {
+        return new GuiStyleContext(GuiStyle.builder().build());
+    }
+
     default GuiSprite sprite(GuiPartKey part, GuiSprite fallback) {
         return this.get(part, GuiStyleProperties.SPRITE, fallback);
     }

@@ -31,11 +31,29 @@ public final class GuiSprites {
     public static final GuiSprite FILTER_ICON_ADD = new GuiSprite(sprite("widget/add"), 16, 16);
     public static final GuiSprite FILTER_ICON_ADD_INVERTED = new GuiSprite(sprite("widget/add_inverted"), 16, 16);
 
+    /*
+     * Fallbacks of the shared widgets that have no CDG sprite yet. They use vanilla sprites, so they look like vanilla GUIs by default.
+     */
+
+    /**
+     * Vertical tab on the left edge of a panel. Vanilla advancement tab, also used for the hovered state until CDG gets its own.
+     */
+    public static final GuiSprite TAB = new GuiSprite(vanillaSprite("advancements/tab_left_middle"), 32, 28);
+    public static final GuiSprite TAB_SELECTED = new GuiSprite(vanillaSprite("advancements/tab_left_middle_selected"), 32, 28);
+    public static final GuiSprite SCROLLBAR_TRACK = new GuiSprite(vanillaSprite("widget/scroller_background"), 6, 32);
+    public static final GuiSprite SCROLLBAR_HANDLE = new GuiSprite(vanillaSprite("widget/scroller"), 6, 32);
+    public static final GuiSprite PROGRESS_BAR_BACKGROUND = new GuiSprite(vanillaSprite("boss_bar/white_background"), 182, 5);
+    public static final GuiSprite PROGRESS_BAR_FILL = new GuiSprite(vanillaSprite("boss_bar/white_progress"), 182, 5);
+
     private GuiSprites() {
     }
 
     private static Identifier sprite(String path) {
         return Identifier.fromNamespaceAndPath(CodeDefinedGui.MODID, path);
+    }
+
+    private static Identifier vanillaSprite(String path) {
+        return Identifier.withDefaultNamespace(path);
     }
 }
 

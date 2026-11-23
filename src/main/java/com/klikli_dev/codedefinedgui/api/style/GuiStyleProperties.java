@@ -12,8 +12,13 @@ public final class GuiStyleProperties {
     public static final GuiStyleProperty<GuiSprite> PRESSED_SPRITE = property("pressed_sprite");
     public static final GuiStyleProperty<GuiSprite> ON_SPRITE = property("on_sprite");
     public static final GuiStyleProperty<GuiSprite> OFF_SPRITE = property("off_sprite");
+    public static final GuiStyleProperty<GuiSprite> DISABLED_SPRITE = property("disabled_sprite");
+    public static final GuiStyleProperty<GuiSprite> FILL_SPRITE = property("fill_sprite");
+    public static final GuiStyleProperty<GuiSprite> HANDLE_SPRITE = property("handle_sprite");
+    public static final GuiStyleProperty<GuiSprite> HANDLE_HOVER_SPRITE = property("handle_hover_sprite");
     public static final GuiStyleProperty<Integer> TEXT_COLOR = property("text_color");
     public static final GuiStyleProperty<Integer> COLOR = property("color");
+    public static final GuiStyleProperty<Integer> DISABLED_TINT = property("disabled_tint");
 
     private GuiStyleProperties() {
     }
@@ -22,6 +27,5 @@ public final class GuiStyleProperties {
         return GuiStyleProperty.of(name);
     }
 }
-
 
 
