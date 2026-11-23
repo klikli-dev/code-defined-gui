@@ -32,7 +32,15 @@ public class IconButtonWidget extends AbstractWidget {
     }
 
     public IconButtonWidget(int x, int y, GuiSprite icon, IconButtonBackgroundSprites backgroundSprites, Component message, Runnable onPress) {
-        super(x, y, WIDTH, HEIGHT, message);
+        this(x, y, WIDTH, HEIGHT, icon, backgroundSprites, message, onPress);
+    }
+
+    /**
+     * @param width width in pixels, the default is 18
+     * @param height height in pixels, the default is 18
+     */
+    protected IconButtonWidget(int x, int y, int width, int height, GuiSprite icon, IconButtonBackgroundSprites backgroundSprites, Component message, Runnable onPress) {
+        super(x, y, width, height, message);
         this.icon = icon;
         this.backgroundSprites = backgroundSprites;
         this.onPress = Objects.requireNonNull(onPress);
@@ -55,10 +63,7 @@ public class IconButtonWidget extends AbstractWidget {
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         this.refreshTooltip();
-        GuiSprite background = !this.active
-                ? this.backgroundSprites.pressed()
-                : this.isMouseOver(mouseX, mouseY) ? this.backgroundSprites.hovered() : this.backgroundSprites.normal();
-        background.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        this.backgroundSprite(mouseX, mouseY).extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
         int iconX = this.getX() + (this.getWidth() - this.icon.width()) / 2;
         int iconY = this.getY() + (this.getHeight() - this.icon.height()) / 2;
         this.icon.extractRenderState(graphics, iconX, iconY, this.icon.width(), this.icon.height());
@@ -72,6 +77,18 @@ public class IconButtonWidget extends AbstractWidget {
     @Override
     protected void updateWidgetNarration(NarrationElementOutput output) {
         this.defaultButtonNarrationText(output);
+    }
+
+    /**
+     * @return the background to draw for the current state: pressed while inactive, hovered under the mouse, normal otherwise.
+     * Subclasses override this to show other states, e.g. a selected button.
+     */
+    protected GuiSprite backgroundSprite(int mouseX, int mouseY) {
+        if (!this.active) {
+            return this.backgroundSprites.pressed();
+        }
+
+        return this.isMouseOver(mouseX, mouseY) ? this.backgroundSprites.hovered() : this.backgroundSprites.normal();
     }
 
     private void refreshTooltip() {
