@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [release/v26.3-1.16.0] - 2026-11-23
+### :sparkles: New Features
+- [`7706e3a`](https://github.com/klikli-dev/code-defined-gui/commit/7706e3a41b06291994fd611ed8499b908ee4aee2) - **style**: add shared widget part keys, style properties and sprite fallbacks *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+- [`0e8d204`](https://github.com/klikli-dev/code-defined-gui/commit/0e8d2048d5960f78365ca3004612f547335d9ea3) - **widget**: let GuiSpriteWidget take an explicit size and a sprite supplier *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+- [`1252e5c`](https://github.com/klikli-dev/code-defined-gui/commit/1252e5c06e199ccda095159208e49857c2977ac5) - **widget**: add IconToggleButtonWidget *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+- [`415ff79`](https://github.com/klikli-dev/code-defined-gui/commit/415ff79658ff8a6feb7670c6e6c42c4b4a8cbcf1) - **widget**: add scroll list, progress bar and wrapped text widgets *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+- [`57d7d74`](https://github.com/klikli-dev/code-defined-gui/commit/57d7d74558a167cad3325abf89c3c3fca77d02ed) - **widget**: add tooltip area, item icon and toggle switch *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+- [`eda2b79`](https://github.com/klikli-dev/code-defined-gui/commit/eda2b79166d487398a4c0640bd153c12e05a89ca) - **widget**: add tab button and tab bar *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+- [`7329e39`](https://github.com/klikli-dev/code-defined-gui/commit/7329e396945f605b374c97c7a060cef9dbb37f39) - **screen**: add page stack and tab host navigation *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+- [`81fe180`](https://github.com/klikli-dev/code-defined-gui/commit/81fe180fd38d2302630811adc3815513ab68bc80) - **showcase**: show progress bar, toggle button, list and wrapped text in TestScreen *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+- [`7cda1d5`](https://github.com/klikli-dev/code-defined-gui/commit/7cda1d5e9e8be9c070be6f3b208e97d05ff457ba) - **widget**: add default cdg sprites for tabs, toggle switch and progress bar *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+
+### :recycle: Refactors
+- [`642d256`](https://github.com/klikli-dev/code-defined-gui/commit/642d256475cd697f1d777037c7912438fc0cc366) - **widget**: let IconButtonWidget subclasses choose background and size *(commit by [@klikli-dev](https://github.com/klikli-dev))*
+
+
 ## [release/v26.3-1.15.0] - 2026-11-16
 ### :sparkles: New Features
 - [`8c24d46`](https://github.com/klikli-dev/code-defined-gui/commit/8c24d46a602a64bcc6166604211bdda9908634fa) - support dragging JEI ghost ingredients into filter slots *(commit by [@klikli-dev](https://github.com/klikli-dev))*
@@ -157,3 +173,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [release/v26.3-1.13.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.3-0.0.0...release/v26.3-1.13.0
 [release/v26.3-1.14.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.3-1.13.0...release/v26.3-1.14.0
 [release/v26.3-1.15.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.3-1.14.0...release/v26.3-1.15.0
+[release/v26.3-1.16.0]: https://github.com/klikli-dev/code-defined-gui/compare/release/v26.3-1.15.0...release/v26.3-1.16.0
