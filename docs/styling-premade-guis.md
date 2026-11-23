@@ -87,8 +87,17 @@ GuiStyle.builder()
 Pass the style to the widget, e.g. `new ProgressBarWidget(x, y, 58, 7, fraction).withStyle(context)`.
 `TabHost` takes the style in its constructor, because it creates its tab buttons itself.
 
-The built-in look of the shared widgets uses vanilla sprites for the tab rail (the advancement tab), the scrollbar,
-and the progress bar. The icon toggle button uses the CDG filter button sprites.
+The built-in look of the shared widgets uses CDG sprites:
+
+- tabs: `GuiSprites.TAB`, `TAB_HOVER`, `TAB_SELECTED` (32x28, for a vertical rail with `TabBar.OVERLAP`)
+- toggle switch: `GuiSprites.TOGGLE_ON`, `TOGGLE_OFF` and their `_HOVER` variants (26x12)
+- progress bar: `GuiSprites.PROGRESS_BAR_BACKGROUND` (58x7, nine-slice) and `PROGRESS_BAR_FILL` (56x5, cropped inside a 1px border)
+- icon toggle button: the filter button sprites, with `FILTER_BUTTON_DOWN` for the selected state
+
+The scrollbar still uses vanilla's scroller sprites, because CDG has no scrollbar sprite yet.
+
+A progress bar draws its fill cropped, never stretched. The fill is 56 pixels wide, so a bar wider than 58 pixels
+shows at most 56 pixels of fill. Use a 58x7 bar, or set `FILL_SPRITE` to a wider sprite.
 
 ## Example style registration
 
