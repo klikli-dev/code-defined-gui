@@ -15,6 +15,7 @@ CDG uses package boundaries to communicate support expectations.
 Stable modder-facing generic GUI API.
 
 Use this for layout specs, style sheets, textures, widgets, and screen/menu integration.
+This includes the shared widgets (`api.widget`, `api.widget.tab`) and the page and tab navigation in `api.screen.page`.
 
 ### `com.klikli_dev.codedefinedgui.premade.*`
 

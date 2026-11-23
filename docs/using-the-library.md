@@ -42,6 +42,13 @@ Code Defined GUI is now documented as a layout-driven GUI framework.
 - `api.screen.GuiHost` - GUI-relative host contract for screens
 - `api.screen.GuiRootWidget` - root widget that owns and resyncs child widgets
 - `api.screen.GuiSyncable` - optional sync hook for widgets that follow host bounds
+- `api.screen.WidgetGroup` - a set of widgets added and removed from the host together
+- `api.screen.ContentRect` - a screen-space rectangle to lay widgets out in
+
+### Pages and tabs
+
+- `api.screen.page.Page`, `PageStack`, `PageContext` - master-detail pages that show one widget set at a time
+- `api.screen.page.Tab` and `TabHost` - a vertical tab rail where every tab owns its own page stack
 
 ### Styling and visuals
 
@@ -58,6 +65,17 @@ Code Defined GUI is now documented as a layout-driven GUI framework.
 - `api.widget.GuiTextWidget`
 - `api.widget.IconButtonWidget`
 - `api.widget.HorizontalSeparatorWidget` / `VerticalSeparatorWidget`
+- `api.widget.IconToggleButtonWidget` - an icon button that stays pressed while selected
+- `api.widget.ScrollListWidget` with `ListEntryRenderer` - a virtualised, smooth-scrolling list
+- `api.widget.ProgressBarWidget` - a bar filled from a supplied fraction
+- `api.widget.WrappedTextWidget` - word-wrapped text with an optional line limit
+- `api.widget.TooltipAreaWidget` - an invisible area that shows a tooltip
+- `api.widget.ItemIconWidget` - an item icon at any size
+- `api.widget.ToggleSwitch` - a static helper that draws an on/off switch, e.g. in a list row
+- `api.widget.tab.TabButtonWidget`, `TabBar`, `TabIcon` - tabs of a vertical tab rail
+
+The shared widgets read their look from a `StyleContext`. Pass one with `withStyle(...)`,
+or leave it out to get the built-in CDG look. See `styling-premade-guis.md`.
 
 ## Defining a layout
 
@@ -226,6 +244,9 @@ Typical building blocks are:
 - `GuiSpriteWidget` for icons and slot frames
 - `GuiTextWidget` for titles and labels
 - `IconButtonWidget` for clickable icon buttons
+- `IconToggleButtonWidget` for one-of-several mode buttons
+- `ScrollListWidget` for long lists of selectable rows
+- `ProgressBarWidget` and `WrappedTextWidget` for progress and multi-line labels
 - separator widgets for dividers
 
 ## Package guidance
