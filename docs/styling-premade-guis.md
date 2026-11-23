@@ -59,6 +59,37 @@ Common properties live in `GuiStyleProperties`, for example:
 - `TEXT_COLOR`
 - `COLOR`
 
+## Shared widget parts
+
+The shared widgets look up their visuals with `BuiltinGuiParts` and the properties of `GuiStyleProperties`.
+Each widget takes a `StyleContext` through `withStyle(...)`. Without one it uses `StyleContext.defaults()`,
+which has no values, so the widget draws its built-in CDG look.
+
+- `BuiltinGuiParts.TAB`: `SPRITE`, `HOVER_SPRITE`, `ON_SPRITE` (selected), `DISABLED_TINT`
+- `BuiltinGuiParts.ICON_TOGGLE_BUTTON`: `SPRITE`, `HOVER_SPRITE`, `ON_SPRITE` (selected), `DISABLED_SPRITE`
+- `BuiltinGuiParts.TOGGLE_SWITCH` and `TOGGLE_SWITCH_HOVER`: `ON_SPRITE`, `OFF_SPRITE`
+- `BuiltinGuiParts.LIST_ROW`: `COLOR` (hover highlight), `TEXT_COLOR`
+- `BuiltinGuiParts.LIST_SCROLLBAR`: `SPRITE` (track), `HANDLE_SPRITE`, `HANDLE_HOVER_SPRITE`
+- `BuiltinGuiParts.PROGRESS_BAR`: `SPRITE` (background), `FILL_SPRITE`
+- `BuiltinGuiParts.TEXT`: `TEXT_COLOR`
+
+Example, styling a tab rail and a progress bar of a downstream mod:
+
+```java
+GuiStyle.builder()
+        .set(BuiltinGuiParts.TAB, GuiStyleProperties.SPRITE, GuiSprites.TAB.tinted(0xFFB78F63))
+        .set(BuiltinGuiParts.TAB, GuiStyleProperties.ON_SPRITE, GuiSprites.TAB_SELECTED.tinted(0xFFF0D0A0))
+        .set(BuiltinGuiParts.TAB, GuiStyleProperties.DISABLED_TINT, 0xFF707070)
+        .set(BuiltinGuiParts.PROGRESS_BAR, GuiStyleProperties.FILL_SPRITE, GuiSprites.PROGRESS_BAR_FILL.tinted(0xFF30A040))
+        .build();
+```
+
+Pass the style to the widget, e.g. `new ProgressBarWidget(x, y, 58, 7, fraction).withStyle(context)`.
+`TabHost` takes the style in its constructor, because it creates its tab buttons itself.
+
+The built-in look of the shared widgets uses vanilla sprites for the tab rail (the advancement tab), the scrollbar,
+and the progress bar. The icon toggle button uses the CDG filter button sprites.
+
 ## Example style registration
 
 Register styles on the client before a built-in CDG screen is opened:

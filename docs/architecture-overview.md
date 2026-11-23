@@ -21,7 +21,8 @@ Supported generic API for downstream mods.
   - `MenuBindingRegistry`, `LayoutResolverRegistry`
   - `GuiLayoutKey`, `SlotRoleKey`, built-in slot-role constants
 - `api.screen`
-  - `GuiHost`, `GuiRootWidget`, `GuiSyncable`
+  - `GuiHost`, `GuiRootWidget`, `GuiSyncable`, `WidgetGroup`, `ContentRect`
+  - `api.screen.page`: `Page`, `PageStack`, `PageContext`, `Tab`, `TabHost` for master-detail pages and tab rails
 - `api.style`
   - `GuiStyle`, `GuiStyleKey`, `GuiPartKey`
   - `GuiStyleRegistry`, `StyleContext`, `GuiStyleProperties`
@@ -30,6 +31,8 @@ Supported generic API for downstream mods.
   - `GuiSprite`, `GuiSprites`
 - `api.widget`
   - reusable widgets such as `GuiBackgroundWidget`, `GuiSpriteWidget`, `GuiTextWidget`, `IconButtonWidget`, separators, and slot helpers
+  - shared widgets: `IconToggleButtonWidget`, `ScrollListWidget` (+ `ListEntryRenderer`), `ProgressBarWidget`, `WrappedTextWidget`, `TooltipAreaWidget`, `ItemIconWidget`, and the `ToggleSwitch` helper
+  - `api.widget.tab`: `TabButtonWidget`, `TabBar`, `TabIcon`
 
 ### `com.klikli_dev.codedefinedgui.premade.filter.*`
 
