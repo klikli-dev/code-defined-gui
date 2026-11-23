@@ -35,10 +35,16 @@ public final class ToggleSwitch {
      * @param hovered whether the mouse hovers the switch, the hover sprite is drawn then
      */
     public static void extract(GuiGraphicsExtractor graphics, StyleContext style, int x, int y, boolean on, boolean hovered) {
-        GuiPartKey part = hovered ? BuiltinGuiParts.TOGGLE_SWITCH_HOVER : BuiltinGuiParts.TOGGLE_SWITCH;
-        GuiSprite sprite = on
-                ? style.onSprite(part, GuiSprites.FILTER_INDICATOR_ON)
-                : style.offSprite(part, GuiSprites.FILTER_INDICATOR_OFF);
+        GuiSprite sprite;
+        if (hovered) {
+            sprite = on
+                    ? style.onSprite(BuiltinGuiParts.TOGGLE_SWITCH_HOVER, GuiSprites.TOGGLE_ON_HOVER)
+                    : style.offSprite(BuiltinGuiParts.TOGGLE_SWITCH_HOVER, GuiSprites.TOGGLE_OFF_HOVER);
+        } else {
+            sprite = on
+                    ? style.onSprite(BuiltinGuiParts.TOGGLE_SWITCH, GuiSprites.TOGGLE_ON)
+                    : style.offSprite(BuiltinGuiParts.TOGGLE_SWITCH, GuiSprites.TOGGLE_OFF);
+        }
 
         sprite.extractRenderState(graphics, x, y, WIDTH, HEIGHT);
     }

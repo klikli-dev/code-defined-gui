@@ -51,11 +51,13 @@ public class ProgressBarWidget extends AbstractWidget {
         GuiSprite background = this.style.get(BuiltinGuiParts.PROGRESS_BAR, GuiStyleProperties.SPRITE, GuiSprites.PROGRESS_BAR_BACKGROUND);
         background.extractRenderState(graphics, this.getX(), this.getY(), this.getWidth(), this.getHeight());
 
+        // The fill sits inside the 1px border of the background, and is cropped, never stretched, so it is at most as wide as the sprite.
         GuiSprite fill = this.style.get(BuiltinGuiParts.PROGRESS_BAR, GuiStyleProperties.FILL_SPRITE, GuiSprites.PROGRESS_BAR_FILL);
         int innerWidth = Math.min(this.getWidth() - 2, fill.width());
+        int innerHeight = Math.min(this.getHeight() - 2, fill.height());
         int filled = Mth.clamp(Math.round(innerWidth * (float) this.fraction.getAsDouble()), 0, innerWidth);
         if (filled > 0) {
-            fill.extractRenderState(graphics, fill.width(), fill.height(), 0, 0, this.getX() + 1, this.getY() + 1, filled, Math.min(this.getHeight() - 2, fill.height()));
+            fill.extractRenderState(graphics, fill.width(), fill.height(), 0, 0, this.getX() + 1, this.getY() + 1, filled, innerHeight);
         }
     }
 

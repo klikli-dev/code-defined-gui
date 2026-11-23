@@ -31,19 +31,37 @@ public final class GuiSprites {
     public static final GuiSprite FILTER_ICON_ADD = new GuiSprite(sprite("widget/add"), 16, 16);
     public static final GuiSprite FILTER_ICON_ADD_INVERTED = new GuiSprite(sprite("widget/add_inverted"), 16, 16);
 
+    /**
+     * Vertical tab on the left edge of a panel. Its left 4 pixels sit under the panel's edge, see {@code TabBar.OVERLAP}.
+     */
+    public static final GuiSprite TAB = new GuiSprite(sprite("widget/tab"), 32, 28);
+    public static final GuiSprite TAB_HOVER = new GuiSprite(sprite("widget/tab_hover"), 32, 28);
+    /**
+     * The selected tab. It runs into the panel border, so it reads as part of the panel.
+     */
+    public static final GuiSprite TAB_SELECTED = new GuiSprite(sprite("widget/tab_selected"), 32, 28);
+
+    public static final GuiSprite TOGGLE_ON = new GuiSprite(sprite("widget/toggle_on"), 26, 12);
+    public static final GuiSprite TOGGLE_ON_HOVER = new GuiSprite(sprite("widget/toggle_on_hover"), 26, 12);
+    public static final GuiSprite TOGGLE_OFF = new GuiSprite(sprite("widget/toggle_off"), 26, 12);
+    public static final GuiSprite TOGGLE_OFF_HOVER = new GuiSprite(sprite("widget/toggle_off_hover"), 26, 12);
+
+    /**
+     * The background of a progress bar, a nine-slice sprite. Its 1px border holds the fill.
+     */
+    public static final GuiSprite PROGRESS_BAR_BACKGROUND = new GuiSprite(sprite("widget/progress_bar_background"), 58, 7);
+    /**
+     * The fill of a progress bar, drawn cropped at a 1px offset inside the background. It is 56 pixels wide, so a bar wider than
+     * 58 pixels shows at most 56 pixels of fill.
+     */
+    public static final GuiSprite PROGRESS_BAR_FILL = new GuiSprite(sprite("widget/progress_bar_fill"), 56, 5);
+
     /*
      * Fallbacks of the shared widgets that have no CDG sprite yet. They use vanilla sprites, so they look like vanilla GUIs by default.
      */
 
-    /**
-     * Vertical tab on the left edge of a panel. Vanilla advancement tab, also used for the hovered state until CDG gets its own.
-     */
-    public static final GuiSprite TAB = new GuiSprite(vanillaSprite("advancements/tab_left_middle"), 32, 28);
-    public static final GuiSprite TAB_SELECTED = new GuiSprite(vanillaSprite("advancements/tab_left_middle_selected"), 32, 28);
     public static final GuiSprite SCROLLBAR_TRACK = new GuiSprite(vanillaSprite("widget/scroller_background"), 6, 32);
     public static final GuiSprite SCROLLBAR_HANDLE = new GuiSprite(vanillaSprite("widget/scroller"), 6, 32);
-    public static final GuiSprite PROGRESS_BAR_BACKGROUND = new GuiSprite(vanillaSprite("boss_bar/white_background"), 182, 5);
-    public static final GuiSprite PROGRESS_BAR_FILL = new GuiSprite(vanillaSprite("boss_bar/white_progress"), 182, 5);
 
     private GuiSprites() {
     }

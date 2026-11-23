@@ -110,7 +110,7 @@ public class TabButtonWidget extends AbstractWidget {
         if (this.selected) {
             sprite = this.style.onSprite(BuiltinGuiParts.TAB, GuiSprites.TAB_SELECTED);
         } else if (this.isHovered() && this.active) {
-            sprite = this.style.hoverSprite(BuiltinGuiParts.TAB, GuiSprites.TAB);
+            sprite = this.style.hoverSprite(BuiltinGuiParts.TAB, GuiSprites.TAB_HOVER);
         } else {
             sprite = this.style.sprite(BuiltinGuiParts.TAB, GuiSprites.TAB);
         }

@@ -65,7 +65,7 @@ public class TestScreen extends Screen implements GuiHost {
         this.root.addChild(new GuiSpriteWidget(this.guiX(94), this.guiY(14), GuiSprites.CRAFTING_RESULT_SLOT));
         this.root.addChild(new FrameWidget(this.guiX(120), this.guiY(18), 40, 24));
 
-        this.root.addChild(new ProgressBarWidget(this.guiX(8), this.guiY(70), 160, 7, () -> 0.6D));
+        this.root.addChild(new ProgressBarWidget(this.guiX(8), this.guiY(70), 58, 7, () -> 0.6D));
 
         this.showcaseToggle = this.root.addChild(new IconToggleButtonWidget(this.guiX(8), this.guiY(82), 18, GuiSprites.FILTER_ICON_ALLOW_LIST,
                 Component.literal("Toggle: click to select"), () -> this.showcaseToggle.setSelected(!this.showcaseToggle.selected())));
