@@ -10,6 +10,7 @@ import com.klikli_dev.codedefinedgui.api.style.StyleContext;
 import com.klikli_dev.codedefinedgui.api.texture.GuiSprite;
 import com.klikli_dev.codedefinedgui.api.texture.GuiSprites;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 
@@ -85,6 +86,15 @@ public class IconToggleButtonWidget extends IconButtonWidget {
     public void onClick(MouseButtonEvent event, boolean doubleClick) {
         WidgetDefaults.playClickSound();
         super.onClick(event, doubleClick);
+    }
+
+    @Override
+    public boolean keyPressed(KeyEvent event) {
+        if (this.active && event.isSelection()) {
+            WidgetDefaults.playClickSound();
+        }
+
+        return super.keyPressed(event);
     }
 }
 
