@@ -243,7 +243,7 @@ Typical building blocks are:
 - `GuiBackgroundWidget` for panels and backgrounds
 - `GuiSpriteWidget` for icons and slot frames
 - `GuiTextWidget` for titles and labels
-- `IconButtonWidget` for clickable icon buttons
+- `IconButtonWidget` for clickable icon buttons. Like vanilla buttons, an active icon button also runs its action on Enter, Space and keypad Enter when it has keyboard focus
 - `IconToggleButtonWidget` for one-of-several mode buttons
 - `ScrollListWidget` for long lists of selectable rows
 - `ProgressBarWidget` and `WrappedTextWidget` for progress and multi-line labels

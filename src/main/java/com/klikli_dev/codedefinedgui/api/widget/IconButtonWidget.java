@@ -12,6 +12,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 
 public class IconButtonWidget extends AbstractWidget {
@@ -72,6 +73,20 @@ public class IconButtonWidget extends AbstractWidget {
     @Override
     public void onClick(MouseButtonEvent event, boolean doubleClick) {
         this.onPress.run();
+    }
+
+    /**
+     * Activates the button from the keyboard, like a click: Enter, Space and keypad Enter run the button's action while it is active, the same
+     * as {@code AbstractButton}.
+     */
+    @Override
+    public boolean keyPressed(KeyEvent event) {
+        if (!this.active || !event.isSelection()) {
+            return false;
+        }
+
+        this.onPress.run();
+        return true;
     }
 
     @Override
